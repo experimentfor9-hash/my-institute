@@ -316,3 +316,64 @@
     margin-bottom: 25px; /* तस्वीर के नीचे जगह छोड़ने के लिए */
     box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* तस्वीर की 3D परछाई */
 }
+/* --- Notice Board (Moving Text) --- */
+.notice-board {
+    background: #0f172a; /* डार्क ब्लू बैकग्राउंड */
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    font-family: 'Inter', sans-serif;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    overflow: hidden; /* बाहर का टेक्स्ट छुपाने के लिए */
+    position: relative;
+    z-index: 999;
+}
+
+/* 📢 Latest Update वाला बैज */
+.notice-title {
+    background: #ec4899; /* पिंक कलर */
+    color: white;
+    padding: 6px 16px;
+    border-radius: 20px;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    font-size: 0.85em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    margin-right: 15px;
+    z-index: 2; /* टेक्स्ट इसके पीछे से होकर जाएगा */
+    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
+}
+
+/* चलने वाले टेक्स्ट का एरिया */
+.notice-content {
+    flex: 1;
+    overflow: hidden;
+    white-space: nowrap;
+    position: relative;
+}
+
+/* एनीमेशन और टेक्स्ट की सेटिंग */
+.notice-content p {
+    display: inline-block;
+    margin: 0;
+    padding-left: 100%; /* टेक्स्ट स्क्रीन के एकदम बाहर से शुरू होगा */
+    animation: scrollText 20s linear infinite; /* 20 सेकंड में एक चक्कर (स्पीड कम-ज़्यादा कर सकते हैं) */
+    font-weight: 500;
+    color: #e2e8f0;
+    letter-spacing: 0.5px;
+}
+
+/* जब माउस ऊपर जाए तो टेक्स्ट रुक जाए */
+.notice-content p:hover {
+    animation-play-state: paused;
+    color: #ec4899;
+    cursor: pointer;
+}
+
+/* राइट से लेफ्ट चलने का एनीमेशन (Keyframes) */
+@keyframes scrollText {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-100%); }
+}
