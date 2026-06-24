@@ -29,15 +29,24 @@
 
     <!-- Main Content -->
     <div class="container">
+            <div class="container">
         <h2>Online Learning Portal</h2>
         <p>Welcome to the E-Learning section. Here students can join live sessions or watch recorded lectures.</p>
         
-        <!-- Live Class Section -->
-        <div class="live-class-box">
-            <div class="live-class-info">
-                <h3>🔴 Live Now: Electrician Trade Theory</h3>
-                <p><strong>Instructor:</strong> Mr. Sharma | <strong>Time:</strong> 10:00 AM - 11:30 AM</p>
-                <p>Topic: Basics of AC and DC Current.</p>
+        <div id="liveClassContainer">
+            <p>Loading Live Classes...</p>
+        </div>
+
+        <hr style="margin: 40px 0; border: 1px solid #e2e8f0;">
+
+        <h3>Recorded Video Lectures</h3>
+        <p>Missed a class? Watch previous lectures below:</p>
+
+        <div id="videoContainer" class="video-grid">
+            <p>Loading Videos...</p>
+        </div>
+            </div>
+
             </div>
             <!-- आप यहाँ Zoom या Google Meet का लिंक डाल सकते हैं -->
             <a href="https://meet.google.com/kxb-nxyq-zps" target="_blank" class="join-btn">Join Live Class</a>
@@ -73,6 +82,53 @@
     <footer>
         <p>&copy; 2026 Indian Classes Sikar. All Rights Reserved.</p>
     </footer>
+    <script>
+        // अपना नया Google Script Web App URL यहाँ डालें
+        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
+        // पेज लोड होते ही डेटा मंगाना
+        window.onload = function() {
+            fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                
+                // 1. Live Classes को पेज पर लगाना
+                let liveHTML = "";
+                data.live.forEach(cls => {
+                    liveHTML += `
+                    <div class="live-class-box">
+                        <div class="live-class-info">
+                            <h3>🔴 Live: ${cls.topic}</h3>
+                            <p><strong>Instructor:</strong> ${cls.instructor} | <strong>Time:</strong> ${cls.time}</p>
+                        </div>
+                        <a href="${cls.link}" target="_blank" class="join-btn">Join Live Class</a>
+                    </div>`;
+                });
+                // अगर शीट खाली है तो मैसेज दिखाना
+                if(data.live.length === 0) { liveHTML = "<p>No live classes scheduled currently.</p>"; }
+                document.getElementById("liveClassContainer").innerHTML = liveHTML;
+
+
+                // 2. Videos को पेज पर लगाना
+                let videoHTML = "";
+                data.videos.forEach(vid => {
+                    videoHTML += `
+                    <div class="video-card">
+                        <iframe src="${vid.url}" title="${vid.title}" allowfullscreen></iframe>
+                        <h4>${vid.title}</h4>
+                        <p>${vid.desc}</p>
+                    </div>`;
+                });
+                if(data.videos.length === 0) { videoHTML = "<p>No recorded videos available.</p>"; }
+                document.getElementById("videoContainer").innerHTML = videoHTML;
+
+            })
+            .catch(error => {
+                console.error("Error fetching data: ", error);
+                document.getElementById("liveClassContainer").innerHTML = "<p>Error loading classes. Please try again later.</p>";
+            });
+        };
+    </script>
+    
 </body>
 </html>
