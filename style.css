@@ -377,3 +377,45 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-100%); }
 }
+/* --- Floating WhatsApp Button --- */
+.whatsapp-float {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25d366; /* WhatsApp का असली हरा रंग */
+    color: #FFF;
+    border-radius: 50px;
+    box-shadow: 2px 2px 15px rgba(37, 211, 102, 0.4);
+    z-index: 1000; /* यह सुनिश्चित करेगा कि बटन हमेशा बाकी चीज़ों के ऊपर दिखे */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* जब माउस बटन के ऊपर जाएगा तो यह हल्का सा बड़ा होगा (Hover Effect) */
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    box-shadow: 2px 2px 20px rgba(37, 211, 102, 0.6);
+}
+
+.whatsapp-icon {
+    width: 35px;
+    height: 35px;
+}
+
+/* मोबाइल स्क्रीन के लिए बटन का साइज़ थोड़ा एडजस्ट करना */
+@media screen and (max-width: 768px) {
+    .whatsapp-float {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    .whatsapp-icon {
+        width: 30px;
+        height: 30px;
+    }
+}
