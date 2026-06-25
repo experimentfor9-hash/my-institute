@@ -3,20 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Classes - My Institute Website</title>        
+    <title>Online Classes - Indian Classes Sikar</title>        
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <!-- Header Section -->
     <header>
-    <!-- यह लिंक सीधे इंटरनेट से एक सुंदर सा लोगो बना कर दिखाएगा -->
-    <img src="https://ui-avatars.com/api/?name=Indian+Classes&background=1e3a8a&color=fff&rounded=true&size=200&bold=true" alt="Institute Logo" class="header-logo">
-    
-    <h1>Indian Classes Sikar</h1>
-    <p>Technical Education</p>
-</header>
-
+        <img src="https://ui-avatars.com/api/?name=Indian+Classes&background=1e3a8a&color=fff&rounded=true&size=200&bold=true" alt="Institute Logo" class="header-logo">
+        <h1>Indian Classes Sikar</h1>
+        <p>Technical Education</p>
+    </header>
 
    <!-- Navigation Menu -->
     <nav>
@@ -29,7 +26,6 @@
 
     <!-- Main Content -->
     <div class="container">
-            <div class="container">
         <h2>Online Learning Portal</h2>
         <p>Welcome to the E-Learning section. Here students can join live sessions or watch recorded lectures.</p>
         
@@ -45,35 +41,6 @@
         <div id="videoContainer" class="video-grid">
             <p>Loading Videos...</p>
         </div>
-            </div>
-
-            </div>
-            <!-- आप यहाँ Zoom या Google Meet का लिंक डाल सकते हैं -->
-            <a href="https://meet.google.com/kxb-nxyq-zps" target="_blank" class="join-btn">Join Live Class</a>
-        </div>
-
-        <hr>
-
-        <!-- Recorded Lectures Section -->
-        <h3>Recorded Video Lectures</h3>
-        <p>Missed a class? Watch previous lectures below:</p>
-
-        <div class="video-grid">
-            <!-- Video 1 (यहाँ YouTube वीडियो का Embed कोड डाला है) -->
-            <div class="video-card">
-                <iframe src="https://youtu.be/yg88oo5Wwo8?si=3yxlpcgz1CvZuw6U"></iframe>
-                <h4>Lecture 1: Introduction to ITI Safety Tools</h4>
-                <p>Basic workshop safety and tools introduction.</p>
-            </div>
-
-            <!-- Video 2 -->
-            <div class="video-card">
-                <iframe src="https://youtu.be/NeqaINq8744?si=ft9c0BP8w0LUSmI2"></iframe>
-                <h4>Lecture 2: Understanding Engineering Drawing</h4>
-                <p>Basics of scales, lines, and drafting.</p>
-            </div>
-        </div>
-
     </div>
 
     <div class="bottom-space"></div>
@@ -82,17 +49,17 @@
     <footer>
         <p>&copy; 2026 Indian Classes Sikar. All Rights Reserved.</p>
     </footer>
+
+    <!-- JavaScript -->
     <script>
-        // अपना नया Google Script Web App URL यहाँ डालें
         const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
-        // पेज लोड होते ही डेटा मंगाना
         window.onload = function() {
             fetch(API_URL)
             .then(response => response.json())
             .then(data => {
                 
-                // 1. Live Classes को पेज पर लगाना
+                // 1. Live Classes 
                 let liveHTML = "";
                 data.live.forEach(cls => {
                     liveHTML += `
@@ -104,12 +71,11 @@
                         <a href="${cls.link}" target="_blank" class="join-btn">Join Live Class</a>
                     </div>`;
                 });
-                // अगर शीट खाली है तो मैसेज दिखाना
                 if(data.live.length === 0) { liveHTML = "<p>No live classes scheduled currently.</p>"; }
                 document.getElementById("liveClassContainer").innerHTML = liveHTML;
 
 
-                // 2. Videos को पेज पर लगाना
+                // 2. Videos 
                 let videoHTML = "";
                 data.videos.forEach(vid => {
                     videoHTML += `
@@ -132,3 +98,4 @@
     
 </body>
 </html>
+
