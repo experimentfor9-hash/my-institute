@@ -419,3 +419,47 @@
         height: 30px;
     }
 }
+/* --- Dark Mode Button Design --- */
+.dark-btn {
+    background-color: #1e3a8a;
+    color: white;
+    border: 2px solid #fff;
+    padding: 6px 14px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-left: 15px;
+    transition: all 0.3s ease;
+}
+
+.dark-btn:hover {
+    background-color: #ec4899;
+    transform: scale(1.05);
+}
+
+/* --- Dark Mode Theme Colors --- */
+/* जब बॉडी में 'dark-mode' क्लास जुड़ेगी, तो ये डिज़ाइन लागू होंगे */
+body.dark-mode {
+    background-color: #0f172a; /* एकदम गहरा नीला/काला बैकग्राउंड */
+    color: #e2e8f0; /* हल्का ग्रे/सफ़ेद टेक्स्ट */
+}
+
+/* कंटेनर का रंग डार्क करना */
+body.dark-mode .container {
+    background-color: #1e293b;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* डार्क मोड में हेडिंग्स को चमकाना */
+body.dark-mode h1, 
+body.dark-mode h2, 
+body.dark-mode h3 {
+    color: #38bdf8; /* स्काई ब्लू रंग की हेडिंग्स */
+}
+
+/* डार्क मोड में वीडियो या क्लास के कार्ड का रंग */
+body.dark-mode .video-card,
+body.dark-mode .live-class-box {
+    background-color: #334155;
+    border: 1px solid #475569;
+}
