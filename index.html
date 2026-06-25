@@ -84,6 +84,28 @@
             document.getElementById("greeting").innerText = greetingMessage;
         };
     </script>
+    <script>
+        // आपका वही पुराना API URL
+        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
+        window.onload = function() {
+            fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                if(data.notices && data.notices.length > 0) {
+                    // सभी नोटिस को एक साथ जोड़कर दिखाना
+                    let allNotices = data.notices.join(" &nbsp; | &nbsp; 🚀 ");
+                    document.getElementById("dynamicNotice").innerHTML = allNotices;
+                } else {
+                    document.getElementById("dynamicNotice").innerHTML = "Welcome to Indian Classes Sikar! Admissions are open.";
+                }
+            })
+            .catch(error => {
+                console.error("Error loading notices:", error);
+                document.getElementById("dynamicNotice").innerHTML = "Welcome to Indian Classes Sikar!";
+            });
+        };
+    </script>
+    
 </body>
 </html>
