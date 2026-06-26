@@ -3,68 +3,181 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Courses - Indian Classes Sikar</title>
+    <title>Courses & Fee Calculator - Indian Classes Sikar</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Calculator Design */
+        .calculator-container { max-width: 600px; margin: 40px auto; background: #ffffff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border-top: 5px solid #2563eb; }
+        .calc-header { background: #1e3a8a; color: white; padding: 20px; text-align: center; }
+        .calc-header h3 { margin: 0; font-size: 1.5em; }
+        .calc-body { padding: 30px; }
+        .form-group-calc { margin-bottom: 20px; }
+        .form-group-calc label { display: block; font-weight: bold; margin-bottom: 8px; color: #334155; }
+        .form-group-calc select, .form-group-calc input { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; box-sizing: border-box; }
+        .btn-calc { padding: 15px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; width: 100%; transition: 0.3s; }
+        .btn-calc:hover { background: #1d4ed8; }
+        
+        #calcResult { margin-top: 25px; padding: 20px; background: #f8fafc; border: 2px dashed #10b981; border-radius: 8px; display: none; }
+        #calcResult p { font-size: 1.1em; margin: 5px 0; color: #334155;}
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        th, td { padding: 12px 15px; border: 1px solid #e2e8f0; text-align: left; }
+        th { background-color: #1e3a8a; color: white; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+    </style>
 </head>
 <body>
 
     <header></header>
     <nav></nav>
 
-    <!-- Main Content -->
     <div class="container">
-        <h2>Our Training Programs (Courses)</h2>
-        <p>We offer Below is the list of courses available at our institute along with their duration and eligibility criteria:</p>
-        <div style="text-align: center; margin: 40px 0;">
-        <h3 style="color: #1e3a8a; margin-bottom: 15px;">क्या आप अपनी फीस और स्कॉलरशिप जानना चाहते हैं?</h3>
-        <a href="scholarship-calc.html" class="glow-btn">🎓 Calculate Fee & Scholarship 🧮</a>
+        
+        <div class="calculator-container">
+            <div class="calc-header">
+                <h3>🎓 Dynamic Fee & Scholarship Calculator</h3>
+                <p style="margin-top: 5px; font-size: 0.9em; opacity: 0.9;">अपनी फीस और स्कॉलरशिप तुरंत चेक करें!</p>
+            </div>
+            
+            <div class="calc-body">
+                <div class="form-group-calc">
+                    <label>Select Course (कोर्स चुनें)</label>
+                    <select id="calcCourse">
+                        <option value="" disabled selected>-- Select Trade --</option>
+                        <option value="electrician">Electrician (2 Years)</option>
+                        <option value="fitter">Fitter (2 Years)</option>
+                        <option value="copa">COPA (1 Year)</option>
+                        <option value="welder">Welder (1 Year)</option>
+                        <option value="diesel">Mechanic Diesel (1 Year)</option>
+                    </select>
+                </div>
+
+                <div class="form-group-calc">
+                    <label>Category (अपनी श्रेणी चुनें)</label>
+                    <select id="calcCategory">
+                        <option value="" disabled selected>-- Select Category --</option>
+                        <option value="gen">General</option>
+                        <option value="obc">OBC</option>
+                        <option value="sc">SC</option>
+                        <option value="st">ST</option>
+                        <option value="ews">EWS (BPL)</option>
+                    </select>
+                </div>
+
+                <div class="form-group-calc">
+                    <label>10th Percentage (10वीं का प्रतिशत)</label>
+                    <input type="number" id="calcPercentage" placeholder="उदा. 75.5" min="33" max="100" step="0.1">
+                </div>
+
+                <button class="btn-calc" onclick="calculateFee()">Calculate Fee 🧮</button>
+
+                <div id="calcResult">
+                    </div>
+            </div>
         </div>
-        <!-- Courses Table -->
+
+        <h2>Our Training Programs (Courses)</h2>
+        <p>Below is the list of courses available at our institute along with their duration and eligibility criteria:</p>
+        
         <table>
             <thead>
                 <tr>
                     <th>S.No.</th>
-                    <th>course name</th>
+                    <th>Course Name</th>
                     <th>Duration</th>
                     <th>Eligibility</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>Electrician</td>
-                    <td>2 Years</td>
-                    <td>10th Pass (with Science & Math)</td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>Fitter</td>
-                    <td>2 Years</td>
-                    <td>10th Pass (with Science & Math)</td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>Computer Operator and Programming Assistant (COPA)</td>
-                    <td>1 Year</td>
-                    <td>10th Pass</td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>Welder</td>
-                    <td>1 Year</td>
-                    <td>8th / 10th Pass</td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>Mechanic Diesel</td>
-                    <td>1 Year</td>
-                    <td>10th Pass</td>
-                </tr>
+                <tr><td>1</td><td>Electrician</td><td>2 Years</td><td>10th Pass (with Science & Math)</td></tr>
+                <tr><td>2</td><td>Fitter</td><td>2 Years</td><td>10th Pass (with Science & Math)</td></tr>
+                <tr><td>3</td><td>Computer Operator and Programming Assistant (COPA)</td><td>1 Year</td><td>10th Pass</td></tr>
+                <tr><td>4</td><td>Welder</td><td>1 Year</td><td>8th / 10th Pass</td></tr>
+                <tr><td>5</td><td>Mechanic Diesel</td><td>1 Year</td><td>10th Pass</td></tr>
             </tbody>
         </table>
     </div>
 
+    <div style="height: 50px;"></div>
+    
     <footer></footer>
     <script src="components.js"></script>
+
+    <script>
+        function calculateFee() {
+            const course = document.getElementById("calcCourse").value;
+            const category = document.getElementById("calcCategory").value;
+            const percentage = parseFloat(document.getElementById("calcPercentage").value);
+
+            // वैलिडेशन: चेक करें कि सभी खाने भरे हैं या नहीं
+            if (!course || !category || isNaN(percentage)) {
+                alert("कृपया कोर्स, कैटेगरी और प्रतिशत सही-सही भरें!");
+                return;
+            }
+            if (percentage < 33 || percentage > 100) {
+                alert("कृपया सही प्रतिशत दर्ज करें (33 से 100 के बीच)!");
+                return;
+            }
+
+            // 1. बेस फीस तय करना (आप इसे बदल सकते हैं)
+            let baseFee = 0;
+            if (course === "electrician" || course === "fitter") {
+                baseFee = 20000; // 2 साल वाले कोर्स की फीस (प्रति वर्ष)
+            } else {
+                baseFee = 15000; // 1 साल वाले कोर्स की फीस
+            }
+
+            // 2. स्कॉलरशिप कैलकुलेट करना
+            let scholarship = 0;
+
+            // कैटेगरी आधारित सरकारी स्कॉलरशिप (काल्पनिक डेटा)
+            if (category === "sc" || category === "st") {
+                scholarship += 12000; // SC/ST को 12,000 की छूट/स्कॉलरशिप
+            } else if (category === "obc" || category === "ews") {
+                scholarship += 5000; // OBC/EWS को 5,000 की छूट
+            }
+
+            // मेरिट आधारित संस्था स्कॉलरशिप (प्रतिशत के आधार पर)
+            let meritScholarship = 0;
+            if (percentage >= 90) {
+                meritScholarship = 5000;
+            } else if (percentage >= 80) {
+                meritScholarship = 3000;
+            } else if (percentage >= 70) {
+                meritScholarship = 1500;
+            }
+
+            scholarship += meritScholarship;
+
+            // यह सुनिश्चित करना कि स्कॉलरशिप फीस से ज्यादा न हो
+            if (scholarship > baseFee) {
+                scholarship = baseFee; 
+            }
+
+            // 3. फाइनल फीस निकालना
+            let finalFee = baseFee - scholarship;
+
+            // 4. रिजल्ट को स्क्रीन पर दिखाना
+            const resultBox = document.getElementById("calcResult");
+            resultBox.innerHTML = `
+                <p><strong>Total Course Fee:</strong> ₹${baseFee} / Year</p>
+                <p style="color: #059669;"><strong>Govt/Category Scholarship:</strong> - ₹${scholarship - meritScholarship}</p>
+                <p style="color: #059669;"><strong>Merit Scholarship (${percentage}%):</strong> - ₹${meritScholarship}</p>
+                <hr style="border: 1px solid #cbd5e1; margin: 10px 0;">
+                <h3 style="color: #1e3a8a; margin: 5px 0;"><strong>Final Payable Fee:</strong> ₹${finalFee} / Year</h3>
+                <p style="font-size: 0.85em; color: #64748b; margin-top: 10px;">* Note: This is an estimated amount. Please verify at the institute counter.</p>
+            `;
+            
+            // रिजल्ट बॉक्स को विजिबल (दिखाना) करना
+            resultBox.style.display = "block";
+            
+            // रिजल्ट आने पर थोड़ा एनिमेशन देने के लिए
+            resultBox.animate([
+                { transform: 'scale(0.9)', opacity: 0 },
+                { transform: 'scale(1)', opacity: 1 }
+            ], { duration: 300, fill: 'forwards' });
+        }
+    </script>
 </body>
 </html>
+
