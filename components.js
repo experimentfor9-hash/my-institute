@@ -13,13 +13,12 @@ const navHTML = `
     <a href="about.html">About Us</a>
     <a href="courses.html">Courses</a>
     <a href="gallery.html">Gallery 📸</a>
-    <a href="cbt-test.html" style="color: #fde047; font-weight: 900; text-shadow: 1px 1px 2px black;">Online Test 💻</a>
-    <a href="online-classes.html">Online Classes</a>
-    <a href="resume-builder.html" style="color: #60a5fa; font-weight: bold;">Make Resume 📄</a>
-    <a href="auto-draft.html">📑 Auto-Draft</a>
+    <a href="cbt-test.html">Online Test 💻</a>
     <a href="contact.html">Contact</a>
-    <button id="darkModeToggle" class="dark-btn">🌙 Dark Mode</button>
+    <a href="contact.html" class="enquiry-btn">Enquiry Now</a>
+    <button id="darkModeToggle" class="dark-btn">🌙</button>
 `;
+
 
 
 // 3. Global Footer HTML Content
