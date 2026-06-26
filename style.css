@@ -1,663 +1,383 @@
-      @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Montserrat:wght@600;700;800&display=swap');
+/* =========================================
+   1. GOOGLE FONTS (Super Modern & Clean)
+========================================= */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;900&family=Poppins:wght@400;600;800&display=swap');
 
-        /* CSS Variables - कलर्स को आसानी से मैनेज करने के लिए */
-        :root {
-            --primary-bg: #f8fafc;
-            --text-main: #334155;
-            --heading-color: #0f172a;
-            --brand-gradient: linear-gradient(135deg, #1e3a8a 0%, #6d28d9 100%);
-            --btn-gradient: linear-gradient(to right, #ec4899, #8b5cf6);
-            --card-bg: #ffffff;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: var(--primary-bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-        }
-
-        /* हेडर - प्रीमियम लुक */
-        header {
-            background: var(--brand-gradient);
-            color: white;
-            padding: 70px 20px 90px; /* नीचे ज़्यादा जगह ताकि मेन्यू सेट हो सके */
-            text-align: center;
-        }
-
-        header h1 {
-            font-family: 'Montserrat', sans-serif;
-            margin: 0;
-            font-size: 3.2em;
-            letter-spacing: -1px;
-            font-weight: 800;
-            text-shadow: 0 4px 15px rgba(0,0,0,0.2);
-        }
-
-        header p {
-            margin: 15px 0 0;
-            font-size: 1.2em;
-            font-weight: 300;
-            opacity: 0.9;
-        }
-
-        /* फ्लोटिंग नेविगेशन बार (Floating Glass Menu) */
-        nav {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            max-width: 800px;
-            margin: -35px auto 30px auto; /* हेडर के ऊपर चढ़ाने के लिए नेगेटिव मार्जिन */
-            border-radius: 50px;
-            padding: 10px;
-            position: sticky;
-            top: 20px;
-            z-index: 1000;
-            border: 1px solid rgba(255,255,255,0.2);
-        }
-
-        nav a {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--text-main);
-            padding: 12px 25px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.9em;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border-radius: 30px;
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        nav a:hover {
-            background-color: #f1f5f9;
-            color: #6d28d9;
-            transform: translateY(-2px);
-        }
-
-        nav a.active {
-            background: var(--brand-gradient);
-            color: white;
-            box-shadow: 0 8px 20px rgba(109, 40, 217, 0.3);
-        }
-
-        /* मुख्य कंटेनर (Main Container) */
-        .container {
-            padding: 50px;
-            margin: 0 auto 50px auto;
-            max-width: 1000px;
-            background-color: var(--card-bg);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.04);
-            border-radius: 24px;
-            line-height: 1.8;
-            border: 1px solid #e2e8f0;
-        }
-
-        h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--heading-color);
-        }
-
-        h2 {
-            font-size: 2.2em;
-            margin-top: 0;
-            position: relative;
-            padding-bottom: 10px;
-        }
-
-        /* हेडिंग के नीचे एक स्टाइलिश लाइन */
-        h2::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 0;
-            width: 60px;
-            height: 4px;
-            background: var(--btn-gradient);
-            border-radius: 2px;
-        }
-
-        /* ग्रीटिंग टेक्स्ट */
-        #greeting {
-            color: #ec4899;
-            font-weight: 600;
-            font-size: 1.1em;
-            background: #fdf2f8;
-            padding: 8px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            border: 1px solid #fbcfe8;
-        }
-
-        /* बटन्स (Buttons - Gradient & Hover) */
-        .btn, input[type="submit"], .join-btn {
-            background: var(--btn-gradient);
-            color: white;
-            padding: 14px 32px;
-            border: none;
-            border-radius: 50px; /* पूरी तरह गोल बटन */
-            cursor: pointer;
-            font-size: 16px;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-            box-shadow: 0 10px 20px rgba(236, 72, 153, 0.25);
-        }
-
-        .btn:hover, input[type="submit"]:hover, .join-btn:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 15px 25px rgba(236, 72, 153, 0.4);
-        }
-
-        /* कोर्सेस टेबल (Tables) */
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin-top: 30px;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.03);
-            border: 1px solid #e2e8f0;
-        }
-
-        th, td {
-            padding: 20px;
-            text-align: left;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        th {
-            background-color: #f8fafc;
-            color: var(--heading-color);
-            font-family: 'Montserrat', sans-serif;
-            text-transform: uppercase;
-            font-size: 0.85em;
-            letter-spacing: 1px;
-        }
-
-        tr:last-child td { border-bottom: none; }
-        
-        tr:hover td {
-            background-color: #f1f5f9;
-        }
-
-        /* लाइव क्लास और कांटेक्ट इन्फो (Cards) */
-        .contact-info, .live-class-box {
-            background: #ffffff;
-            padding: 30px;
-            border-radius: 16px;
-            border-left: 6px solid #8b5cf6;
-            margin-bottom: 30px;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
-            border: 1px solid #e2e8f0;
-        }
-
-        .contact-info:hover, .live-class-box:hover {
-            transform: translateX(10px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-        }
-
-        /* वीडियो गैलरी (Video Grid) */
-        .video-grid {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-            margin-top: 30px;
-        }
-
-        .video-card {
-            flex: 1;
-            min-width: 300px;
-            background: var(--card-bg);
-            border-radius: 20px;
-            padding: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.06);
-            transition: all 0.4s ease;
-            border: 1px solid #e2e8f0;
-        }
-
-        .video-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.12);
-        }
-
-        .video-card iframe {
-            width: 100%;
-            height: 220px;
-            border-radius: 12px;
-            border: none;
-        }
-
-        /* फॉर्म (Contact Form) */
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            padding: 16px;
-            margin: 10px 0 25px 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 12px;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            font-size: 16px;
-            transition: all 0.3s;
-            background-color: #f8fafc;
-        }
-
-        input:focus, textarea:focus {
-            border-color: #8b5cf6;
-            background-color: #ffffff;
-            outline: none;
-            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.15);
-        }
-
-        label {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 600;
-            font-size: 0.9em;
-            color: var(--heading-color);
-        }
-
-        /* About Us लिस्ट */
-        .trade-list { list-style: none; padding: 0; }
-        .trade-list li {
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 15px;
-            background: #f8fafc;
-            padding: 15px 15px 15px 45px;
-            border-radius: 12px;
-        }
-        .trade-list li::before {
-            content: "🚀";
-            position: absolute;
-            left: 15px;
-            top: 15px;
-        }
-
-        .bottom-space { height: 30px; }
-
-        /* मॉडर्न फ़ुटर */
-        footer {
-            background: #0f172a; /* एकदम डार्क ब्लू-ब्लैक */
-            color: #94a3b8;
-            text-align: center;
-            padding: 30px 20px;
-            font-size: 0.9em;
-            border-top: 1px solid #1e293b;
-        }
-/* --- Images Styling --- */
-
-/* हेडर के लोगो की डिज़ाइन */
-.header-logo {
-    width: 100px; /* लोगो की चौड़ाई, इसे आप अपने हिसाब से कम-ज़्यादा कर सकते हैं */
-    height: auto;
-    margin-bottom: 15px; /* लोगो और नाम के बीच की जगह */
-    border-radius: 50%; /* अगर आप लोगो को गोल दिखाना चाहते हैं */
-    box-shadow: 0 4px 15px rgba(0,0,0,0.2); /* लोगो के पीछे हल्की परछाई */
-    border: 3px solid rgba(255, 255, 255, 0.5); /* लोगो के चारों तरफ हल्का सफेद बॉर्डर */
+/* =========================================
+   2. CSS VARIABLES (Fresh Color Palette)
+========================================= */
+:root {
+    --bg-animated: linear-gradient(-45deg, #f3e8ff, #e0e7ff, #dcfce7, #ffe4e6);
+    --text-primary: #1e293b;
+    --text-secondary: #64748b;
+    --accent-color: #6366f1; /* Indigo */
+    --accent-glow: rgba(99, 102, 241, 0.4);
+    --btn-gradient: linear-gradient(135deg, #4f46e5 0%, #ec4899 100%);
+    --card-glass: rgba(255, 255, 255, 0.85);
+    --border-glass: rgba(255, 255, 255, 0.6);
 }
 
-/* पेजों के अंदर की तस्वीरों की डिज़ाइन */
-.page-image {
-    width: 100%; /* तस्वीर पूरे बॉक्स में फिट हो जाएगी */
-    max-height: 400px; /* तस्वीर की अधिकतम लम्बाई */
-    object-fit: cover; /* तस्वीर बिना स्ट्रेच हुए अच्छे से कटेगी */
-    border-radius: 16px; /* कोनों को गोल करने के लिए */
-    margin-bottom: 25px; /* तस्वीर के नीचे जगह छोड़ने के लिए */
-    box-shadow: 0 10px 30px rgba(0,0,0,0.1); /* तस्वीर की 3D परछाई */
-}
-/* --- Notice Board (Moving Text) --- */
-.notice-board {
-    background: #0f172a; /* डार्क ब्लू बैकग्राउंड */
-    color: white;
-    display: flex;
-    align-items: center;
-    padding: 10px 20px;
-    font-family: 'Inter', sans-serif;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    overflow: hidden; /* बाहर का टेक्स्ट छुपाने के लिए */
-    position: relative;
-    z-index: 999;
-}
-
-/* 📢 Latest Update वाला बैज */
-.notice-title {
-    background: #ec4899; /* पिंक कलर */
-    color: white;
-    padding: 6px 16px;
-    border-radius: 20px;
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    font-size: 0.85em;
-    text-transform: uppercase;
-    white-space: nowrap;
-    margin-right: 15px;
-    z-index: 2; /* टेक्स्ट इसके पीछे से होकर जाएगा */
-    box-shadow: 0 0 15px rgba(236, 72, 153, 0.4);
-}
-
-/* चलने वाले टेक्स्ट का एरिया */
-.notice-content {
-    flex: 1;
-    overflow: hidden;
-    white-space: nowrap;
-    position: relative;
-}
-
-/* एनीमेशन और टेक्स्ट की सेटिंग */
-.notice-content p {
-    display: inline-block;
+/* =========================================
+   3. GLOBAL BODY & ANIMATED BACKGROUND
+========================================= */
+body {
+    font-family: 'Outfit', sans-serif;
     margin: 0;
-    padding-left: 100%; /* टेक्स्ट स्क्रीन के एकदम बाहर से शुरू होगा */
-    animation: scrollText 20s linear infinite; /* 20 सेकंड में एक चक्कर (स्पीड कम-ज़्यादा कर सकते हैं) */
-    font-weight: 500;
-    color: #e2e8f0;
+    padding: 0;
+    color: var(--text-primary);
+    background: var(--bg-animated);
+    background-size: 400% 400%;
+    animation: gradientMove 15s ease infinite; /* बैकग्राउंड का रंग धीरे-धीरे बदलेगा */
+    line-height: 1.8;
+    overflow-x: hidden;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* पेज लोड होने का नया इफेक्ट */
+body > * {
+    animation: slideUpFade 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes slideUpFade {
+    from { opacity: 0; transform: translateY(40px) scale(0.98); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* =========================================
+   4. PREMIUM HEADER (3D Feel)
+========================================= */
+header {
+    background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+    color: white;
+    padding: 100px 20px 120px;
+    text-align: center;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); /* नीचे से तिरछा कट (Stylish Cut) */
+}
+
+header h1 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 4em;
+    font-weight: 900;
+    margin: 0;
+    background: linear-gradient(to right, #38bdf8, #a78bfa, #f472b6);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0px 10px 30px rgba(167, 139, 250, 0.3);
+    letter-spacing: -1.5px;
+}
+
+header p {
+    font-size: 1.3em;
+    font-weight: 300;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: #cbd5e1;
+    margin-top: 10px;
+}
+
+/* =========================================
+   5. FLOATING GLASS NAVIGATION
+========================================= */
+nav {
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+    border: 1px solid var(--border-glass);
+    max-width: 950px;
+    margin: -60px auto 40px auto;
+    border-radius: 50px;
+    padding: 15px 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    position: relative;
+    z-index: 100;
+}
+
+nav a {
+    color: var(--text-primary);
+    padding: 12px 24px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95em;
+    border-radius: 30px;
+    transition: all 0.4s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+nav a:hover {
+    background: var(--text-primary);
+    color: white !important;
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.15);
+}
+
+/* =========================================
+   6. MAIN CONTAINERS (Extra Margins & Floating)
+========================================= */
+.container, .draft-container, .calculator-container, .cbt-container {
+    background: var(--card-glass);
+    backdrop-filter: blur(12px);
+    border: 1px solid var(--border-glass);
+    padding: 60px;
+    max-width: 1050px;
+    margin: 0 auto 60px auto;
+    border-radius: 30px;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.05), 0 0 0 4px rgba(255,255,255,0.4) inset;
+    transition: transform 0.4s ease;
+}
+
+.container:hover {
+    transform: translateY(-5px); /* होवर करने पर पूरा बॉक्स हवा में उठेगा */
+}
+
+h2 {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5em;
+    color: var(--text-primary);
+    margin-bottom: 30px;
+    display: inline-block;
+    position: relative;
+}
+
+/* हेडिंग के नीचे 3D अंडरलाइन */
+h2::after {
+    content: '';
+    position: absolute;
+    width: 50%;
+    height: 6px;
+    background: var(--btn-gradient);
+    bottom: -10px;
+    left: 0;
+    border-radius: 10px;
+}
+
+/* =========================================
+   7. SUPER DYNAMIC BUTTONS
+========================================= */
+.btn, .btn-gen, .btn-calc, .btn-cbt, input[type="submit"] {
+    background: var(--btn-gradient);
+    color: white;
+    padding: 16px 40px;
+    border-radius: 50px;
+    border: none;
+    font-size: 1.1em;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 10px 25px var(--accent-glow);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); /* Bouncy Effect */
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn:hover, .btn-gen:hover, .btn-calc:hover, .btn-cbt:hover, input[type="submit"]:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 20px 35px rgba(236, 72, 153, 0.4);
+}
+
+/* =========================================
+   8. FORMS & INPUTS (Soft UI)
+========================================= */
+input[type="text"], input[type="email"], input[type="number"], input[type="password"], select, textarea {
+    width: 100%;
+    padding: 18px 20px;
+    margin-top: 8px;
+    margin-bottom: 25px;
+    background: rgba(255, 255, 255, 0.9);
+    border: 2px solid #e2e8f0;
+    border-radius: 16px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 16px;
+    color: var(--text-primary);
+    transition: all 0.3s ease;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: #6366f1;
+    background: #fff;
+    outline: none;
+    box-shadow: 0 0 0 5px rgba(99, 102, 241, 0.15), inset 0 2px 4px rgba(0,0,0,0.02);
+    transform: translateY(-2px);
+}
+
+label {
+    font-weight: 700;
+    color: #475569;
+    font-size: 0.95em;
+    text-transform: uppercase;
     letter-spacing: 0.5px;
 }
 
-/* जब माउस ऊपर जाए तो टेक्स्ट रुक जाए */
-.notice-content p:hover {
-    animation-play-state: paused;
-    color: #ec4899;
-    cursor: pointer;
-}
-
-/* राइट से लेफ्ट चलने का एनीमेशन (Keyframes) */
-@keyframes scrollText {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-100%); }
-}
-/* --- Floating WhatsApp Button --- */
-.whatsapp-float {
-    position: fixed;
-    width: 60px;
-    height: 60px;
-    bottom: 30px;
-    right: 30px;
-    background-color: #25d366; /* WhatsApp का असली हरा रंग */
-    color: #FFF;
-    border-radius: 50px;
-    box-shadow: 2px 2px 15px rgba(37, 211, 102, 0.4);
-    z-index: 1000; /* यह सुनिश्चित करेगा कि बटन हमेशा बाकी चीज़ों के ऊपर दिखे */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* जब माउस बटन के ऊपर जाएगा तो यह हल्का सा बड़ा होगा (Hover Effect) */
-.whatsapp-float:hover {
-    transform: scale(1.1);
-    box-shadow: 2px 2px 20px rgba(37, 211, 102, 0.6);
-}
-
-.whatsapp-icon {
-    width: 35px;
-    height: 35px;
-}
-
-/* मोबाइल स्क्रीन के लिए बटन का साइज़ थोड़ा एडजस्ट करना */
-@media screen and (max-width: 768px) {
-    .whatsapp-float {
-        width: 50px;
-        height: 50px;
-        bottom: 20px;
-        right: 20px;
-    }
-    .whatsapp-icon {
-        width: 30px;
-        height: 30px;
-    }
-}
-/* --- Dark Mode Button Design --- */
-.dark-btn {
-    background-color: #1e3a8a;
-    color: white;
-    border: 2px solid #fff;
-    padding: 6px 14px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    margin-left: 15px;
-    transition: all 0.3s ease;
-}
-
-.dark-btn:hover {
-    background-color: #ec4899;
-    transform: scale(1.05);
-}
-
-/* --- Dark Mode Theme Colors --- */
-/* जब बॉडी में 'dark-mode' क्लास जुड़ेगी, तो ये डिज़ाइन लागू होंगे */
-body.dark-mode {
-    background-color: #0f172a; /* एकदम गहरा नीला/काला बैकग्राउंड */
-    color: #e2e8f0; /* हल्का ग्रे/सफ़ेद टेक्स्ट */
-}
-
-/* कंटेनर का रंग डार्क करना */
-body.dark-mode .container {
-    background-color: #1e293b;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-/* डार्क मोड में हेडिंग्स को चमकाना */
-body.dark-mode h1, 
-body.dark-mode h2, 
-body.dark-mode h3 {
-    color: #38bdf8; /* स्काई ब्लू रंग की हेडिंग्स */
-}
-
-/* डार्क मोड में वीडियो या क्लास के कार्ड का रंग */
-body.dark-mode .video-card,
-body.dark-mode .live-class-box {
-    background-color: #334155;
-    border: 1px solid #475569;
-}
-/* --- 360 Virtual Tour Section --- */
-.virtual-tour-section {
-    text-align: center;
-    padding: 60px 20px;
-    background-color: #e0f2fe; /* बहुत हल्का स्काई ब्लू बैकग्राउंड */
-    margin: 40px 0;
-}
-
-.virtual-tour-section h2 {
-    color: #1e3a8a;
-    font-size: 2.2em;
-    margin-bottom: 10px;
-}
-
-.virtual-tour-section p {
-    color: #475569;
-    font-size: 1.1em;
-    margin-bottom: 30px;
-    max-width: 600px;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* टूर के वीडियो का फ्रेम */
-.tour-container {
-    max-width: 900px;
-    margin: 0 auto;
-    border: 6px solid #1e3a8a;
-    border-radius: 15px;
-    overflow: hidden;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
-    height: 0;
-}
-
-.tour-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
+/* =========================================
+   9. TABLES (Clean & Round)
+========================================= */
+table {
     width: 100%;
-    height: 100%;
-    border: none;
+    border-collapse: separate;
+    border-spacing: 0 10px; /* पंक्तियों के बीच गैप */
+    margin-top: 30px;
 }
 
-/* डार्क मोड सपोर्ट के लिए */
-body.dark-mode .virtual-tour-section {
-    background-color: #1e293b;
-}
-body.dark-mode .tour-container {
-    border-color: #38bdf8;
-}
-/* --- 📚 E-Library Bookshelf Design --- */
-.e-library-section {
-    padding: 60px 20px;
-    background-color: #f8fafc;
-    margin: 40px 0;
+th, td {
+    padding: 20px;
+    text-align: left;
+    background: #ffffff;
 }
 
-.e-library-section .header {
-    text-align: center;
-    margin-bottom: 40px;
+th {
+    background: #f1f5f9;
+    color: #334155;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
-.e-library-section .header h2 {
-    color: #1e3a8a;
-    font-size: 2.2em;
-    margin-bottom: 10px;
+/* टेबल के किनारों को गोल करना */
+tr td:first-child, tr th:first-child { border-top-left-radius: 15px; border-bottom-left-radius: 15px; }
+tr td:last-child, tr th:last-child { border-top-right-radius: 15px; border-bottom-right-radius: 15px; }
+
+tr {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.03);
+    transition: transform 0.3s ease;
 }
 
-.e-library-section .header p {
-    color: #64748b;
-    font-size: 1.1em;
+tr:hover td {
+    background: #f8fafc;
+    color: #4f46e5;
+    transform: scale(1.01);
 }
 
+/* =========================================
+   10. E-LIBRARY & VIRTUAL TOUR
+========================================= */
 .bookshelf {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-    max-width: 1100px;
-    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
 }
 
 .book-card {
-    background: #ffffff;
-    border-radius: 12px;
+    background: #fff;
+    border-radius: 25px;
     overflow: hidden;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #e2e8f0;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+    transition: all 0.4s ease;
+    border: 1px solid #f1f5f9;
 }
 
 .book-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+    transform: translateY(-15px) rotateZ(1deg); /* होवर पर हल्का सा घूमेगा */
+    box-shadow: 0 25px 50px rgba(0,0,0,0.1);
 }
 
-/* 4 अलग-अलग किताबों के रंग */
-.book-cover {
-    height: 160px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    color: white;
-    text-align: center;
-    padding: 20px;
-    position: relative;
-}
-
-/* किताबों के कवर्स को एक टेक्सचर लुक देने के लिए */
-.book-cover::after {
-    content: '';
-    position: absolute;
-    left: 15px;
-    top: 0;
-    bottom: 0;
-    width: 2px;
-    background: rgba(255,255,255,0.3);
-    box-shadow: 4px 0 0 rgba(255,255,255,0.1);
-}
-
-.book-cover.theory { background: linear-gradient(135deg, #1e40af, #3b82f6); }
-.book-cover.wcs { background: linear-gradient(135deg, #047857, #10b981); }
-.book-cover.es { background: linear-gradient(135deg, #b91c1c, #ef4444); }
-.book-cover.papers { background: linear-gradient(135deg, #7e22ce, #a855f7); }
-
-.book-cover h3 { margin: 0; font-size: 1.5em; letter-spacing: 1px; }
-.book-cover p { margin: 5px 0 0 0; font-size: 0.95em; opacity: 0.9; }
-
-.book-details {
-    padding: 20px;
-    text-align: center;
-}
-
-.book-details p {
-    color: #475569;
-    margin-bottom: 20px;
-    font-size: 0.95em;
-    font-weight: 500;
-}
-
-.download-btn {
-    display: inline-block;
-    width: 80%;
+.tour-container {
+    border-radius: 25px;
     padding: 10px;
-    background: #f1f5f9;
-    color: #1e3a8a;
-    text-decoration: none;
-    font-weight: bold;
-    border-radius: 8px;
-    transition: 0.2s;
-    border: 1px solid #cbd5e1;
+    background: white;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.1);
 }
 
-.download-btn:hover {
-    background: #1e3a8a;
+.tour-container iframe {
+    border-radius: 15px;
+}
+
+/* =========================================
+   11. NOTICE BOARD (Marquee with Glow)
+========================================= */
+.notice-board {
+    background: linear-gradient(90deg, #0f172a, #1e293b);
+    color: #fff;
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    border-radius: 20px;
+    max-width: 1100px;
+    margin: 0 auto 40px auto;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    border: 1px solid #334155;
+}
+
+.notice-title {
+    background: #10b981;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-weight: 800;
+    box-shadow: 0 0 20px rgba(16, 185, 129, 0.5);
+    z-index: 2;
+}
+
+/* =========================================
+   12. DARK MODE (Neon Cyberpunk Vibe)
+========================================= */
+body.dark-mode {
+    background: #020617; /* Pitch Black-Blue */
+    color: #e2e8f0;
+}
+
+body.dark-mode .container, 
+body.dark-mode .draft-container,
+body.dark-mode .calculator-container,
+body.dark-mode nav,
+body.dark-mode .book-card,
+body.dark-mode th, body.dark-mode td {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: #334155;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+body.dark-mode nav a { color: #cbd5e1; }
+body.dark-mode nav a:hover { background: #38bdf8; color: #0f172a !important; }
+
+body.dark-mode h1, body.dark-mode h2, body.dark-mode h3 {
+    color: #f8fafc;
+}
+
+body.dark-mode input, body.dark-mode select, body.dark-mode textarea {
+    background: #0f172a;
+    border-color: #475569;
     color: white;
 }
 
-/* डार्क मोड सपोर्ट */
-body.dark-mode .e-library-section { background-color: #0f172a; }
-body.dark-mode .book-card { background: #1e293b; border-color: #334155; }
-body.dark-mode .book-details p { color: #94a3b8; }
-body.dark-mode .download-btn { background: #334155; color: #f8fafc; border-color: #475569; }
-body.dark-mode .download-btn:hover { background: #38bdf8; color: #0f172a; }
-/* --- 🎓 Glowing Scholarship Button --- */
-.glow-btn {
-    display: inline-block;
-    padding: 15px 35px;
-    background: linear-gradient(45deg, #10b981, #059669); /* हरा रंग जो स्कॉलरशिप/पैसे को दर्शाता है */
-    color: white !important;
-    font-size: 1.2em;
-    font-weight: bold;
-    text-decoration: none;
-    border-radius: 50px;
-    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
-    animation: glowingEffect 1.5s infinite; /* यह एनीमेशन इसे चमकाएगा */
-    transition: transform 0.2s;
-    border: 2px solid #ffffff;
+/* Dark Mode Glowing Button */
+.dark-btn {
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 10px 20px;
+    border-radius: 30px;
+    color: var(--text-primary);
+}
+body.dark-mode .dark-btn { color: white; border-color: #38bdf8; }
+
+/* =========================================
+   13. FOOTER
+========================================= */
+footer {
+    background: #020617;
+    color: #64748b;
+    text-align: center;
+    padding: 40px 20px;
+    font-size: 1em;
+    margin-top: 60px;
+    border-top: 1px solid #1e293b;
 }
 
-.glow-btn:hover {
-    transform: scale(1.08); /* माउस ले जाने पर बटन थोड़ा बड़ा होगा */
-    color: white;
-}
-
-/* बटन के चमकने का एनीमेशन (Keyframes) */
-@keyframes glowingEffect {
-    0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.4); }
-    50% { box-shadow: 0 0 25px rgba(16, 185, 129, 1); }
-    100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.4); }
-}
-
-/* डार्क मोड सपोर्ट */
-body.dark-mode .glow-btn {
-    box-shadow: 0 0 15px rgba(52, 211, 153, 0.6);
+/* --- WhatsApp Icon Adjustments --- */
+.whatsapp-float {
+    bottom: 40px; right: 40px;
+    width: 65px; height: 65px;
+    background: linear-gradient(135deg, #25D366, #128C7E);
 }
