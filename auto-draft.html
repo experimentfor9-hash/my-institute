@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="hi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced Auto-Draft & Forms Generator</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Advanced Editable Auto-Draft & Forms Generator</title>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
     <style>
         body { font-family: 'Georgia', serif; background-color: #f8fafc; padding: 20px; color: #1e293b; }
         .draft-container { max-width: 900px; margin: 30px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
@@ -17,25 +19,33 @@
         .btn-gen:hover { background: #1d4ed8; }
         
         #draftBox { margin-top: 30px; display: none; }
-        #letterContent { padding: 40px; border: 1px solid #cbd5e1; background: #fff; line-height: 1.6; font-size: 14px; color: black; min-height: 500px; overflow-x: auto;}
+        
+        /* Editable Content Styling */
+        #letterContent { padding: 40px; border: 1px solid #cbd5e1; background: #fff; line-height: 1.6; font-size: 14px; color: black; min-height: 500px; overflow-x: auto; outline: none; transition: 0.3s;}
+        #letterContent:focus-within { border-color: #3b82f6; box-shadow: 0 0 10px rgba(59, 130, 246, 0.2); }
         
         table.annex-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
         table.annex-table th, table.annex-table td { border: 1px solid #000; padding: 8px; text-align: left; }
         table.annex-table th { background-color: #f1f5f9; text-align: center;}
-        .text-center { text-align: center; }
+        table.annex-table td:focus { background-color: #e0f2fe; outline: none; } /* Highlight row when typing */
         
-        .action-buttons { display: flex; gap: 15px; margin-top: 20px; }
-        .print-btn { flex: 1; background: #64748b; padding: 12px; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;}
-        .pdf-btn { flex: 1; background: #ef4444; padding: 12px; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold;}
+        .text-center { text-align: center; }
+        .edit-hint { text-align: center; color: #16a34a; font-weight: bold; margin-bottom: 10px; font-size: 14px; }
+        
+        /* Action Buttons Grid */
+        .action-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; }
+        .btn { padding: 12px; color: white; border: none; cursor: pointer; border-radius: 5px; font-weight: bold; display: flex; justify-content: center; align-items: center; gap: 5px; }
+        .print-btn { background: #64748b; }
+        .pdf-btn { background: #ef4444; }
+        .word-btn { background: #2563eb; }
+        .excel-btn { background: #16a34a; }
+        .btn:hover { opacity: 0.9; }
     </style>
 </head>
 <body>
 
-    <header></header>
-    <nav></nav>
-
 <div class="draft-container">
-    <h2>📝 All Annexures & Auto-Draft Generator</h2>
+    <h2>📝 Editable Annexures & Auto-Draft Generator</h2>
     <div class="form-section">
         <div>
             <label>Name (छात्र/स्टाफ का नाम) / Trade (व्यवसाय)</label>
@@ -93,20 +103,23 @@
     <button class="btn-gen" onclick="generateDraft()">Generate Document 🚀</button>
 
     <div id="draftBox">
-        <div id="letterContent"></div>
+        <p class="edit-hint">✏️ दस्तावेज़ जेनरेट हो गया है। आप किसी भी टेक्स्ट या खाली बॉक्स पर क्लिक करके सीधे डाटा भर सकते हैं।</p>
+        
+        <div id="letterContent" contenteditable="true"></div>
+        
         <div class="action-buttons">
-            <button class="print-btn" onclick="window.print()">🖨️ Print Document</button>
-            <button class="pdf-btn" onclick="downloadPDF()">📥 Download as PDF</button>
+            <button class="btn print-btn" onclick="window.print()">🖨️ Print</button>
+            <button class="btn pdf-btn" onclick="downloadPDF()">📥 Download PDF</button>
+            <button class="btn word-btn" onclick="downloadWord()">📄 Download Word</button>
+            <button class="btn excel-btn" onclick="downloadExcel()">📊 Download Excel</button>
         </div>
     </div>
 </div>
 
-<footer></footer>
-<script src="components.js"></script>
-
 <script>
+// Makes individual table cells explicitly editable to guide the user visually
 function generateRows(cols, count) {
-    return ('<tr>' + '<td></td>'.repeat(cols) + '</tr>').repeat(count);
+    return ('<tr>' + '<td contenteditable="true"></td>'.repeat(cols) + '</tr>').repeat(count);
 }
 
 function generateDraft() {
@@ -114,14 +127,14 @@ function generateDraft() {
     let type = document.getElementById("templateType").value;
     let content = "";
     let date = new Date().toLocaleDateString('en-IN');
-    let hdr = `<h3 class="text-center" style="margin-bottom:5px;">DIRECTORATE OF SKILL DEVELOPMENT, MADHYA PRADESH<br>GOVT/PVT. INDUSTRIAL TRAINING INSTITUTE</h3>`;
+    let hdr = `<h3 class="text-center" style="margin-bottom:5px;">DIRECTORATE OF SKILL DEVELOPMENT, RAJASTHAN<br>GOVT. INDUSTRIAL TRAINING INSTITUTE, CHURU</h3>`;
 
     const templates = {
-        "probation": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: प्रोबेशन अवधि संतोषजनक पूर्ण करने एवं नियमित पे-स्केल निर्धारण बाबत।</strong><br><br>महोदय,<br>उपरोक्त विषयान्तर्गत निवेदन है कि मैं, <strong>${name}</strong>, इस संस्थान में पदस्थापित हूँ। मेरी दो वर्षीय प्रोबेशन अवधि सफलतापूर्वक पूर्ण हो गई है। अतः सेवाएँ नियमित करते हुए पे-फिक्सेशन करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}`,
-        "cl": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: आकस्मिक अवकाश (Casual Leave) हेतु प्रार्थना पत्र।</strong><br><br>महोदय,<br>सविनय निवेदन है कि मुझे व्यक्तिगत कारणों से दिनांक ____________ को एक दिन का आकस्मिक अवकाश चाहिए। अतः मेरा अवकाश स्वीकृत करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}<br>दिनांक: ${date}`,
-        "rti": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br>क्रमांक: RTI/2026/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name}<br><br><strong>विषय: सूचना का अधिकार अधिनियम (RTI Act) 2005 के अंतर्गत चाही गई सूचना बाबत।</strong><br><strong>संदर्भ:</strong> आपका प्रार्थना पत्र दिनांक ____________<br><br>महोदय,<br>उपरोक्त विषयान्तर्गत लेख है कि माँगी गई जानकारी बिन्दुवार संलग्न है। यदि आप संतुष्ट नहीं हैं, तो 30 दिवस के भीतर प्रथम अपीलीय अधिकारी के समक्ष अपील प्रस्तुत कर सकते हैं।<br><br><strong>लोक सूचना अधिकारी / प्रधानाचार्य</strong>`,
-        "recovery": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br>क्रमांक: GF/Rec/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name} (गेस्ट फैकल्टी)<br><br><strong>विषय: कार्य में लापरवाही एवं मानदेय/रिकवरी जमा कराने बाबत।</strong><br><br>उपरोक्त विषयान्तर्गत लेख है कि आपके द्वारा कार्य करते समय नियमों का उल्लंघन/रिकॉर्ड में अनियमितता पाई गई है। अतः 07 दिवस के भीतर स्पष्टीकरण दें अथवा नियमानुसार रिकवरी राशि जमा कराएं।<br><br><strong>प्रधानाचार्य</strong>`,
-        "missing_stock": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: स्टॉक/स्टोर रजिस्टर में मिसिंग रिकॉर्ड की रिपोर्टिंग बाबत।</strong><br><br>महोदय,<br>निवेदन है कि मैं <strong>${name}</strong> अनुभाग के स्टॉक रजिस्टर का मिलान कर रहा था, जिसमें कुछ सामग्री मिसिंग पाई गई है। यह पूर्व प्रभारी के कार्यकाल की प्रतीत होती है। अतः वस्तुस्थिति आवश्यक कार्यवाही हेतु प्रेषित है।<br><br><strong>हस्ताक्षर:</strong><br>${name}<br>दिनांक: ${date}`,
+        "probation": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI, Churu<br><br><strong>विषय: प्रोबेशन अवधि संतोषजनक पूर्ण करने एवं नियमित पे-स्केल निर्धारण बाबत।</strong><br><br>महोदय,<br>उपरोक्त विषयान्तर्गत निवेदन है कि मैं, <strong>${name}</strong>, इस संस्थान में पदस्थापित हूँ। मेरी दो वर्षीय प्रोबेशन अवधि सफलतापूर्वक पूर्ण हो गई है। अतः सेवाएँ नियमित करते हुए पे-फिक्सेशन करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}`,
+        "cl": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI, Churu<br><br><strong>विषय: आकस्मिक अवकाश (Casual Leave) हेतु प्रार्थना पत्र।</strong><br><br>महोदय,<br>सविनय निवेदन है कि मुझे व्यक्तिगत कारणों से दिनांक ____________ को एक दिन का आकस्मिक अवकाश चाहिए। अतः मेरा अवकाश स्वीकृत करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}<br>दिनांक: ${date}`,
+        "rti": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br>क्रमांक: RTI/2026/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name}<br><br><strong>विषय: सूचना का अधिकार अधिनियम (RTI Act) 2005 के अंतर्गत चाही गई सूचना बाबत।</strong><br><strong>संदर्भ:</strong> आपका प्रार्थना पत्र दिनांक ____________<br><br>महोदय,<br>उपरोक्त विषयान्तर्गत लेख है कि माँगी गई जानकारी बिन्दुवार संलग्न है। यदि आप संतुष्ट नहीं हैं, तो 30 दिवस के भीतर प्रथम अपीलीय अधिकारी के समक्ष अपील प्रस्तुत कर सकते हैं।<br><br><strong>लोक सूचना अधिकारी / प्रधानाचार्य</strong>`,
+        "recovery": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br>क्रमांक: GF/Rec/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name} (गेस्ट फैकल्टी)<br><br><strong>विषय: कार्य में लापरवाही एवं मानदेय/रिकवरी जमा कराने बाबत।</strong><br><br>उपरोक्त विषयान्तर्गत लेख है कि आपके द्वारा कार्य करते समय नियमों का उल्लंघन/रिकॉर्ड में अनियमितता पाई गई है। अतः 07 दिवस के भीतर स्पष्टीकरण दें अथवा नियमानुसार रिकवरी राशि जमा कराएं।<br><br><strong>प्रधानाचार्य</strong>`,
+        "missing_stock": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI, Churu<br><br><strong>विषय: स्टॉक/स्टोर रजिस्टर में मिसिंग रिकॉर्ड की रिपोर्टिंग बाबत।</strong><br><br>महोदय,<br>निवेदन है कि मैं <strong>${name}</strong> अनुभाग के स्टॉक रजिस्टर का मिलान कर रहा था, जिसमें कुछ सामग्री मिसिंग पाई गई है। यह पूर्व प्रभारी के कार्यकाल की प्रतीत होती है। अतः वस्तुस्थिति आवश्यक कार्यवाही हेतु प्रेषित है।<br><br><strong>हस्ताक्षर:</strong><br>${name}<br>दिनांक: ${date}`,
         
         "anx1": hdr + `<h4 class="text-center">DIVIDED - SYLLABUS (Annexure-1)</h4><p><strong>Trade:</strong> ${name}</p><table class="annex-table"><tr><th>Week No</th><th>Date</th><th>L.P.No.</th><th>Theory</th><th>Aids</th><th>D.P.No</th><th>Practical</th><th>Shop Talk</th></tr>${generateRows(8, 10)}</table>`,
         "anx2": hdr + `<h4 class="text-center">WEEKLY - PROGRAMME (Annexure-2)</h4><p><strong>Name of T.O.:</strong> ${name}</p><table class="annex-table"><tr><th>Day</th><th>Date</th><th>Practical Work</th><th>Theory Portion</th><th>Remarks</th></tr>${generateRows(5, 6)}</table>`,
@@ -147,10 +160,10 @@ function generateDraft() {
         "anx22": hdr + `<h4 class="text-center">WORKSHOP LAYOUT (Annexure-22)</h4><div style="border: 2px dashed #333; padding: 100px 20px; text-align: center; margin-top: 20px;"><h3>[ Map Placeholder ]</h3><p>Draw machine arrangement here.</p></div>`,
         "anx23": hdr + `<h4 class="text-center">PASSOUT STUDENT DATABASE (Annexure-23)</h4><table class="annex-table"><tr><th>Name</th><th>DOB</th><th>Category</th><th>Contact No.</th><th>Job/Education</th><th>Salary</th></tr>${generateRows(6, 8)}</table>`,
         "anx24": hdr + `<h4 class="text-center">सफलता की कहानी (Annexure-24)</h4><table class="annex-table"><tr><td><strong>नाम:</strong> ${name}</td><td rowspan="4" class="text-center" style="width:150px;">[Photo]</td></tr><tr><td><strong>मोबाईल:</strong></td></tr><tr><td><strong>नियोजक:</strong></td></tr><tr><td><strong>विवरण:</strong><br><br><br><br></td></tr></table>`,
-        "anx25": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः - संस्था से नाम खारिज करने बावत्। (टी.सी. अप्राप्त) (Annexure-25)</h4><br>उपरोक्त विषयान्तर्गत लेख है कि आपको टी.सी. के अभाव में अस्थाई प्रवेश दिया गया था। आपने टी.सी. जमा नहीं की है, अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
-        "anx26": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- बिना सूचना के अनुपस्थित रहने बावत्। चेतावनी (Annexure-26)</h4><br>आप बिना सूचना के अनुपस्थित हैं। अतः 7 दिन के अंदर संतोषप्रद स्पष्टीकरण सहित उपस्थित हों अन्यथा आपका नाम संस्था से खारिज कर दिया जावेगा।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
-        "anx27": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- डिस्चार्ज करने बावत् (After 3 Warnings) (Annexure-27)</h4><br>संस्था द्वारा तीन चेतावनी देने के पश्चात् भी आपने कोई सूचना नहीं दी। अतः आपका नाम खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
-        "anx28": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- स्वयं के आवेदन पर डिस्चार्ज करने बावत् (Annexure-28)</h4><br>आपने संस्था छोड़ने के लिये आवेदन दिया है। अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`
+        "anx25": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः - संस्था से नाम खारिज करने बावत्। (टी.सी. अप्राप्त) (Annexure-25)</h4><br>उपरोक्त विषयान्तर्गत लेख है कि आपको टी.सी. के अभाव में अस्थाई प्रवेश दिया गया था। आपने टी.सी. जमा नहीं की है, अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx26": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- बिना सूचना के अनुपस्थित रहने बावत्। चेतावनी (Annexure-26)</h4><br>आप बिना सूचना के अनुपस्थित हैं। अतः 7 दिन के अंदर संतोषप्रद स्पष्टीकरण सहित उपस्थित हों अन्यथा आपका नाम संस्था से खारिज कर दिया जावेगा।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx27": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- डिस्चार्ज करने बावत् (After 3 Warnings) (Annexure-27)</h4><br>संस्था द्वारा तीन चेतावनी देने के पश्चात् भी आपने कोई सूचना नहीं दी। अतः आपका नाम खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx28": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI, Churu</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- स्वयं के आवेदन पर डिस्चार्ज करने बावत् (Annexure-28)</h4><br>आपने संस्था छोड़ने के लिये आवेदन दिया है। अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`
     };
 
     content = templates[type] || "Template Not Found.";
@@ -158,19 +171,56 @@ function generateDraft() {
     document.getElementById("draftBox").style.display = "block";
 }
 
+// 1. PDF Download Logic
 function downloadPDF() {
     const element = document.getElementById('letterContent');
     const opt = {
         margin:       10,
-        filename:     'ITI_Annexure_Document.pdf',
+        filename:     'ITI_Document.pdf',
         image:        { type: 'jpeg', quality: 0.98 },
         html2canvas:  { scale: 2 },
         jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
     };
     html2pdf().set(opt).from(element).save();
 }
+
+// 2. Word (DOC) Download Logic
+function downloadWord() {
+    var header = "<html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'><head><meta charset='utf-8'><title>Export
+    var footer = "</body></html>";
+    var sourceHTML = header + document.getElementById("letterContent").innerHTML + footer;
+    
+    var source = 'data:application/vnd.ms-word;charset=utf-8,' + encodeURIComponent(sourceHTML);
+    var fileDownload = document.createElement("a");
+    document.body.appendChild(fileDownload);
+    fileDownload.href = source;
+    fileDownload.download = 'ITI_Document.doc';
+    fileDownload.click();
+    document.body.removeChild(fileDownload);
+}
+
+// 3. Excel Download Logic (Using SheetJS)
+function downloadExcel() {
+    // Check if a table exists in the current format
+    var tables = document.querySelectorAll("#letterContent table");
+    if (tables.length === 0) {
+        alert("इस ड्राफ्ट में कोई टेबल नहीं है। कृपया कोई रजिस्टर या अनेक्चर फॉर्मेट चुनें।");
+        return;
+    }
+    
+    // Create a new workbook
+    var wb = XLSX.utils.book_new();
+    
+    // Loop through all tables and add them as separate sheets
+    tables.forEach((table, index) => {
+        var ws = XLSX.utils.table_to_sheet(table);
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet" + (index + 1));
+    });
+    
+    // Export the Excel file
+    XLSX.writeFile(wb, 'ITI_Record.xlsx');
+}
 </script>
 
 </body>
 </html>
-
