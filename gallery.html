@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus & Workshop Gallery - Indian Classes Sikar</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .gallery-container { max-width: 1200px; margin: 40px auto; padding: 0 20px; }
+        .gallery-header { text-align: center; margin-bottom: 40px; }
+        .gallery-header h2 { color: #1e3a8a; font-size: 2.5em; margin-bottom: 10px; }
+        .gallery-header p { color: #64748b; font-size: 1.1em; }
+        
+        /* Filter Buttons Styling */
+        .filter-btns { text-align: center; margin-bottom: 30px; }
+        .filter-btn { background: #f1f5f9; border: 2px solid #e2e8f0; padding: 8px 20px; margin: 0 5px; border-radius: 20px; cursor: pointer; font-weight: bold; color: #334155; transition: 0.3s; }
+        .filter-btn:hover, .filter-btn.active { background: #2563eb; color: white; border-color: #2563eb; }
+
+        /* Modern Grid Layout */
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        
+        /* Individual Image Card */
+        .gallery-item { position: relative; overflow: hidden; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); cursor: pointer; background: #e2e8f0; aspect-ratio: 4/3; }
+        .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+        
+        /* Hover Animation */
+        .gallery-item:hover img { transform: scale(1.1); }
+        
+        /* Text Overlay on Hover */
+        .overlay { position: absolute; bottom: -100%; left: 0; width: 100%; padding: 20px; background: linear-gradient(transparent, rgba(15, 23, 42, 0.95)); color: white; transition: bottom 0.3s ease; box-sizing: border-box; }
+        .gallery-item:hover .overlay { bottom: 0; }
+        .overlay h4 { margin: 0 0 5px 0; font-size: 18px; color: #f8fafc; }
+        .overlay p { margin: 0; font-size: 14px; color: #cbd5e1; }
+        
+        .bottom-space { height: 50px; }
+    </style>
+</head>
+<body>
+
+    <header></header>
+    <nav></nav>
+
+    <div class="gallery-container">
+        <div class="gallery-header">
+            <h2>📸 Campus & Workshop Gallery</h2>
+            <p>Glimpses of our state-of-the-art facilities and practical training sessions.</p>
+        </div>
+
+        <!-- Filter Buttons -->
+        <div class="filter-btns">
+            <button class="filter-btn active" onclick="filterGallery('all', this)">All Photos</button>
+            <button class="filter-btn" onclick="filterGallery('fitter', this)">Fitter Workshop</button>
+            <button class="filter-btn" onclick="filterGallery('electrician', this)">Electrician</button>
+            <button class="filter-btn" onclick="filterGallery('campus', this)">Campus & Labs</button>
+        </div>
+
+        <div class="gallery-grid" id="galleryGrid">
+            
+            <!-- Item 1: Your Real Uploaded Image -->
+            <div class="gallery-item fitter">
+                <img src="Logo.jpg" alt="Fitter Practical Training">
+                <div class="overlay">
+                    <h4>Fitter Practical Training</h4>
+                    <p>Students performing welding and fabrication work safely.</p>
+                </div>
+            </div>
+
+            <!-- Item 2: Electrician Placeholder -->
+            <div class="gallery-item electrician">
+                <!-- Replace src with your actual image path later, e.g., 'elec-lab.jpg' -->
+                <img src="https://via.placeholder.com/600x400/1e3a8a/ffffff?text=Electrician+Lab" alt="Electrician Lab">
+                <div class="overlay">
+                    <h4>Electrician Workshop</h4>
+                    <p>Motor winding and AC circuit testing setup.</p>
+                </div>
+            </div>
+
+            <!-- Item 3: Campus Placeholder -->
+            <div class="gallery-item campus">
+                <img src="https://via.placeholder.com/600x400/10b981/ffffff?text=Institute+Building" alt="Institute Building">
+                <div class="overlay">
+                    <h4>Institute Campus</h4>
+                    <p>Main building and administrative block.</p>
+                </div>
+            </div>
+
+            <!-- Item 4: Fitter Placeholder -->
+            <div class="gallery-item fitter">
+                <img src="https://via.placeholder.com/600x400/ef4444/ffffff?text=Lathe+Machine" alt="Lathe Machine">
+                <div class="overlay">
+                    <h4>Lathe Machine Operation</h4>
+                    <p>Advanced turning and threading operations.</p>
+                </div>
+            </div>
+            
+            <!-- Item 5: Electrician Placeholder -->
+            <div class="gallery-item electrician">
+                <img src="https://via.placeholder.com/600x400/f59e0b/ffffff?text=Wiring+Board" alt="Wiring Board">
+                <div class="overlay">
+                    <h4>House Wiring Practice</h4>
+                    <p>Students practicing domestic wiring on testing boards.</p>
+                </div>
+            </div>
+            
+            <!-- Item 6: COPA/Campus Placeholder -->
+            <div class="gallery-item campus">
+                <img src="https://via.placeholder.com/600x400/8b5cf6/ffffff?text=Computer+Lab" alt="Computer Lab">
+                <div class="overlay">
+                    <h4>Computer Lab (COPA)</h4>
+                    <p>Fully equipped lab for IT and software training.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    
+    <div class="bottom-space"></div>
+
+    <footer></footer>
+    <script src="components.js"></script>
+    
+    <!-- Gallery Filter Logic -->
+    <script>
+        function filterGallery(category, btnElement) {
+            // Remove active class from all buttons and add to the clicked one
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Show/Hide gallery items based on class
+            const items = document.querySelectorAll('.gallery-item');
+            items.forEach(item => {
+                if (category === 'all' || item.classList.contains(category)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+    </script>
+</body>
+</html>
