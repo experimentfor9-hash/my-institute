@@ -629,3 +629,35 @@ body.dark-mode .book-card { background: #1e293b; border-color: #334155; }
 body.dark-mode .book-details p { color: #94a3b8; }
 body.dark-mode .download-btn { background: #334155; color: #f8fafc; border-color: #475569; }
 body.dark-mode .download-btn:hover { background: #38bdf8; color: #0f172a; }
+/* --- 🎓 Glowing Scholarship Button --- */
+.glow-btn {
+    display: inline-block;
+    padding: 15px 35px;
+    background: linear-gradient(45deg, #10b981, #059669); /* हरा रंग जो स्कॉलरशिप/पैसे को दर्शाता है */
+    color: white !important;
+    font-size: 1.2em;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 50px;
+    box-shadow: 0 0 15px rgba(16, 185, 129, 0.6);
+    animation: glowingEffect 1.5s infinite; /* यह एनीमेशन इसे चमकाएगा */
+    transition: transform 0.2s;
+    border: 2px solid #ffffff;
+}
+
+.glow-btn:hover {
+    transform: scale(1.08); /* माउस ले जाने पर बटन थोड़ा बड़ा होगा */
+    color: white;
+}
+
+/* बटन के चमकने का एनीमेशन (Keyframes) */
+@keyframes glowingEffect {
+    0% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.4); }
+    50% { box-shadow: 0 0 25px rgba(16, 185, 129, 1); }
+    100% { box-shadow: 0 0 5px rgba(16, 185, 129, 0.4); }
+}
+
+/* डार्क मोड सपोर्ट */
+body.dark-mode .glow-btn {
+    box-shadow: 0 0 15px rgba(52, 211, 153, 0.6);
+}
