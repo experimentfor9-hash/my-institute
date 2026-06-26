@@ -3,201 +3,138 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ITI Resume Builder - 1 Click PDF</title>
-    <!-- PDF जनरेट करने के लिए लाइब्रेरी -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <title>Professional Resume Builder</title>
+    <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f5f9; margin: 0; padding: 20px; color: #1e293b; }
+        .builder-container { display: flex; flex-wrap: wrap; gap: 20px; margin: 30px auto; max-width: 1200px; padding: 0 20px; }
+        .form-section { flex: 1; min-width: 300px; background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border-top: 5px solid #2563eb; }
+        .preview-section { flex: 1; min-width: 300px; background: #fff; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); border: 1px solid #cbd5e1; }
         
-        .header { text-align: center; margin-bottom: 30px; }
-        .header h2 { color: #1e3a8a; font-size: 2em; margin-bottom: 5px; }
-        .header p { color: #64748b; font-size: 1.1em; }
-
-        .container { display: flex; flex-wrap: wrap; gap: 20px; max-width: 1200px; margin: 0 auto; }
-        
-        /* 📝 Form Section */
-        .form-section { flex: 1; min-width: 300px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 5px solid #2563eb; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #334155; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 15px; box-sizing: border-box; }
+        .form-group input, .form-group textarea { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 5px; box-sizing: border-box; }
+        h3 { color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 5px; margin-bottom: 15px; }
         
-        /* Skills Checkboxes */
-        .skills-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px; }
-        .skill-item { display: flex; align-items: center; gap: 8px; font-size: 0.9em; background: #f8fafc; padding: 8px; border-radius: 5px; border: 1px solid #e2e8f0; }
-        .skill-item input { width: auto; transform: scale(1.2); }
+        .btn-generate { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px; margin-top: 10px;}
+        .btn-generate:hover { background: #1d4ed8; }
+        .btn-print { background: #10b981; margin-top: 20px; display: none; }
+        .btn-print:hover { background: #059669; }
 
-        .btn-generate { width: 100%; padding: 15px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 20px; transition: 0.3s; }
-        .btn-generate:hover { background: #059669; }
-
-        /* 📄 Resume Preview Section (A4 Size Look) */
-        .preview-section { flex: 1.5; min-width: 400px; background: #e2e8f0; padding: 20px; border-radius: 12px; display: flex; justify-content: center; overflow-x: auto; }
+        /* Resume Template Styles */
+        #resumePreview { display: none; color: #000; font-family: 'Arial', sans-serif; }
+        .res-header { text-align: center; border-bottom: 2px solid #1e3a8a; padding-bottom: 15px; margin-bottom: 20px; }
+        .res-name { font-size: 28px; font-weight: bold; color: #1e3a8a; text-transform: uppercase; margin: 0; }
+        .res-contact { font-size: 14px; color: #333; margin-top: 5px; }
+        .res-section-title { font-size: 18px; font-weight: bold; color: #1e3a8a; border-bottom: 1px solid #ccc; margin-bottom: 10px; padding-bottom: 3px; margin-top: 20px; }
+        .res-text { font-size: 14px; line-height: 1.6; margin-bottom: 10px; }
         
-        #resume-document { background: white; width: 210mm; min-height: 297mm; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); box-sizing: border-box; color: #000; }
-        
-        /* Resume Inside Styling */
-        .res-header { text-align: center; border-bottom: 3px solid #1e3a8a; padding-bottom: 20px; margin-bottom: 20px; }
-        .res-name { font-size: 2.5em; font-weight: bold; color: #1e3a8a; margin: 0; text-transform: uppercase; }
-        .res-contact { font-size: 1.1em; color: #475569; margin-top: 10px; }
-        
-        .res-section-title { font-size: 1.4em; color: #1e3a8a; border-bottom: 2px solid #cbd5e1; padding-bottom: 5px; margin-top: 25px; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; }
-        
-        .res-text { font-size: 1.1em; line-height: 1.6; color: #333; }
-        .res-skills-list { display: flex; flex-wrap: wrap; gap: 10px; padding: 0; list-style: none; }
-        .res-skills-list li { background: #1e3a8a; color: white; padding: 8px 15px; border-radius: 20px; font-size: 0.95em; font-weight: bold; }
-
-        @media (max-width: 768px) {
-            .preview-section { display: none; /* मोबाइल में प्रीव्यू छिपा दें ताकि जगह बचे, सीधा डाउनलोड हो */ }
+        @media print {
+            body * { visibility: hidden; }
+            .preview-section, .preview-section * { visibility: visible; }
+            .preview-section { position: absolute; left: 0; top: 0; width: 100%; box-shadow: none; border: none; }
+            .btn-print { display: none !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <h2>📄 1-Click ITI Resume Builder</h2>
-        <p>Fill the details and download your professional resume instantly!</p>
-    </div>
+    <header></header>
+    <nav></nav>
 
-    <div class="container">
-        
-        <!-- Left: Input Form -->
+    <div class="builder-container">
+        <!-- Form Section -->
         <div class="form-section">
-            <h3 style="color: #1e3a8a; margin-top: 0; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Student Details</h3>
+            <h2 style="text-align: center; color: #1e3a8a;">📄 Resume Builder</h2>
+            <p style="text-align: center; color: #64748b; margin-bottom: 20px;">Fill details to generate a professional resume</p>
             
-            <div class="form-group">
-                <label>Full Name (पूरा नाम)</label>
-                <input type="text" id="inpName" placeholder="e.g. Rahul Kumar" onkeyup="updatePreview()">
-            </div>
-            
-            <div class="form-group">
-                <label>Mobile Number</label>
-                <input type="text" id="inpPhone" placeholder="+91 XXXXX XXXXX" onkeyup="updatePreview()">
-            </div>
-            
-            <div class="form-group">
-                <label>Email ID</label>
-                <input type="email" id="inpEmail" placeholder="rahul@email.com" onkeyup="updatePreview()">
-            </div>
+            <form id="resumeForm">
+                <h3>Personal Information</h3>
+                <div class="form-group"><label>Full Name</label><input type="text" id="rName" placeholder="E.g. Rahul Kumar"></div>
+                <div class="form-group"><label>Professional Title / Trade</label><input type="text" id="rTitle" placeholder="E.g. ITI Electrician"></div>
+                <div class="form-group"><label>Phone Number</label><input type="text" id="rPhone" placeholder="+91 XXXXXXXXXX"></div>
+                <div class="form-group"><label>Email Address</label><input type="email" id="rEmail" placeholder="rahul@example.com"></div>
+                <div class="form-group"><label>Address</label><input type="text" id="rAddress" placeholder="City, State, Pincode"></div>
 
-            <div class="form-group">
-                <label>ITI Trade</label>
-                <select id="inpTrade" onchange="updatePreview()">
-                    <option value="Electrician">⚡ Electrician (NCVT)</option>
-                    <option value="Fitter">🔧 Fitter (NCVT)</option>
-                    <option value="COPA">💻 COPA (NCVT)</option>
-                </select>
-            </div>
+                <h3>Summary / Objective</h3>
+                <div class="form-group"><textarea id="rSummary" rows="3" placeholder="Briefly describe your career goal..."></textarea></div>
 
-            <div class="form-group">
-                <label>Passing Year (पास होने का वर्ष)</label>
-                <input type="text" id="inpYear" placeholder="e.g. 2024" onkeyup="updatePreview()">
-            </div>
+                <h3>Education</h3>
+                <div class="form-group"><label>Degree / Certificate</label><input type="text" id="rEduTitle" placeholder="E.g. ITI in Electrician"></div>
+                <div class="form-group"><label>Institute Name</label><input type="text" id="rInstitute" placeholder="Govt. ITI Churu"></div>
+                <div class="form-group"><label>Passing Year & Percentage</label><input type="text" id="rEduYear" placeholder="2026 | 85%"></div>
 
-            <div class="form-group">
-                <label>Practical Skills (अपने हुनर चुनें)</label>
-                <div class="skills-grid" id="skillsCheckboxes">
-                    <label class="skill-item"><input type="checkbox" value="Motor Winding" onchange="updatePreview()"> Motor Winding</label>
-                    <label class="skill-item"><input type="checkbox" value="House Wiring" onchange="updatePreview()"> House Wiring</label>
-                    <label class="skill-item"><input type="checkbox" value="Lathe Operation" onchange="updatePreview()"> Lathe Operation</label>
-                    <label class="skill-item"><input type="checkbox" value="Welding (Arc/Gas)" onchange="updatePreview()"> Welding (Arc/Gas)</label>
-                    <label class="skill-item"><input type="checkbox" value="Measuring Tools" onchange="updatePreview()"> Measuring Tools</label>
-                    <label class="skill-item"><input type="checkbox" value="Basic Computer" onchange="updatePreview()"> Basic Computer</label>
-                </div>
-            </div>
+                <h3>Experience (Optional)</h3>
+                <div class="form-group"><label>Job Title & Company</label><input type="text" id="rExpTitle" placeholder="Apprentice at XYZ Pvt Ltd"></div>
+                <div class="form-group"><label>Duration</label><input type="text" id="rExpDuration" placeholder="Aug 2025 - Present"></div>
 
-            <button class="btn-generate" onclick="downloadPDF()">📥 Download PDF Resume</button>
+                <h3>Skills</h3>
+                <div class="form-group"><label>Technical & Soft Skills</label><input type="text" id="rSkills" placeholder="House Wiring, Motor Winding, Time Management"></div>
+
+                <button type="button" class="btn-generate" onclick="generateResume()">Generate Resume ✨</button>
+            </form>
         </div>
 
-        <!-- Right: Live Resume Preview (A4 Paper) -->
-        <div class="preview-section">
-            <div id="resume-document">
+        <!-- Preview Section -->
+        <div class="preview-section" id="printArea">
+            <div id="resumePreview">
                 <div class="res-header">
-                    <h1 class="res-name" id="outName">YOUR NAME</h1>
-                    <div class="res-contact">
-                        📞 <span id="outPhone">+91 XXXXX XXXXX</span> | ✉️ <span id="outEmail">email@example.com</span>
-                    </div>
+                    <p class="res-name" id="outName">JOHN DOE</p>
+                    <p style="font-size: 16px; font-weight: bold; color: #555; margin: 5px 0;" id="outTitle">Professional Title</p>
+                    <p class="res-contact">📞 <span id="outPhone">+91 0000000000</span> | ✉️ <span id="outEmail">email@example.com</span> | 📍 <span id="outAddress">Address here</span></p>
                 </div>
 
-                <div class="res-section-title">Career Objective</div>
-                <div class="res-text">
-                    To secure a challenging position in a reputable technical organization where I can utilize my ITI training, practical skills, and dedication to contribute to the company's growth while continuously upgrading my technical knowledge.
+                <div class="res-section-title">Professional Summary</div>
+                <p class="res-text" id="outSummary">Summary goes here...</p>
+
+                <div class="res-section-title">Education</div>
+                <p class="res-text"><strong><span id="outEduTitle">Degree</span></strong> <br>
+                <span id="outInstitute">Institute Name</span> <br>
+                <span id="outEduYear">Year | Grade</span></p>
+
+                <div id="expBlock">
+                    <div class="res-section-title">Experience</div>
+                    <p class="res-text"><strong><span id="outExpTitle">Job Title</span></strong> <br>
+                    <span id="outExpDuration">Duration</span></p>
                 </div>
 
-                <div class="res-section-title">Technical Education</div>
-                <div class="res-text">
-                    <strong>Course:</strong> Industrial Training Institute (ITI) - NCVT<br>
-                    <strong>Trade:</strong> <span id="outTrade">Electrician</span><br>
-                    <strong>Institute:</strong> Indian Classes Sikar, Rajasthan<br>
-                    <strong>Year of Passing:</strong> <span id="outYear">2024</span>
-                </div>
-
-                <div class="res-section-title">Practical Skills & Expertise</div>
-                <ul class="res-skills-list" id="outSkills">
-                    <li>Select skills from the form...</li>
-                </ul>
-                
-                <div class="res-section-title">Academic Qualification</div>
-                <div class="res-text">
-                    • 10th / Secondary Examination passed from Board of Secondary Education, Rajasthan.
-                </div>
-
-                <div class="res-section-title">Declaration</div>
-                <div class="res-text">
-                    I hereby declare that all the information furnished above is true to the best of my knowledge and belief.<br><br><br>
-                    <strong>Date:</strong> ________________<br>
-                    <strong>Signature:</strong> ________________
-                </div>
+                <div class="res-section-title">Skills</div>
+                <p class="res-text" id="outSkills">Skill 1, Skill 2, Skill 3</p>
             </div>
+            
+            <button type="button" class="btn-generate btn-print" id="printBtn" onclick="window.print()">🖨️ Print / Save as PDF</button>
         </div>
-
     </div>
 
-    <!-- ⚙️ JavaScript for Live Preview and PDF Export -->
+    <footer></footer>
+    <script src="components.js"></script>
     <script>
-        function updatePreview() {
-            // Update Text Fields
-            document.getElementById('outName').innerText = document.getElementById('inpName').value || 'YOUR NAME';
-            document.getElementById('outPhone').innerText = document.getElementById('inpPhone').value || '+91 XXXXX XXXXX';
-            document.getElementById('outEmail').innerText = document.getElementById('inpEmail').value || 'email@example.com';
-            document.getElementById('outTrade').innerText = document.getElementById('inpTrade').value;
-            document.getElementById('outYear').innerText = document.getElementById('inpYear').value || '2024';
-
-            // Update Skills
-            const checkboxes = document.querySelectorAll('#skillsCheckboxes input[type="checkbox"]:checked');
-            const outSkills = document.getElementById('outSkills');
-            outSkills.innerHTML = ''; // Clear old skills
+        function generateResume() {
+            document.getElementById("outName").innerText = document.getElementById("rName").value || "YOUR NAME";
+            document.getElementById("outTitle").innerText = document.getElementById("rTitle").value || "Your Trade / Title";
+            document.getElementById("outPhone").innerText = document.getElementById("rPhone").value || "Phone Number";
+            document.getElementById("outEmail").innerText = document.getElementById("rEmail").value || "Email ID";
+            document.getElementById("outAddress").innerText = document.getElementById("rAddress").value || "Your Address";
             
-            if(checkboxes.length === 0) {
-                outSkills.innerHTML = '<li>Select skills from the form...</li>';
+            document.getElementById("outSummary").innerText = document.getElementById("rSummary").value || "Your professional summary will appear here.";
+            
+            document.getElementById("outEduTitle").innerText = document.getElementById("rEduTitle").value || "Degree/Trade";
+            document.getElementById("outInstitute").innerText = document.getElementById("rInstitute").value || "Institute Name";
+            document.getElementById("outEduYear").innerText = document.getElementById("rEduYear").value || "Year and Grade";
+            
+            let expTitle = document.getElementById("rExpTitle").value;
+            if(expTitle) {
+                document.getElementById("expBlock").style.display = "block";
+                document.getElementById("outExpTitle").innerText = expTitle;
+                document.getElementById("outExpDuration").innerText = document.getElementById("rExpDuration").value || "";
             } else {
-                checkboxes.forEach((cb) => {
-                    let li = document.createElement('li');
-                    li.innerText = cb.value;
-                    outSkills.appendChild(li);
-                });
+                document.getElementById("expBlock").style.display = "none";
             }
-        }
-
-        function downloadPDF() {
-            const element = document.getElementById('resume-document');
-            const studentName = document.getElementById('inpName').value || 'Student';
             
-            // PDF Generation Options
-            const opt = {
-                margin:       0,
-                filename:     studentName + '_ITI_Resume.pdf',
-                image:        { type: 'jpeg', quality: 0.98 },
-                html2canvas:  { scale: 2, useCORS: true },
-                jsPDF:        { unit: 'in', format: 'a4', orientation: 'portrait' }
-            };
+            document.getElementById("outSkills").innerText = document.getElementById("rSkills").value || "Your Skills";
 
-            // Magic command to create and download PDF
-            html2pdf().set(opt).from(element).save();
+            document.getElementById("resumePreview").style.display = "block";
+            document.getElementById("printBtn").style.display = "block";
         }
-
-        // Initialize preview on load
-        window.onload = updatePreview;
     </script>
-
 </body>
 </html>
-
