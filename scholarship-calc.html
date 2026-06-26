@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fee & Scholarship Calculator</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #e2e8f0; margin: 0; padding: 20px; color: #1e293b; }
+        
+        .calc-wrapper { max-width: 500px; margin: 40px auto; background: #ffffff; padding: 30px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); border-top: 8px solid #10b981; }
+        
+        .header { text-align: center; margin-bottom: 30px; }
+        .header h2 { color: #0f172a; font-size: 1.8em; margin-bottom: 5px; }
+        .header p { color: #64748b; font-size: 1em; margin: 0; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #334155; }
+        .form-group select { width: 100%; padding: 12px; border: 2px solid #cbd5e1; border-radius: 8px; font-size: 16px; outline: none; transition: 0.3s; }
+        .form-group select:focus { border-color: #10b981; }
+
+        .btn { width: 100%; padding: 14px; background: #10b981; color: white; border: none; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 10px rgba(16,185,129,0.3); }
+        .btn:hover { background: #059669; transform: translateY(-2px); }
+
+        /* Result Section Design */
+        #resultBox { display: none; margin-top: 30px; padding: 20px; background: #f8fafc; border-radius: 10px; border: 2px dashed #cbd5e1; text-align: center; animation: fadeIn 0.5s ease-in-out; }
+        
+        .amount-row { display: flex; justify-content: space-between; margin-bottom: 15px; font-size: 1.1em; color: #475569; }
+        .amount-row.total { font-weight: bold; color: #0f172a; border-top: 2px solid #e2e8f0; padding-top: 15px; font-size: 1.3em; }
+        
+        .highlight-green { color: #10b981; font-weight: bold; font-size: 1.2em; }
+        .highlight-blue { color: #2563eb; font-weight: bold; }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</head>
+<body>
+
+    <div class="calc-wrapper">
+        <div class="header">
+            <h2>🎓 Fee & Scholarship Calculator</h2>
+            <p>Check your estimated Govt. ITI Fees & Samaj Kalyan Scholarship</p>
+        </div>
+
+        <div class="form-group">
+            <label>Select Trade (अपनी ट्रेड चुनें)</label>
+            <select id="tradeSelect">
+                <option value="electrician">⚡ Electrician (2 Years)</option>
+                <option value="fitter">🔧 Fitter (2 Years)</option>
+                <option value="copa">💻 COPA (1 Year)</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Select Category (अपनी श्रेणी चुनें)</label>
+            <select id="categorySelect">
+                <option value="sc_st">SC / ST</option>
+                <option value="obc_bpl">OBC (BPL) / MBC (BPL)</option>
+                <option value="obc_general">OBC (Non-BPL) / General</option>
+                <option value="girls">All Category Girls (महिलाएं)</option>
+            </select>
+        </div>
+
+        <button class="btn" onclick="calculateFee()">Calculate Now 🧮</button>
+
+        <div id="resultBox">
+            <h3 style="color: #1e3a8a; margin-top: 0;">📊 Your Estimate</h3>
+            
+            <div class="amount-row">
+                <span>Total Course Fee:</span>
+                <span id="totalFee" class="highlight-blue">₹0</span>
+            </div>
+            
+            <div class="amount-row">
+                <span>Estimated Scholarship:</span>
+                <span id="scholarship" class="highlight-green">- ₹0</span>
+            </div>
+            
+            <div class="amount-row total">
+                <span>Effective Fee (आपकी असली फीस):</span>
+                <span id="effectiveFee">₹0</span>
+            </div>
+            
+            <p id="noteText" style="color: #ef4444; font-size: 0.85em; margin-top: 15px; font-weight: bold;"></p>
+        </div>
+    </div>
+
+    <script>
+        // संस्थान की अनुमानित वार्षिक फीस (आप इसे अपने हिसाब से बदल सकते हैं)
+        const feeStructure = {
+            "electrician": 3400,
+            "fitter": 3400,
+            "copa": 2400
+        };
+
+        function calculateFee() {
+            let trade = document.getElementById("tradeSelect").value;
+            let category = document.getElementById("categorySelect").value;
+            
+            let totalFee = feeStructure[trade];
+            let scholarship = 0;
+            let note = "";
+
+            // समाज कल्याण स्कॉलरशिप का नियम (लगभग)
+            if (category === "sc_st" || category === "obc_bpl") {
+                scholarship = totalFee; // 100% फीस वापस
+                note = "✔️ You are eligible for full fee reimbursement under Samaj Kalyan Scholarship!";
+            } else if (category === "girls") {
+                scholarship = totalFee; // सरकारी आईटीआई में महिलाओं के लिए अक्सर फीस माफ़ होती है
+                note = "✔️ Govt ITIs offer special fee waivers/scholarships for female candidates.";
+            } else {
+                scholarship = 0; // जनरल और सामान्य ओबीसी के लिए
+                note = "⚠️ General/OBC (Non-BPL) candidates may not be eligible for full fee reimbursement.";
+            }
+
+            let effectiveFee = totalFee - scholarship;
+
+            // रिजल्ट स्क्रीन पर दिखाना
+            document.getElementById("totalFee").innerText = "₹" + totalFee;
+            document.getElementById("scholarship").innerText = "- ₹" + scholarship;
+            document.getElementById("effectiveFee").innerText = "₹" + effectiveFee;
+            document.getElementById("noteText").innerText = note;
+
+            // बॉक्स को एनिमेशन के साथ दिखाना
+            document.getElementById("resultBox").style.display = "block";
+        }
+    </script>
+
+</body>
+</html>
