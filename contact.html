@@ -4,14 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contact Us - Indian Classes Sikar</title>
-   <link rel="stylesheet" href="style.css">
-   <style>
-       /* थोडा सा CSS बटन डिसेबल होने पर दिखने के लिए */
-       input[type="submit"]:disabled {
-           background-color: #94a3b8;
-           cursor: not-allowed;
-       }
-   </style>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        input[type="submit"]:disabled {
+            background-color: #94a3b8;
+            cursor: not-allowed;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,35 +23,33 @@
         
         <div class="contact-info">
             <h3>Get in Touch</h3>
-            <p><strong>Address:</strong> Indian Classes Sikar[span_1](start_span)[span_1](end_span)</p>
-            <p><strong>Phone:</strong> +91-XXXXXXXXXX[span_2](start_span)[span_2](end_span)</p>
-            <p><strong>Email:</strong> Indian Classes Sikar@example.com[span_3](start_span)[span_3](end_span)</p>
-            <p><strong>Office Hours:</strong> Monday to Saturday (9:00 AM - 5:00 PM)[span_4](start_span)[span_4](end_span)</p>
+            <p><strong>Address:</strong> Indian Classes Sikar</p>
+            <p><strong>Phone:</strong> +91-XXXXXXXXXX</p>
+            <p><strong>Email:</strong> Indian Classes Sikar@example.com</p>
+            <p><strong>Office Hours:</strong> Monday to Saturday (9:00 AM - 5:00 PM)</p>
         </div>
 
         <h3>Send us a Message</h3>
-        <p>Fill out the form below and we will get back to you as soon as possible.[span_5](start_span)[span_5](end_span)</p>
+        <p>Fill out the form below and we will get back to you as soon as possible.</p>
         
         <form id="contactForm">
-            <!-- यह Hidden Field Google Sheet को बताएगी कि यह डेटा Contact Form से आया है -->
             <input type="hidden" name="formType" value="contact">
 
-            <label for="name">Full Name[span_6](start_span)[span_6](end_span)</label>
+            <label for="name">Full Name</label>
             <input type="text" id="name" name="name" placeholder="Enter your full name" required>
 
-            <label for="email">Email Address[span_7](start_span)[span_7](end_span)</label>
+            <label for="email">Email Address</label>
             <input type="email" id="email" name="email" placeholder="Enter your email ID" required>
 
-            <label for="subject">Subject[span_8](start_span)[span_8](end_span)</label>
+            <label for="subject">Subject</label>
             <input type="text" id="subject" name="subject" placeholder="What is this regarding?">
 
-            <label for="message">Message[span_9](start_span)[span_9](end_span)</label>
+            <label for="message">Message</label>
             <textarea id="message" name="message" rows="5" placeholder="Write your message here..." required></textarea>
 
             <input type="submit" id="submitBtn" value="Send Message">
         </form>
         
-        <!-- मैसेज भेजने के बाद यूजर को सक्सेस/एरर दिखाने के लिए -->
         <p id="formStatus" style="text-align: center; font-weight: bold; margin-top: 15px; font-size: 16px;"></p>
     </div>
 
@@ -61,32 +58,28 @@
     <footer></footer>
     <script src="components.js"></script>
     
-    <!-- यहाँ मैंने script.js को हटाकर सीधा फॉर्म सबमिशन का वर्किंग कोड लगा दिया है -->
     <script>
         const contactForm = document.getElementById('contactForm');
         const formStatus = document.getElementById('formStatus');
         const submitBtn = document.getElementById('submitBtn');
         
-        // वही API लिंक जो आपने बाकी प्रोजेक्ट्स में इस्तेमाल किया है
         const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
         contactForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // पेज को रीलोड होने से रोकेगा
+            e.preventDefault();
             
-            // बटन का टेक्स्ट बदलकर लोडिंग इफ़ेक्ट देना
             submitBtn.value = "Sending Message... ⏳";
             submitBtn.disabled = true;
             formStatus.innerText = "";
 
             let formData = new FormData(contactForm);
 
-            // Google Apps Script पर डेटा भेजना
             fetch(API_URL, { method: 'POST', body: formData })
                 .then(response => response.text())
                 .then(data => {
                     formStatus.innerText = "✅ Message sent successfully! We will contact you soon.";
                     formStatus.style.color = "green";
-                    contactForm.reset(); // फॉर्म को खाली करना
+                    contactForm.reset();
                     submitBtn.value = "Send Message";
                     submitBtn.disabled = false;
                 })
