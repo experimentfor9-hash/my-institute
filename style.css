@@ -125,3 +125,34 @@ footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px;
     border-radius: 20px !important;
     font-weight: bold !important;
 }
+/* मोबाइल के लिए Hamburger Menu का स्टाइल */
+.hamburger {
+    display: none; /* डेस्कटॉप पर छुपा हुआ */
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+@media (max-width: 768px) {
+    .hamburger { display: block; } /* मोबाइल पर दिखेगा */
+    
+    nav {
+        flex-direction: column;
+        align-items: center;
+        border-radius: 20px;
+        margin: -40px 10px 20px 10px;
+    }
+
+    nav.menu-open {
+        height: auto;
+    }
+
+    nav a, .dark-btn {
+        display: none; /* मोबाइल पर लिंक छुपा दिए */
+    }
+
+    nav.menu-open a, nav.menu-open .dark-btn {
+        display: block; /* मेनू खुलने पर दिखेंगे */
+        margin: 5px 0;
+    }
+}
