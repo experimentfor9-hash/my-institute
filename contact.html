@@ -66,37 +66,47 @@
     <script src="components.js"></script>
     
     <script>
-        const contactForm = document.getElementById('contactForm');
-        const formStatus = document.getElementById('formStatus');
-        const submitBtn = document.getElementById('submitBtn');
-        
-        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
+    const contactForm = document.getElementById('contactForm');
+    const formStatus = document.getElementById('formStatus');
+    const submitBtn = document.getElementById('submitBtn'); // अब यह काम करेगा
+    
+    const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // बटन चेक करें कि वह मौजूद है या नहीं
+        if(submitBtn) {
             submitBtn.value = "Sending Message... ⏳";
             submitBtn.disabled = true;
-            formStatus.innerText = "";
+        }
+        
+        formStatus.innerText = "Sending...";
+        formStatus.style.color = "blue";
 
-            let formData = new FormData(contactForm);
+        let formData = new FormData(contactForm);
 
-            fetch(API_URL, { method: 'POST', body: formData })
-                .then(response => response.text())
-                .then(data => {
-                    formStatus.innerText = "✅ Message sent successfully! We will contact you soon.";
-                    formStatus.style.color = "green";
-                    contactForm.reset();
+        fetch(API_URL, { method: 'POST', body: formData })
+            .then(response => response.text())
+            .then(data => {
+                formStatus.innerText = "✅ Message sent successfully!";
+                formStatus.style.color = "green";
+                contactForm.reset();
+                if(submitBtn) {
                     submitBtn.value = "Send Message";
                     submitBtn.disabled = false;
-                })
-                .catch(error => {
-                    formStatus.innerText = "❌ Error sending message. Please check your internet or try again.";
-                    formStatus.style.color = "red";
+                }
+            })
+            .catch(error => {
+                formStatus.innerText = "❌ Error! Please try again.";
+                formStatus.style.color = "red";
+                if(submitBtn) {
                     submitBtn.value = "Send Message";
                     submitBtn.disabled = false;
-                });
-        });
+                }
+            });
+    });
     </script>
+    
 </body>
 </html>
