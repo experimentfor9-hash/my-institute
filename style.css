@@ -515,3 +515,117 @@ body.dark-mode .virtual-tour-section {
 body.dark-mode .tour-container {
     border-color: #38bdf8;
 }
+/* --- 📚 E-Library Bookshelf Design --- */
+.e-library-section {
+    padding: 60px 20px;
+    background-color: #f8fafc;
+    margin: 40px 0;
+}
+
+.e-library-section .header {
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.e-library-section .header h2 {
+    color: #1e3a8a;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.e-library-section .header p {
+    color: #64748b;
+    font-size: 1.1em;
+}
+
+.bookshelf {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.book-card {
+    background: #ffffff;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.book-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+}
+
+/* 4 अलग-अलग किताबों के रंग */
+.book-cover {
+    height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-align: center;
+    padding: 20px;
+    position: relative;
+}
+
+/* किताबों के कवर्स को एक टेक्सचर लुक देने के लिए */
+.book-cover::after {
+    content: '';
+    position: absolute;
+    left: 15px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: rgba(255,255,255,0.3);
+    box-shadow: 4px 0 0 rgba(255,255,255,0.1);
+}
+
+.book-cover.theory { background: linear-gradient(135deg, #1e40af, #3b82f6); }
+.book-cover.wcs { background: linear-gradient(135deg, #047857, #10b981); }
+.book-cover.es { background: linear-gradient(135deg, #b91c1c, #ef4444); }
+.book-cover.papers { background: linear-gradient(135deg, #7e22ce, #a855f7); }
+
+.book-cover h3 { margin: 0; font-size: 1.5em; letter-spacing: 1px; }
+.book-cover p { margin: 5px 0 0 0; font-size: 0.95em; opacity: 0.9; }
+
+.book-details {
+    padding: 20px;
+    text-align: center;
+}
+
+.book-details p {
+    color: #475569;
+    margin-bottom: 20px;
+    font-size: 0.95em;
+    font-weight: 500;
+}
+
+.download-btn {
+    display: inline-block;
+    width: 80%;
+    padding: 10px;
+    background: #f1f5f9;
+    color: #1e3a8a;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.2s;
+    border: 1px solid #cbd5e1;
+}
+
+.download-btn:hover {
+    background: #1e3a8a;
+    color: white;
+}
+
+/* डार्क मोड सपोर्ट */
+body.dark-mode .e-library-section { background-color: #0f172a; }
+body.dark-mode .book-card { background: #1e293b; border-color: #334155; }
+body.dark-mode .book-details p { color: #94a3b8; }
+body.dark-mode .download-btn { background: #334155; color: #f8fafc; border-color: #475569; }
+body.dark-mode .download-btn:hover { background: #38bdf8; color: #0f172a; }
