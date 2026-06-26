@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Stock Register</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-container { max-width: 600px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .admin-container h2 { color: #1e3a8a; text-align: center; margin-bottom: 20px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
+        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .submit-btn { width: 100%; padding: 12px; background: #1e3a8a; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .submit-btn:hover { background: #2563eb; }
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <h2>🛠️ Digital Stock & Inventory Register</h2>
+        <form id="inventoryForm">
+            <!-- यह Hidden Field बैकएंड को बताएगी कि यह इन्वेंटरी फॉर्म है -->
+            <input type="hidden" name="formType" value="inventory">
+            
+            <div class="form-group">
+                <label>Staff Name</label>
+                <input type="text" name="staffName" required placeholder="Enter name">
+            </div>
+
+            <div class="form-group">
+                <label>Staff Type</label>
+                <select name="staffType" required>
+                    <option value="">Select Type</option>
+                    <option value="Regular Faculty">Regular Faculty</option>
+                    <option value="Guest Faculty">Guest Faculty</option>
+                    <option value="Other Staff">Other Staff</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Tool / Item Name</label>
+                <input type="text" name="itemName" required placeholder="E.g., Multimeter, Drilling Machine">
+            </div>
+
+            <div class="form-group">
+                <label>Quantity</label>
+                <input type="number" name="quantity" required placeholder="How many?">
+            </div>
+
+            <div class="form-group">
+                <label>Action</label>
+                <select name="action" required>
+                    <option value="Issued">Issued (सामान लिया)</option>
+                    <option value="Returned">Returned (सामान वापस किया)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Remarks</label>
+                <input type="text" name="remarks" placeholder="Any damage or note? (Optional)">
+            </div>
+
+            <button type="submit" class="submit-btn">Submit Record</button>
+        </form>
+        <p id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></p>
+    </div>
+
+    <script>
+        // यहाँ अपना API URL डालें
+        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
+
+        document.getElementById("inventoryForm").addEventListener("submit", function(e) {
+            e.preventDefault();
+            document.getElementById("statusMsg").innerText = "Submitting record... Please wait.";
+            document.getElementById("statusMsg").style.color = "blue";
+            
+            let formData = new FormData(this);
+
+            fetch(API_URL, { method: "POST", body: formData })
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById("statusMsg").innerText = "✅ Record saved successfully in Register!";
+                document.getElementById("statusMsg").style.color = "green";
+                this.reset();
+            })
+            .catch(error => {
+                document.getElementById("statusMsg").innerText = "❌ Error submitting record.";
+                document.getElementById("statusMsg").style.color = "red";
+            });
+        });
+    </script>
+</body>
+</html>
