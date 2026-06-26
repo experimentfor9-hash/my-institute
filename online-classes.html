@@ -3,99 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Online Classes - Indian Classes Sikar</title>        
+    <title>Online Classes - Indian Classes Sikar</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        .classes-container { max-width: 1000px; margin: 30px auto; padding: 20px; }
+        
+        /* Live Class Banner */
+        .live-banner { background: linear-gradient(135deg, #1e3a8a, #3b82f6); color: white; padding: 30px; border-radius: 12px; text-align: center; margin-bottom: 40px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); position: relative; overflow: hidden;}
+        .live-badge { background: #ef4444; color: white; padding: 5px 15px; border-radius: 20px; font-weight: bold; font-size: 14px; animation: pulse 2s infinite; display: inline-block; margin-bottom: 15px; }
+        .live-banner h2 { margin: 0 0 10px 0; color: white; font-size: 24px;}
+        .join-btn { display: inline-block; background: #10b981; color: white; text-decoration: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; font-size: 18px; margin-top: 20px; transition: 0.3s; }
+        .join-btn:hover { background: #059669; transform: scale(1.05); }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        /* Video Grid */
+        .video-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .video-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; transition: 0.3s; }
+        .video-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .video-thumbnail { height: 180px; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #64748b; }
+        .video-info { padding: 20px; }
+        .trade-tag { display: inline-block; font-size: 12px; font-weight: bold; padding: 4px 10px; border-radius: 4px; margin-bottom: 10px; }
+        .tag-elec { background: #fef08a; color: #854d0e; }
+        .tag-fitter { background: #bfdbfe; color: #1e40af; }
+        .tag-wcs { background: #bbf7d0; color: #166534; }
+        .tag-copa { background: #fbcfe8; color: #9d174d; }
+        .video-title { margin: 0 0 10px 0; font-size: 18px; color: #1e293b; }
+        .video-desc { color: #64748b; font-size: 14px; margin: 0; line-height: 1.5; }
+    </style>
 </head>
 <body>
 
-    <!-- Header Section -->
-    <header>
-        <img src="Mukesh.jpg" alt="Institute Logo" class="header-logo">
-        <h1>Indian Classes Sikar</h1>
-        <p>Technical Education</p>
-    </header>
+    <header></header>
+    <nav></nav>
 
-   <!-- Navigation Menu -->
-    <nav>
-        <a href="index.html">Home</a>
-        <a href="about.html">About Us</a>
-        <a href="courses.html">Courses</a>
-        <a href="online-classes.html">Online Classes</a>
-        <a href="contact.html">Contact</a>
-    </nav>
-
-    <!-- Main Content -->
-    <div class="container">
-        <h2>Online Learning Portal</h2>
-        <p>Welcome to the E-Learning section. Here students can join live sessions or watch recorded lectures.</p>
-        
-        <div id="liveClassContainer">
-            <p>Loading Live Classes...</p>
+    <div class="classes-container">
+        <!-- Live Class Banner -->
+        <div class="live-banner">
+            <div class="live-badge">🔴 LIVE NOW</div>
+            <h2>Employability Skills Session[span_19](start_span)[span_19](end_span)</h2>
+            <p>Join our expert faculty for a live interactive session on communication skills and interview preparation.[span_20](start_span)[span_20](end_span)</p>
+            <p><strong>Schedule:</strong> Today at 4:00 PM[span_21](start_span)[span_21](end_span)</p>
+            <a href="https://meet.google.com" target="_blank" class="join-btn">Join Google Meet[span_22](start_span)[span_22](end_span)</a>
         </div>
 
-        <hr style="margin: 40px 0; border: 1px solid #e2e8f0;">
+        <h3 style="color: #1e3a8a; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">Recent Video Lectures[span_23](start_span)[span_23](end_span)</h3>
+        
+        <!-- Recorded Videos Grid -->
+        <div class="video-grid">
+            
+            <div class="video-card">
+                <div class="video-thumbnail">▶️</div>
+                <div class="video-info">
+                    <span class="trade-tag tag-elec">⚡ Electrician[span_24](start_span)[span_24](end_span)</span>
+                    <h4 class="video-title">Understanding AC Circuits (Part 1)[span_25](start_span)[span_25](end_span)</h4>
+                    <p class="video-desc">Detailed explanation of alternating current fundamentals, RMS value, and peak voltage.[span_26](start_span)[span_26](end_span)</p>
+                </div>
+            </div>
 
-        <h3>Recorded Video Lectures</h3>
-        <p>Missed a class? Watch previous lectures below:</p>
+            <div class="video-card">
+                <div class="video-thumbnail">▶️</div>
+                <div class="video-info">
+                    <span class="trade-tag tag-fitter">🔧 Fitter[span_27](start_span)[span_27](end_span)</span>
+                    <h4 class="video-title">Precision Measurement Tools[span_28](start_span)[span_28](end_span)</h4>
+                    <p class="video-desc">Practical demonstration on how to accurately read and use a Vernier Caliper and Micrometer.[span_29](start_span)[span_29](end_span)</p>
+                </div>
+            </div>
 
-        <div id="videoContainer" class="video-grid">
-            <p>Loading Videos...</p>
+            <div class="video-card">
+                <div class="video-thumbnail">▶️</div>
+                <div class="video-info">
+                    <span class="trade-tag tag-wcs">📐 WCS (Common)[span_30](start_span)[span_30](end_span)</span>
+                    <h4 class="video-title">Fractions and Decimals Basics[span_31](start_span)[span_31](end_span)</h4>
+                    <p class="video-desc">Workshop Calculation & Science basic mathematical concepts important for all trades.[span_32](start_span)[span_32](end_span)</p>
+                </div>
+            </div>
+
+            <div class="video-card">
+                <div class="video-thumbnail">▶️</div>
+                <div class="video-info">
+                    <span class="trade-tag tag-copa">💻 COPA[span_33](start_span)[span_33](end_span)</span>
+                    <h4 class="video-title">Introduction to MS Excel[span_34](start_span)[span_34](end_span)</h4>
+                    <p class="video-desc">Upcoming lecture on basic spreadsheet management and formulas.[span_35](start_span)[span_35](end_span)</p>
+                </div>
+            </div>
+
         </div>
     </div>
 
-    <div class="bottom-space"></div>
-
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2026 Indian Classes Sikar. All Rights Reserved.</p>
-    </footer>
-
-    <!-- JavaScript -->
-    <script>
-        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
-
-        window.onload = function() {
-            fetch(API_URL)
-            .then(response => response.json())
-            .then(data => {
-                
-                // 1. Live Classes 
-                let liveHTML = "";
-                data.live.forEach(cls => {
-                    liveHTML += `
-                    <div class="live-class-box">
-                        <div class="live-class-info">
-                            <h3>🔴 Live: ${cls.topic}</h3>
-                            <p><strong>Instructor:</strong> ${cls.instructor} | <strong>Time:</strong> ${cls.time}</p>
-                        </div>
-                        <a href="${cls.link}" target="_blank" class="join-btn">Join Live Class</a>
-                    </div>`;
-                });
-                if(data.live.length === 0) { liveHTML = "<p>No live classes scheduled currently.</p>"; }
-                document.getElementById("liveClassContainer").innerHTML = liveHTML;
-
-
-                // 2. Videos 
-                let videoHTML = "";
-                data.videos.forEach(vid => {
-                    videoHTML += `
-                    <div class="video-card">
-                        <iframe src="${vid.url}" title="${vid.title}" allowfullscreen></iframe>
-                        <h4>${vid.title}</h4>
-                        <p>${vid.desc}</p>
-                    </div>`;
-                });
-                if(data.videos.length === 0) { videoHTML = "<p>No recorded videos available.</p>"; }
-                document.getElementById("videoContainer").innerHTML = videoHTML;
-
-            })
-            .catch(error => {
-                console.error("Error fetching data: ", error);
-                document.getElementById("liveClassContainer").innerHTML = "<p>Error loading classes. Please try again later.</p>";
-            });
-        };
-    </script>
-    
+    <footer></footer>
+    <script src="components.js"></script>
 </body>
 </html>
-
