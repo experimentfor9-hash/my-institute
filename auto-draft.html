@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Advanced Auto-Draft & Forms Generator</title>
     <link rel="stylesheet" href="style.css">
-    <!-- PDF जनरेट करने के लिए html2pdf लाइब्रेरी -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <style>
         body { font-family: 'Georgia', serif; background-color: #f8fafc; padding: 20px; color: #1e293b; }
@@ -13,14 +12,13 @@
         h2 { color: #1e3a8a; text-align: center; }
         .form-section { margin-bottom: 30px; display: grid; grid-template-columns: 1fr; gap: 15px; }
         label { font-weight: bold; display: block; margin-bottom: 5px; }
-        input, select { padding: 10px; width: 100%; border: 1px solid #cbd5e1; border-radius: 5px; box-sizing: border-box; font-size: 16px; }
-        .btn-gen { width: 100%; padding: 15px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 16px;}
+        input, select { padding: 10px; width: 100%; border: 1px solid #cbd5e1; border-radius: 5px; font-size: 16px; }
+        .btn-gen { width: 100%; padding: 15px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 16px;}
         .btn-gen:hover { background: #1d4ed8; }
         
         #draftBox { margin-top: 30px; display: none; }
-        #letterContent { padding: 40px; border: 1px solid #cbd5e1; background: #fff; line-height: 1.6; font-size: 14px; color: black; box-shadow: 0 2px 10px rgba(0,0,0,0.05); min-height: 500px; overflow-x: auto;}
+        #letterContent { padding: 40px; border: 1px solid #cbd5e1; background: #fff; line-height: 1.6; font-size: 14px; color: black; min-height: 500px; overflow-x: auto;}
         
-        /* Tables Styling for Annexures */
         table.annex-table { width: 100%; border-collapse: collapse; margin-top: 15px; font-size: 13px; }
         table.annex-table th, table.annex-table td { border: 1px solid #000; padding: 8px; text-align: left; }
         table.annex-table th { background-color: #f1f5f9; text-align: center;}
@@ -69,25 +67,25 @@
                     <option value="anx11">Annexure-11: Leave Record</option>
                     <option value="anx12">Annexure-12: Absent Notice</option>
                     <option value="anx13">Annexure-13: Scholarship Record</option>
-                    <option value="anx14">Annexure-14: Indent Book (Stores Requisition)</option>
+                    <option value="anx14">Annexure-14: Indent Book</option>
                 </optgroup>
-                <optgroup label="Store & Equipment Records (Annexure 15 to 22)">
-                    <option value="anx15">Annexure-15: Section Store Register (SSR)</option>
+                <optgroup label="Store & Equipment (Annexure 15 to 22)">
+                    <option value="anx15">Annexure-15: Section Store Register</option>
                     <option value="anx16">Annexure-16: Tools & Equipment Register</option>
-                    <option value="anx17">Annexure-17: Equipment Maintenance Log Book</option>
+                    <option value="anx17">Annexure-17: Equipment Maintenance Log</option>
                     <option value="anx18">Annexure-18: Store Return Book</option>
-                    <option value="anx19">Annexure-19: Unserviceable Tools & Equipments</option>
+                    <option value="anx19">Annexure-19: Unserviceable Equipments</option>
                     <option value="anx20">Annexure-20: Condemnation Form</option>
                     <option value="anx21">Annexure-21: Manufacturing Register</option>
-                    <option value="anx22">Annexure-22: Trade Workshop Layout (Template)</option>
+                    <option value="anx22">Annexure-22: Workshop Layout</option>
                 </optgroup>
-                <optgroup label="Discharge, Notices & Misc (Annexure 23 to 28)">
+                <optgroup label="Discharge & Misc (Annexure 23 to 28)">
                     <option value="anx23">Annexure-23: Passout Student Data Base</option>
                     <option value="anx24">Annexure-24: Success Story Format</option>
-                    <option value="anx25">Annexure-25: Discharge Letter (TC Not Submitted)</option>
+                    <option value="anx25">Annexure-25: Discharge (TC Not Submitted)</option>
                     <option value="anx26">Annexure-26: Warning Letter (Absenteeism)</option>
-                    <option value="anx27">Annexure-27: Discharge Letter (After 3 Warnings)</option>
-                    <option value="anx28">Annexure-28: Discharge Letter (On Self Application)</option>
+                    <option value="anx27">Annexure-27: Discharge (After 3 Warnings)</option>
+                    <option value="anx28">Annexure-28: Discharge (On Self Application)</option>
                 </optgroup>
             </select>
         </div>
@@ -108,8 +106,7 @@
 
 <script>
 function generateRows(cols, count) {
-    let row = '<tr>' + '<td></td>'.repeat(cols) + '</tr>';
-    return row.repeat(count);
+    return ('<tr>' + '<td></td>'.repeat(cols) + '</tr>').repeat(count);
 }
 
 function generateDraft() {
@@ -117,173 +114,63 @@ function generateDraft() {
     let type = document.getElementById("templateType").value;
     let content = "";
     let date = new Date().toLocaleDateString('en-IN');
-    let dirHeader = `<h3 class="text-center" style="margin-bottom:5px;">DIRECTORATE OF SKILL DEVELOPMENT, MADHYA PRADESH<br>GOVT/PVT. INDUSTRIAL TRAINING INSTITUTE</h3>`;
+    let hdr = `<h3 class="text-center" style="margin-bottom:5px;">DIRECTORATE OF SKILL DEVELOPMENT, MADHYA PRADESH<br>GOVT/PVT. INDUSTRIAL TRAINING INSTITUTE</h3>`;
 
-    // --- ADMINISTRATIVE LETTERS ---
-    if(type === "probation") {
-        content = `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: प्रोबेशन अवधि संतोषजनक पूर्ण करने एवं नियमित पे-स्केल निर्धारण बाबत।</strong><br><br>महोदय,<br>उपरोक्त विषयान्तर्गत निवेदन है कि मैं, <strong>${name}</strong>, इस संस्थान में पदस्थापित हूँ। मेरी दो वर्षीय प्रोबेशन अवधि सफलतापूर्वक पूर्ण हो गई है। अतः सेवाएँ नियमित (Regular) करते हुए पे-फिक्सेशन (Pay Fixation) करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}`;
-    } 
-    else if (type === "cl") {
-        content = `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: आकस्मिक अवकाश (Casual Leave) हेतु प्रार्थना पत्र।</strong><br><br>महोदय,<br>सविनय निवेदन है कि मुझे व्यक्तिगत कारणों से दिनांक ____________ को एक दिन का आकस्मिक अवकाश चाहिए। अतः मेरा अवकाश स्वीकृत करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}<br>दिनांक: ${date}`;
-    }
-    // --- ANNEXURES 1 TO 7 (TRAINING) ---
-    else if (type === "anx1") {
-        content = dirHeader + `<h4 class="text-center">DIVIDED - SYLLABUS (Annexure-1)</h4>
-        <p><strong>Trade:</strong> ${name} <span style="float:right;"><strong>Semester:</strong> _____</span></p>
-        <table class="annex-table">
-            <tr><th>Week No</th><th>Date</th><th>L.P.No.</th><th>Professional Knowledge (Theory)</th><th>Teaching Aids</th><th>D.P.No</th><th>Professional Skills (Practical)</th><th>Demo Aids</th><th>Shop Talk</th></tr>
-            ${generateRows(9, 15)}
-        </table><br><p>Signature of T.O.: ____________</p>`;
-    }
-    else if (type === "anx2") {
-        content = dirHeader + `<h4 class="text-center">WEEKLY - PROGRAMME (Annexure-2)</h4>
-        <p><strong>Name of T.O.:</strong> ${name} <span style="float:right;"><strong>Running Week:</strong> _____</span></p>
-        <table class="annex-table">
-            <tr><th>Day</th><th>Date</th><th>Practical Work</th><th>Theory Portion</th><th>Remarks</th></tr>
-            <tr><td>Monday</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>Tuesday</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>Wednesday</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>Thursday</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>Friday</td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>Saturday</td><td></td><td></td><td></td><td></td></tr>
-        </table><br><p>Signature of T.O. ____________ <span style="float:right;">Signature of T.S. ____________</span></p>`;
-    }
-    else if (type === "anx3") {
-        content = dirHeader + `<h4 class="text-center">LESSON-PLAN (Annexure-3)</h4>
-        <table class="annex-table">
-            <tr><td><strong>NAME:</strong> ${name}</td><td><strong>TRADE:</strong> __________</td><td><strong>DATE:</strong> ${date}</td></tr>
-            <tr><td colspan="3"><strong>SUBJECT:</strong> ______________________________________________________</td></tr>
-            <tr><td colspan="3"><strong>OBJECTIVE:</strong> ____________________________________________________</td></tr>
-            <tr><td colspan="3"><strong>AIDS:</strong> _________________________________________________________</td></tr>
-        </table>
-        <table class="annex-table">
-            <tr><th>TOPICS</th><th>INFORMATION POINTS</th><th>SPOT HINTS</th></tr>
-            ${generateRows(3, 10)}
-        </table><br><p>SUMMARY: _______________ <br>ASSIGNMENT: _______________</p><p>SIGN OF T.O.: _________ <span style="float:right;">SIGN OF T.S.: _________</span></p>`;
-    }
-    else if (type === "anx4") {
-        content = dirHeader + `<h4 class="text-center">DEMONSTRATION-PLAN (Annexure-4)</h4>
-        <table class="annex-table">
-            <tr><td><strong>NAME:</strong> ${name}</td><td><strong>TRADE:</strong> __________</td><td><strong>DATE:</strong> ${date}</td></tr>
-            <tr><td colspan="3"><strong>TITLE:</strong> ______________________________________________________</td></tr>
-            <tr><td colspan="3"><strong>OBJECTIVE:</strong> ____________________________________________________</td></tr>
-        </table>
-        <table class="annex-table">
-            <tr><th>STEPS/PROCEDURE</th><th>INFORMATION POINTS</th><th>SAFE PRACTICE</th></tr>
-            ${generateRows(3, 10)}
-        </table><br><p>SIGN OF T.O.: _________ <span style="float:right;">SIGN OF T.S.: _________</span></p>`;
-    }
-    else if (type === "anx5") {
-        content = dirHeader + `<h4 class="text-center">JOB MARKING - SHEET (Annexure-5)</h4>
-        <p><strong>Trade:</strong> ${name} <span style="float:right;"><strong>Exercise No:</strong> _____</span></p>
-        <table class="annex-table">
-            <tr><th rowspan="2">S.No.</th><th rowspan="2">Name of Student</th><th colspan="3">Method of Work</th><th colspan="3">Quality of Work</th><th colspan="3">Time</th><th>Total</th><th>Grade</th></tr>
-            <tr><th>1</th><th>2</th><th>Total</th><th>1</th><th>2</th><th>Total</th><th>1</th><th>2</th><th>Total</th><th>(100)</th><th></th></tr>
-            ${generateRows(12, 10)}
-        </table><br><p>Sign of T.O.: _________ <span style="float:right;">Sign of T.S.: _________</span></p>`;
-    }
-    else if (type === "anx6") {
-        content = dirHeader + `<h4 class="text-center">FORMAT FOR - INTERNAL ASSESSMENT (Annexure-6A/B)</h4>
-        <table class="annex-table">
-            <tr><th>S.No</th><th>Candidate Name</th><th>Safety (15)</th><th>Workplace Hygiene (10)</th><th>Attendance (10)</th><th>Skills to Handle Tools (10)</th><th>Speed (10)</th><th>Quality (15)</th><th>VIVA (15)</th><th>Total (100)</th></tr>
-            ${generateRows(10, 10)}
-        </table>`;
-    }
-    else if (type === "anx7") {
-        content = dirHeader + `<h4 class="text-center">PROGRESS-CARD (Annexure-7A/7B)</h4>
-        <p><strong>Name of Trainee:</strong> ${name} <span style="float:right;"><strong>Roll No:</strong> _____</span></p>
-        <table class="annex-table">
-            <tr><th>Month</th><th>Practical (100)</th><th>Theory (20)</th><th>W/S Cal (10)</th><th>Engg. Drg (20)</th><th>Total (150)</th><th>Sign T.O.</th><th>Remark</th></tr>
-            <tr><td>August</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>September</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td>October</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            ${generateRows(8, 3)}
-        </table>`;
-    }
-    // --- ANNEXURES 8 TO 14 (SECTIONAL) ---
-    else if (type === "anx8") {
-        content = dirHeader + `<h4 class="text-center">ADMISSION SLIP (Annexure-8)</h4>
-        <table class="annex-table">
-            <tr><td colspan="2"><strong>Applicant Name:</strong> ${name}</td><td colspan="2"><strong>Application No:</strong> __________</td></tr>
-            <tr><td><strong>Father's Name:</strong></td><td>__________</td><td><strong>DOB:</strong></td><td>__________</td></tr>
-            <tr><td><strong>Category:</strong></td><td>__________</td><td><strong>Gender:</strong></td><td>__________</td></tr>
-            <tr><th colspan="4" class="text-center">Educational Details</th></tr>
-            <tr><td><strong>10th Board:</strong></td><td>__________</td><td><strong>Percentage:</strong></td><td>__________</td></tr>
-            <tr><td colspan="2"><strong>Allotted Trade:</strong></td><td colspan="2">__________ (NCVT/SCVT)</td></tr>
-        </table><br><p>Seal & Signature of Officer In charge: __________________</p>`;
-    }
-    else if (type === "anx9") {
-        content = dirHeader + `<h4 class="text-center">ATTENDANCE - REGISTER (Annexure-9)</h4>
-        <p><strong>Month:</strong> __________ <span style="float:right;"><strong>Trade:</strong> ${name}</span></p>
-        <table class="annex-table">
-            <tr><th>S.No</th><th>Name of Trainee</th><th>1</th><th>2</th><th>3</th><th>...</th><th>29</th><th>30</th><th>31</th><th>Total Present</th><th>Total Absent</th></tr>
-            ${generateRows(11, 10)}
-        </table>`;
-    }
-    else if (type === "anx10") {
-        content = dirHeader + `<h4 class="text-center">TIME - TABLE (Annexure-10 A/B/C/D)</h4>
-        <table class="annex-table">
-            <tr><th>Shift / Day</th><th>Monday</th><th>Tuesday</th><th>Wednesday</th><th>Thursday</th><th>Friday</th><th>Saturday</th></tr>
-            <tr><td><strong>Period 1</strong><br>09:30 - 10:20</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td><strong>Period 2</strong><br>10:20 - 11:10</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td><strong>Period 3</strong><br>11:10 - 12:00</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-            <tr><td colspan="7" class="text-center"><strong>LUNCH BREAK</strong></td></tr>
-            <tr><td><strong>Practical</strong><br>12:30 - 05:30</td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
-        </table>`;
-    }
-    else if (type === "anx11") {
-        content = dirHeader + `<h4 class="text-center">LEAVE - RECORD (Annexure-11)</h4>
-        <p><strong>Name Of Trainee:</strong> ${name} <span style="float:right;"><strong>Trade:</strong> __________</span></p>
-        <table class="annex-table">
-            <tr><th>S.No.</th><th>Date From</th><th>Date To</th><th>Sanctioned Days</th><th>Balance Days</th><th>Sign of T.O.</th><th>Remark</th></tr>
-            ${generateRows(7, 8)}
-        </table>`;
-    }
-    else if (type === "anx12") {
-        content = `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br>
-            <h4 class="text-center">अनुपस्थिति - सूचना (Annexure-12)</h4>
-            क्र.: ________ <span style="float:right;">दिनांक: ${date}</span><br><br>
-            श्री/सुश्री <strong>${name}</strong>, व्यवसाय _______________, अनु क्र. ____________, बैच ____________ दिनांक ____________ से लगातार अनुपस्थित हैं।<br><br>
-            बिना पूर्व सूचना के ______ दिन का आकस्मिक अवकाश ग्रहण करने के बाद, अनुपस्थिति के पूर्व हाजरी प्रतिशत ______ है। छुट्टियों का उपयोग:<br>
-            - आकस्मिक अवकाश: ______<br>
-            - चिकित्सा अवकाश: ______<br>
-            माह ____________ के अंत तक हाजरी प्रतिशत ______ है।<br><br><br>
-            <strong>हस्ताक्षर:</strong> प्रशिक्षण अधिकारी <span style="float:right;"><strong>हस्ताक्षर:</strong> प्रशिक्षण अधीक्षक</span>`;
-    }
-    else if (type === "anx13") {
-        content = dirHeader + `<h4 class="text-center">SCHOLARSHIP - RECORD (Annexure-13)</h4>
-        <table class="annex-table">
-            <tr><th>S.No</th><th>Trainee / Father's Name</th><th>Month</th><th>Working Days</th><th>Attendance %</th><th>Scholarship Days</th><th>Amount</th><th>Remark</th></tr>
-            ${generateRows(8, 10)}
-        </table>`;
-    }
-    else if (type === "anx14") {
-        content = dirHeader + `<h4 class="text-center">STORES REQUISITIONS BOOK - Indent Book (Annexure-14)</h4>
-        <p><strong>Section / Trade:</strong> ${name} <span style="float:right;"><strong>Date:</strong> ${date}</span></p>
-        <table class="annex-table">
-            <tr><th>S.No.</th><th>Particulars of Stores</th><th>Quantity</th><th>Rate</th><th>Amount</th><th>Bin Card No.</th><th>Balance in Bin Card</th><th>Remark</th></tr>
-            ${generateRows(8, 8)}
-        </table><br><p>Approved By Principal: __________ <span style="float:right;">Issued By Store Keeper: __________</span></p>`;
-    }
-    // --- ANNEXURES 15 TO 22 (STORE & EQUIP) ---
-    else if (type === "anx15") {
-        content = dirHeader + `<h4 class="text-center">SECTION STORE REGISTER - SSR (Annexure-15)</h4>
-        <p><strong>Description of Stores:</strong> ${name}</p>
-        <table class="annex-table">
-            <tr><th colspan="4">RECEIPT</th><th colspan="5">ISSUE</th></tr>
-            <tr><th>Date</th><th>No.</th><th>Qty</th><th>Amount</th><th>Date</th><th>Issued to Trainees</th><th>Qty</th><th>Balance</th><th>Sign</th></tr>
-            ${generateRows(9, 10)}
-        </table>`;
-    }
-    else if (type === "anx16") {
-        content = dirHeader + `<h4 class="text-center">TOOLS AND EQUIPMENT - REGISTER (Annexure-16)</h4>
-        <p><strong>T.O. Name:</strong> ${name}</p>
-        <table class="annex-table">
-            <tr><th>S.No.</th><th>Date of Issue</th><th>Indent No.</th><th>Particulars Of tools issued</th><th>Quantity</th><th>Sign of receiver</th><th>Return Date</th><th>Balance With Receiver</th></tr>
-            ${generateRows(8, 10)}
-        </table>`;
-    }
-    else if (type === "anx17") {
-        content = dirHeader + `<h4 class="text-center">EQUIPMENT MAINTENANCE LOG (Annexure-17)</h4>
-        <table class="annex-table">
-            <tr><td><strong>Name O
+    const templates = {
+        "probation": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: प्रोबेशन अवधि संतोषजनक पूर्ण करने एवं नियमित पे-स्केल निर्धारण बाबत।</strong><br><br>महोदय,<br>उपरोक्त विषयान्तर्गत निवेदन है कि मैं, <strong>${name}</strong>, इस संस्थान में पदस्थापित हूँ। मेरी दो वर्षीय प्रोबेशन अवधि सफलतापूर्वक पूर्ण हो गई है। अतः सेवाएँ नियमित करते हुए पे-फिक्सेशन करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}`,
+        "cl": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: आकस्मिक अवकाश (Casual Leave) हेतु प्रार्थना पत्र।</strong><br><br>महोदय,<br>सविनय निवेदन है कि मुझे व्यक्तिगत कारणों से दिनांक ____________ को एक दिन का आकस्मिक अवकाश चाहिए। अतः मेरा अवकाश स्वीकृत करने की कृपा करें।<br><br><strong>भवदीय,</strong><br>${name}<br>दिनांक: ${date}`,
+        "rti": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br>क्रमांक: RTI/2026/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name}<br><br><strong>विषय: सूचना का अधिकार अधिनियम (RTI Act) 2005 के अंतर्गत चाही गई सूचना बाबत।</strong><br><strong>संदर्भ:</strong> आपका प्रार्थना पत्र दिनांक ____________<br><br>महोदय,<br>उपरोक्त विषयान्तर्गत लेख है कि माँगी गई जानकारी बिन्दुवार संलग्न है। यदि आप संतुष्ट नहीं हैं, तो 30 दिवस के भीतर प्रथम अपीलीय अधिकारी के समक्ष अपील प्रस्तुत कर सकते हैं।<br><br><strong>लोक सूचना अधिकारी / प्रधानाचार्य</strong>`,
+        "recovery": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br>क्रमांक: GF/Rec/____ <span style="float:right;">दिनांक: ${date}</span><br><br><strong>प्रति,</strong><br>${name} (गेस्ट फैकल्टी)<br><br><strong>विषय: कार्य में लापरवाही एवं मानदेय/रिकवरी जमा कराने बाबत।</strong><br><br>उपरोक्त विषयान्तर्गत लेख है कि आपके द्वारा कार्य करते समय नियमों का उल्लंघन/रिकॉर्ड में अनियमितता पाई गई है। अतः 07 दिवस के भीतर स्पष्टीकरण दें अथवा नियमानुसार रिकवरी राशि जमा कराएं।<br><br><strong>प्रधानाचार्य</strong>`,
+        "missing_stock": `<strong>सेवा में,</strong><br>श्रीमान प्रधानाचार्य महोदय,<br>Govt. ITI<br><br><strong>विषय: स्टॉक/स्टोर रजिस्टर में मिसिंग रिकॉर्ड की रिपोर्टिंग बाबत।</strong><br><br>महोदय,<br>निवेदन है कि मैं <strong>${name}</strong> अनुभाग के स्टॉक रजिस्टर का मिलान कर रहा था, जिसमें कुछ सामग्री मिसिंग पाई गई है। यह पूर्व प्रभारी के कार्यकाल की प्रतीत होती है। अतः वस्तुस्थिति आवश्यक कार्यवाही हेतु प्रेषित है।<br><br><strong>हस्ताक्षर:</strong><br>${name}<br>दिनांक: ${date}`,
+        
+        "anx1": hdr + `<h4 class="text-center">DIVIDED - SYLLABUS (Annexure-1)</h4><p><strong>Trade:</strong> ${name}</p><table class="annex-table"><tr><th>Week No</th><th>Date</th><th>L.P.No.</th><th>Theory</th><th>Aids</th><th>D.P.No</th><th>Practical</th><th>Shop Talk</th></tr>${generateRows(8, 10)}</table>`,
+        "anx2": hdr + `<h4 class="text-center">WEEKLY - PROGRAMME (Annexure-2)</h4><p><strong>Name of T.O.:</strong> ${name}</p><table class="annex-table"><tr><th>Day</th><th>Date</th><th>Practical Work</th><th>Theory Portion</th><th>Remarks</th></tr>${generateRows(5, 6)}</table>`,
+        "anx3": hdr + `<h4 class="text-center">LESSON-PLAN (Annexure-3)</h4><table class="annex-table"><tr><td><strong>NAME:</strong> ${name}</td><td><strong>DATE:</strong> ${date}</td></tr><tr><td colspan="2"><strong>SUBJECT/OBJECTIVE:</strong> </td></tr></table><table class="annex-table"><tr><th>TOPICS</th><th>INFORMATION POINTS</th><th>SPOT HINTS</th></tr>${generateRows(3, 8)}</table>`,
+        "anx4": hdr + `<h4 class="text-center">DEMONSTRATION-PLAN (Annexure-4)</h4><table class="annex-table"><tr><td><strong>NAME:</strong> ${name}</td><td><strong>DATE:</strong> ${date}</td></tr></table><table class="annex-table"><tr><th>STEPS/PROCEDURE</th><th>INFORMATION POINTS</th><th>SAFE PRACTICE</th></tr>${generateRows(3, 8)}</table>`,
+        "anx5": hdr + `<h4 class="text-center">JOB MARKING - SHEET (Annexure-5)</h4><p><strong>Trade:</strong> ${name}</p><table class="annex-table"><tr><th>S.No.</th><th>Name of Student</th><th>Workmanship</th><th>Quality</th><th>Time</th><th>Total</th><th>Grade</th></tr>${generateRows(7, 10)}</table>`,
+        "anx6": hdr + `<h4 class="text-center">INTERNAL ASSESSMENT (Annexure-6)</h4><table class="annex-table"><tr><th>S.No</th><th>Candidate Name</th><th>Safety</th><th>Attendance</th><th>Skills</th><th>Speed</th><th>Quality</th><th>VIVA</th><th>Total</th></tr>${generateRows(9, 10)}</table>`,
+        "anx7": hdr + `<h4 class="text-center">PROGRESS-CARD (Annexure-7)</h4><p><strong>Trainee:</strong> ${name}</p><table class="annex-table"><tr><th>Month</th><th>Practical</th><th>Theory</th><th>W/S Cal</th><th>Engg. Drg</th><th>Total</th><th>Sign</th></tr>${generateRows(7, 8)}</table>`,
+        "anx8": hdr + `<h4 class="text-center">ADMISSION SLIP (Annexure-8)</h4><table class="annex-table"><tr><td><strong>Name:</strong> ${name}</td><td><strong>Application No:</strong></td></tr><tr><td><strong>Father's Name:</strong></td><td><strong>DOB:</strong></td></tr><tr><td><strong>10th %:</strong></td><td><strong>Trade:</strong></td></tr></table>`,
+        "anx9": hdr + `<h4 class="text-center">ATTENDANCE - REGISTER (Annexure-9)</h4><p><strong>Trade:</strong> ${name}</p><table class="annex-table"><tr><th>Name</th><th>1</th><th>2</th><th>3</th><th>...</th><th>30</th><th>31</th><th>Total</th></tr>${generateRows(8, 10)}</table>`,
+        "anx10": hdr + `<h4 class="text-center">TIME - TABLE (Annexure-10)</h4><table class="annex-table"><tr><th>Time</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>${generateRows(7, 5)}</table>`,
+        "anx11": hdr + `<h4 class="text-center">LEAVE - RECORD (Annexure-11)</h4><p><strong>Trainee:</strong> ${name}</p><table class="annex-table"><tr><th>Date From</th><th>Date To</th><th>Sanctioned</th><th>Balance</th><th>Sign</th><th>Remark</th></tr>${generateRows(6, 6)}</table>`,
+        "anx12": `<h4 class="text-center">अनुपस्थिति - सूचना (Annexure-12)</h4><br>श्री/सुश्री <strong>${name}</strong>, दिनांक ____________ से लगातार अनुपस्थित हैं। बिना पूर्व सूचना के अवकाश ग्रहण करने के बाद माह के अंत तक हाजरी प्रतिशत ______ है।<br><br><strong>प्रशिक्षण अधिकारी</strong>`,
+        "anx13": hdr + `<h4 class="text-center">SCHOLARSHIP - RECORD (Annexure-13)</h4><table class="annex-table"><tr><th>Name</th><th>Month</th><th>Working Days</th><th>Attendance %</th><th>Amount</th><th>Remark</th></tr>${generateRows(6, 8)}</table>`,
+        "anx14": hdr + `<h4 class="text-center">STORES REQUISITIONS BOOK (Annexure-14)</h4><p><strong>Section:</strong> ${name}</p><table class="annex-table"><tr><th>Particulars</th><th>Qty</th><th>Rate</th><th>Amount</th><th>Bin Card</th><th>Remark</th></tr>${generateRows(6, 6)}</table>`,
+        "anx15": hdr + `<h4 class="text-center">SECTION STORE REGISTER (Annexure-15)</h4><table class="annex-table"><tr><th>Date</th><th>No.</th><th>Qty (Receipt)</th><th>Date</th><th>Issued to</th><th>Qty (Issue)</th><th>Balance</th></tr>${generateRows(7, 8)}</table>`,
+        "anx16": hdr + `<h4 class="text-center">TOOLS & EQUIPMENT - REGISTER (Annexure-16)</h4><table class="annex-table"><tr><th>Date</th><th>Particulars</th><th>Qty</th><th>Sign</th><th>Return Date</th><th>Balance</th></tr>${generateRows(6, 8)}</table>`,
+        "anx17": hdr + `<h4 class="text-center">EQUIPMENT MAINTENANCE LOG (Annexure-17)</h4><table class="annex-table"><tr><td><strong>Equipment:</strong> ${name}</td><td><strong>Purchase Date:</strong></td></tr></table><table class="annex-table"><tr><th>Date</th><th>Maintenance Description</th><th>Performed by</th><th>Next Date</th></tr>${generateRows(4, 5)}</table>`,
+        "anx18": hdr + `<h4 class="text-center">STORE REQUISITION - BOOK (Annexure-18)</h4><table class="annex-table"><tr><th>Particulars</th><th>Qty</th><th>Ledger No.</th><th>Balance</th><th>Remark</th></tr>${generateRows(5, 6)}</table>`,
+        "anx19": hdr + `<h4 class="text-center">Unserviceable Tools & Equipments (Annexure-19)</h4><table class="annex-table"><tr><th>Description</th><th>Qty</th><th>Cost</th><th>Damage</th><th>Recovered</th><th>Remark</th></tr>${generateRows(6, 6)}</table>`,
+        "anx20": hdr + `<h4 class="text-center">CONDEMNATION FORM (Annexure-20)</h4><table class="annex-table"><tr><th>Articles</th><th>Qty</th><th>Book Value</th><th>Date U/S</th><th>Total Value</th><th>Remark</th></tr>${generateRows(6, 6)}</table>`,
+        "anx21": hdr + `<h4 class="text-center">MANUFACTURING REGISTER (Annexure-21)</h4><table class="annex-table"><tr><th>Date</th><th>Job No.</th><th>Name of stores</th><th>Qty</th><th>Manufactured</th><th>Remark</th></tr>${generateRows(6, 6)}</table>`,
+        "anx22": hdr + `<h4 class="text-center">WORKSHOP LAYOUT (Annexure-22)</h4><div style="border: 2px dashed #333; padding: 100px 20px; text-align: center; margin-top: 20px;"><h3>[ Map Placeholder ]</h3><p>Draw machine arrangement here.</p></div>`,
+        "anx23": hdr + `<h4 class="text-center">PASSOUT STUDENT DATABASE (Annexure-23)</h4><table class="annex-table"><tr><th>Name</th><th>DOB</th><th>Category</th><th>Contact No.</th><th>Job/Education</th><th>Salary</th></tr>${generateRows(6, 8)}</table>`,
+        "anx24": hdr + `<h4 class="text-center">सफलता की कहानी (Annexure-24)</h4><table class="annex-table"><tr><td><strong>नाम:</strong> ${name}</td><td rowspan="4" class="text-center" style="width:150px;">[Photo]</td></tr><tr><td><strong>मोबाईल:</strong></td></tr><tr><td><strong>नियोजक:</strong></td></tr><tr><td><strong>विवरण:</strong><br><br><br><br></td></tr></table>`,
+        "anx25": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः - संस्था से नाम खारिज करने बावत्। (टी.सी. अप्राप्त) (Annexure-25)</h4><br>उपरोक्त विषयान्तर्गत लेख है कि आपको टी.सी. के अभाव में अस्थाई प्रवेश दिया गया था। आपने टी.सी. जमा नहीं की है, अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx26": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- बिना सूचना के अनुपस्थित रहने बावत्। चेतावनी (Annexure-26)</h4><br>आप बिना सूचना के अनुपस्थित हैं। अतः 7 दिन के अंदर संतोषप्रद स्पष्टीकरण सहित उपस्थित हों अन्यथा आपका नाम संस्था से खारिज कर दिया जावेगा।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx27": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- डिस्चार्ज करने बावत् (After 3 Warnings) (Annexure-27)</h4><br>संस्था द्वारा तीन चेतावनी देने के पश्चात् भी आपने कोई सूचना नहीं दी। अतः आपका नाम खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`,
+        "anx28": `<strong>कार्यालय प्रधानाचार्य, Govt. ITI</strong><br><br><strong>प्रति,</strong><br>${name}<br><br><h4 class="text-center">विषयः- स्वयं के आवेदन पर डिस्चार्ज करने बावत् (Annexure-28)</h4><br>आपने संस्था छोड़ने के लिये आवेदन दिया है। अतः आपका नाम संस्था से खारिज किया जाता है।<br><br><strong>उप-प्राचार्य / प्रधानाचार्य</strong>`
+    };
+
+    content = templates[type] || "Template Not Found.";
+    document.getElementById("letterContent").innerHTML = content;
+    document.getElementById("draftBox").style.display = "block";
+}
+
+function downloadPDF() {
+    const element = document.getElementById('letterContent');
+    const opt = {
+        margin:       10,
+        filename:     'ITI_Annexure_Document.pdf',
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2 },
+        jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' }
+    };
+    html2pdf().set(opt).from(element).save();
+}
+</script>
+
+</body>
+</html>
+
