@@ -8,16 +8,34 @@ const headerHTML = `
 `;
 
 // 2. Global Navigation Menu HTML Content
+// components.js में navHTML को अपडेट करें
 const navHTML = `
-    <a href="index.html">Home</a>
-    <a href="about.html">About Us</a>
-    <a href="courses.html">Courses</a>
-    <a href="gallery.html">Gallery 📸</a>
-    <a href="cbt-test.html">Online Test 💻</a>
-    <a href="contact.html">Contact</a>
-    <a href="contact.html" class="enquiry-btn">Enquiry Now</a>
-    <button id="darkModeToggle" class="dark-btn">🌙</button>
+    <div class="hamburger" onclick="toggleMenu()">☰</div>
+    <div id="navLinks" style="display: flex; gap: 15px; align-items: center;">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="courses.html">Courses</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="cbt-test.html">CBT Test</a>
+        <a href="contact.html" class="enquiry-btn">Enquiry</a>
+        <button id="darkModeToggle" class="dark-btn">🌙</button>
+    </div>
 `;
+
+// नीचे यह नया फंक्शन जोड़ें
+function toggleMenu() {
+    const links = document.getElementById("navLinks");
+    const nav = document.querySelector("nav");
+    if (links.style.display === "flex") {
+        links.style.display = "none";
+        nav.classList.remove("menu-open");
+    } else {
+        links.style.display = "flex";
+        links.style.flexDirection = "column";
+        nav.classList.add("menu-open");
+    }
+}
+
 
 
 
