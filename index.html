@@ -3,69 +3,283 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indian Classes Sikar | Technical Education</title>
+    <title>Indian Classes Sikar | NCVT ITI Coaching & CBT Preparation</title>
     <link rel="stylesheet" href="style.css">
+    <!-- FontAwesome Icons for Beautiful UX -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-    <!-- Notice Board -->
+    <!-- 📢 Latest Notice Moving Bar -->
     <div class="notice-board">
         <div class="notice-title">📢 Latest Update</div>
-        <div class="notice-content"><p id="dynamicNotice">Loading latest updates...</p></div>
+        <div class="notice-content">
+            <p id="dynamicNotice">Loading latest updates...</p>
+        </div>
     </div>
 
+    <!-- 🚀 Premium Hero Section -->
     <header>
-        <h1>Build Your Career in Skilled Trades</h1>
+        <div class="hero-tag"><i class="fa-solid fa-graduation-cap"></i> NCVT Approved Training</div>
+        <h1>Build Your Career in <span style="color: #fde047;">Skilled Trades</span></h1>
         <p>Best IT Coaching for Electrician, Fitter & All Trades with NCVT CBT Preparation.</p>
-        <br>
-        <a href="courses.html" class="btn">Explore Courses</a>
+        
+        <div class="hero-features">
+            <span><i class="fa-solid fa-user-tie"></i> Expert Faculty</span>
+            <span><i class="fa-solid fa-screwdriver-wrench"></i> Practical Training</span>
+            <span><i class="fa-solid fa-briefcase"></i> 100% Placement Support</span>
+            <span><i class="fa-solid fa-gears"></i> Modern Workshops</span>
+        </div>
+        
+        <div class="hero-btns">
+            <a href="courses.html" class="btn active-btn">Explore Courses <i class="fa-solid fa-arrow-right"></i></a>
+            <a href="cbt-test.html" class="btn white-btn">Free CBT Test <i class="fa-solid fa-laptop"></i></a>
+        </div>
     </header>
 
+    <!-- 🪟 Floating Navigation Menu (Handled via components.js) -->
     <nav></nav>
 
-    <!-- Stats Row -->
-    <div class="container" style="display: flex; justify-content: space-around; text-align: center; margin-top: -80px; padding: 30px;">
-        <div><h2>1500+</h2><p>Students Trained</p></div>
-        <div><h2>25+</h2><p>Expert Instructors</p></div>
-        <div><h2>95%</h2><p>Placement Rate</p></div>
-        <div><h2>10+</h2><p>Years of Excellence</p></div>
+    <!-- 📊 Counter / Statistics Row -->
+    <div class="stats-row">
+        <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+            <div><h3>1500+</h3><p>Students Trained</p></div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div><h3>25+</h3><p>Expert Instructors</p></div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-chart-line"></i></div>
+            <div><h3>95%</h3><p>Placement Rate</p></div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-icon"><i class="fa-solid fa-award"></i></div>
+            <div><h3>10+</h3><p>Years of Excellence</p></div>
+        </div>
     </div>
 
-    <!-- Main Content -->
-    <div class="container">
-        <h2>Welcome to Our Institute</h2>
-        <p id="greeting"></p> 
-        <p>We are committed to providing quality technical education with practical knowledge and industry exposure to make you job-ready.</p>
+    <!-- 🎓 Popular ITI Courses Grid -->
+    <div class="container section-area">
+        <div class="section-title">
+            <span>OUR COURSES</span>
+            <h2>Popular ITI Courses</h2>
+            <p>Choose from our wide range of technical courses and build your future</p>
+        </div>
         
-        <div class="virtual-tour-section">
-            <h2>🎥 360° Workshop Virtual Tour</h2>
+        <div class="courses-grid">
+            <!-- Course 1 -->
+            <div class="card course-card">
+                <div class="icon-circle yellow-icon"><i class="fa-solid fa-bolt"></i></div>
+                <h3>Electrician</h3>
+                <p class="duration">2 Years</p>
+                <p>Learn electrical systems, wiring, safety procedures and industrial applications.</p>
+                <a href="courses.html" class="details-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <!-- Course 2 -->
+            <div class="card course-card">
+                <div class="icon-circle blue-icon"><i class="fa-solid fa-wrench"></i></div>
+                <h3>Fitter</h3>
+                <p class="duration">2 Years</p>
+                <p>Master fitting operations, machining, assembly and maintenance skills.</p>
+                <a href="courses.html" class="details-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <!-- Course 3 -->
+            <div class="card course-card">
+                <div class="icon-circle green-icon"><i class="fa-solid fa-desktop"></i></div>
+                <h3>COPA</h3>
+                <p class="duration">1 Year</p>
+                <p>Computer fundamentals, programming, networking and IT skills.</p>
+                <a href="courses.html" class="details-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <!-- Course 4 -->
+            <div class="card course-card">
+                <div class="icon-circle purple-icon"><i class="fa-solid fa-fire"></i></div>
+                <h3>Welder</h3>
+                <p class="duration">1 Year</p>
+                <p>Learn all types of welding techniques and safety standards.</p>
+                <a href="courses.html" class="details-link">View Details <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎯 Why Choose Us Section with Grid Info -->
+    <div class="container section-area grid-split">
+        <div class="info-side">
+            <div class="section-title" style="text-align: left; margin-bottom: 20px;">
+                <span>WHY CHOOSE US</span>
+                <h2 style="border: none; padding: 0;">Your Success is Our <span style="color: #1e3a8a;">Mission</span></h2>
+            </div>
+            <p>We are committed to providing quality technical education with practical knowledge and industry exposure to make you job-ready.</p>
+            <ul class="bullets-list">
+                <li><i class="fa-solid fa-circle-check"></i> Industry Experienced Faculty</li>
+                <li><i class="fa-solid fa-circle-check"></i> Well Equipped Modern Workshops</li>
+                <li><i class="fa-solid fa-circle-check"></i> NCVT Based Updated Curriculum</li>
+                <li><i class="fa-solid fa-circle-check"></i> Regular CBT Practice & Mock Tests</li>
+                <li><i class="fa-solid fa-circle-check"></i> 100% Placement Assistance</li>
+            </ul>
+            <br>
+            <a href="about.html" class="btn active-btn">About Us <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="image-side">
+            <img src="1000724255.png" alt="Workshop Tour & Students Grid" class="page-image" style="object-position: top;">
+        </div>
+    </div>
+
+    <!-- 📺 Join Live Classes Banner -->
+    <div class="container live-banner">
+        <div class="live-left">
+            <span class="live-tag"><i class="fa-solid fa-circle"></i> LIVE CLASS</span>
+            <h2>Join Our <span style="color: #fde047;">Live Classes</span></h2>
+            <p>Attend interactive live sessions with expert faculty and clear your doubts in real-time.</p>
+            <div class="time-meta">
+                <span><i class="fa-solid fa-calendar-days"></i> Every Day</span>
+                <span><i class="fa-solid fa-clock"></i> 4:00 PM - 6:00 PM</span>
+            </div>
+            <br>
+            <a href="online-classes.html" class="join-live-btn"><i class="fa-solid fa-video"></i> Join Live Class</a>
+        </div>
+    </div>
+
+    <!-- 🛠️ Quick Access Everything You Need Grid -->
+    <div class="container section-area">
+        <div class="section-title">
+            <span>QUICK ACCESS</span>
+            <h2>Everything You Need</h2>
+        </div>
+        <div class="quick-grid">
+            <div class="card quick-card" onclick="location.href='cbt-test.html'">
+                <div class="q-icon pink-q"><i class="fa-solid fa-laptop-code"></i></div>
+                <h4>CBT Mock Test</h4>
+                <p class="q-link">Practice Now <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+            <div class="card quick-card" onclick="location.href='index.html#library'">
+                <div class="q-icon green-q"><i class="fa-solid fa-book-open"></i></div>
+                <h4>E-Library</h4>
+                <p class="q-link">Study Material <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+            <div class="card quick-card" onclick="location.href='resume-builder.html'">
+                <div class="q-icon orange-q"><i class="fa-solid fa-file-invoice"></i></div>
+                <h4>Resume Builder</h4>
+                <p class="q-link">Create Resume <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+            <div class="card quick-card" onclick="location.href='auto-draft.html'">
+                <div class="q-icon purple-q"><i class="fa-solid fa-file-signature"></i></div>
+                <h4>Auto Draft</h4>
+                <p class="q-link">Create Documents <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+            <div class="card quick-card" onclick="location.href='courses.html'">
+                <div class="q-icon blue-q"><i class="fa-solid fa-calculator"></i></div>
+                <h4>Fee Calculator</h4>
+                <p class="q-link">Calculate Now <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+            <div class="card quick-card" onclick="location.href='contact.html'">
+                <div class="q-icon cyan-q"><i class="fa-solid fa-headset"></i></div>
+                <h4>Contact Us</h4>
+                <p class="q-link">Get in Touch <i class="fa-solid fa-arrow-right"></i></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎥 360° Virtual Workshop Tour -->
+    <div class="container section-area">
+        <div class="section-title">
+            <span>OUR ACHIEVEMENT</span>
+            <h2>Proud Moments</h2>
+            <p>Experience our state-of-the-art training facilities right from your screen.</p>
+        </div>
+        <div class="virtual-tour-section" style="margin: 0; padding: 0; background: transparent;">
             <div class="tour-container">
                 <iframe src="https://www.youtube.com/embed/O-XgMW_R71A" title="360 Virtual Tour" allowfullscreen></iframe>
             </div>
         </div>
     </div>
 
-    <!-- E-Library Section -->
+    <!-- 📚 NIMI E-Library Portal -->
     <div class="e-library-section" id="library">
-        <div class="header"><h2>📚 NIMI E-Library & Study Material</h2></div>
+        <div class="header">
+            <h2>📚 NIMI E-Library & Study Material</h2>
+            <p>Download Trade Theory, WCS, and Employability Skills PDF Books in one click!</p>
+        </div>
         <div class="bookshelf">
-            <!-- Books remain as per your existing logic -->
+            <div class="book-card">
+                <div class="book-cover theory"><h3>⚡ Electrician</h3><p>Trade Theory</p></div>
+                <div class="book-details">
+                    <p>NIMI Pattern Book (Hindi/English)</p>
+                    <a href="https://drive.google.com/file/d/1s8DMO1u5RbDSS5VsRN7ymIpc0ZGOfvQ8/view?usp=drivesdk" class="download-btn" target="_blank">📥 Download PDF</a>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-cover wcs"><h3>📐 WCS</h3><p>Workshop Calc. & Science</p></div>
+                <div class="book-details">
+                    <p>Common for All Trades (1st & 2nd Year)</p>
+                    <a href="#" class="download-btn">📥 Download PDF</a>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-cover es"><h3>💼 Employability</h3><p>Skills (ES)</p></div>
+                <div class="book-details">
+                    <p>New Updated Syllabus</p>
+                    <a href="#" class="download-btn">📥 Download PDF</a>
+                </div>
+            </div>
+            <div class="book-card">
+                <div class="book-cover papers"><h3>📝 Old Papers</h3><p>Previous Year CBT</p></div>
+                <div class="book-details">
+                    <p>CBT Mock Tests & Old Papers</p>
+                    <a href="#" class="download-btn">📥 Download PDF</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🎫 Bottom Call-to-Action Admission Bar -->
+    <div class="container admission-cta-bar">
+        <div class="cta-left">
+            <div class="cta-icon-box"><i class="fa-solid fa-user-graduate"></i></div>
+            <div>
+                <h2>Admission <span style="color: #fde047;">Open 2026</span></h2>
+                <p>Limited Seats Available! Take the first step towards your successful career.</p>
+            </div>
+        </div>
+        <div class="cta-right">
+            <a href="contact.html" class="btn yellow-cta-btn">Apply Now <i class="fa-solid fa-arrow-right"></i></a>
+            <div class="cta-phone"><i class="fa-solid fa-phone"></i> +91 97858 42401</div>
         </div>
     </div>
 
     <footer></footer>
 
+    <!-- Scripts and Notice API logic -->
     <script>
-        // Greeting Logic
         window.onload = function() {
             var currentHour = new Date().getHours();
-            var greetingMessage = currentHour < 12 ? "Good Morning!" : (currentHour < 18 ? "Good Afternoon!" : "Good Evening!");
-            document.getElementById("greeting").innerText = greetingMessage + " Welcome to our portal.";
+            var greetingMessage = "";
+            if (currentHour < 12) greetingMessage = "Good Morning! Have a great day ahead.";
+            else if (currentHour < 18) greetingMessage = "Good Afternoon! We hope you are having a productive day.";
+            else greetingMessage = "Good Evening! Welcome to our portal.";
+            
+            // Inject dynamic notices
+            const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
+            fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                if(data.notices && data.notices.length > 0) {
+                    document.getElementById("dynamicNotice").innerHTML = data.notices.join(" &nbsp; | &nbsp; 🚀 ");
+                } else {
+                    document.getElementById("dynamicNotice").innerHTML = greetingMessage + " Admissions are Open for 2026 session!";
+                }
+            })
+            .catch(error => {
+                document.getElementById("dynamicNotice").innerHTML = greetingMessage + " Welcome to Indian Classes Sikar!";
+            });
         };
     </script>
     
-    <a href="https://wa.me/917877709258" class="whatsapp-float" target="_blank">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width:30px;">
+    <!-- 🟢 WhatsApp Sidebar Action Sticky Link -->
+    <a href="https://wa.me/917877709258?text=Hello!%20I%20want%20to%20know%20more%20about%20admissions%20in%20Govt%20ITI." class="whatsapp-float" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Chat" class="whatsapp-icon">
     </a>
     
     <script src="components.js"></script>
