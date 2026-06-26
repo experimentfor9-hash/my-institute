@@ -463,3 +463,55 @@ body.dark-mode .live-class-box {
     background-color: #334155;
     border: 1px solid #475569;
 }
+/* --- 360 Virtual Tour Section --- */
+.virtual-tour-section {
+    text-align: center;
+    padding: 60px 20px;
+    background-color: #e0f2fe; /* बहुत हल्का स्काई ब्लू बैकग्राउंड */
+    margin: 40px 0;
+}
+
+.virtual-tour-section h2 {
+    color: #1e3a8a;
+    font-size: 2.2em;
+    margin-bottom: 10px;
+}
+
+.virtual-tour-section p {
+    color: #475569;
+    font-size: 1.1em;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* टूर के वीडियो का फ्रेम */
+.tour-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border: 6px solid #1e3a8a;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+}
+
+.tour-container iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+}
+
+/* डार्क मोड सपोर्ट के लिए */
+body.dark-mode .virtual-tour-section {
+    background-color: #1e293b;
+}
+body.dark-mode .tour-container {
+    border-color: #38bdf8;
+}
