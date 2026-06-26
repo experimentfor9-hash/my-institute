@@ -82,4 +82,27 @@ nav a:hover { background: #f1f5f9; color: var(--primary); }
 footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px; margin-top: 40px; }
 .whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
 .whatsapp-float img { width: 50px; }
+/* हेडर फोटो और लेआउट फिक्स */
+.page-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    border-radius: 16px;
+}
+
+/* नेविगेशन बटन को सही लुक देने के लिए */
+.enquiry-btn {
+    background: #ec4899 !important;
+    color: white !important;
+    padding: 10px 20px !important;
+    border-radius: 20px;
+    font-weight: bold !important;
+}
+
+/* अगर फोटो बहुत बड़ी दिख रही है, तो उसे यहाँ कंट्रोल करें */
+.image-side img {
+    width: 100% !important;
+    height: auto !important;
+    max-height: 500px;
+}
 
