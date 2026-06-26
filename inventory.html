@@ -3,71 +3,108 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital Stock Register</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Secure Stock Register</title>
     <style>
-        .admin-container { max-width: 600px; margin: 50px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        
+        /* PIN Screen Design */
+        #pinScreen { max-width: 400px; margin: 100px auto; background: #fff; padding: 40px 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.15); text-align: center; }
+        #pinScreen h2 { color: #1e3a8a; margin-bottom: 10px; }
+        #pinScreen input { width: 60%; padding: 12px; margin: 20px 0; border: 2px solid #ccc; border-radius: 5px; text-align: center; font-size: 24px; letter-spacing: 10px; }
+        
+        /* Main Form Design */
+        #mainContent { display: none; /* यह फॉर्म को शुरुआत में छुपा कर रखेगा */ }
+        .admin-container { max-width: 600px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .admin-container h2 { color: #1e3a8a; text-align: center; margin-bottom: 20px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; }
-        .form-group input, .form-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
-        .submit-btn { width: 100%; padding: 12px; background: #1e3a8a; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .form-group input, .form-group select { width: 95%; padding: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        .submit-btn { width: 100%; padding: 12px; background: #1e3a8a; color: white; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; }
         .submit-btn:hover { background: #2563eb; }
     </style>
 </head>
 <body>
 
-    <div class="admin-container">
-        <h2>🛠️ Digital Stock & Inventory Register</h2>
-        <form id="inventoryForm">
-            <!-- यह Hidden Field बैकएंड को बताएगी कि यह इन्वेंटरी फॉर्म है -->
-            <input type="hidden" name="formType" value="inventory">
-            
-            <div class="form-group">
-                <label>Staff Name</label>
-                <input type="text" name="staffName" required placeholder="Enter name">
-            </div>
+    <!-- 1. Security Lock Screen -->
+    <div id="pinScreen">
+        <h2>🔒 Security Check</h2>
+        <p style="color: #666;">Enter staff passcode to access the register</p>
+        <input type="password" id="staffPin" placeholder="****" maxlength="4">
+        <br>
+        <button onclick="checkPin()" class="submit-btn" style="width: 70%;">Unlock</button>
+        <p id="pinError" style="color:red; display:none; margin-top:15px; font-weight:bold;">❌ Incorrect PIN!</p>
+    </div>
 
-            <div class="form-group">
-                <label>Staff Type</label>
-                <select name="staffType" required>
-                    <option value="">Select Type</option>
-                    <option value="Regular Faculty">Regular Faculty</option>
-                    <option value="Guest Faculty">Guest Faculty</option>
-                    <option value="Other Staff">Other Staff</option>
-                </select>
-            </div>
+    <!-- 2. Main Inventory Form (Hidden by default) -->
+    <div id="mainContent">
+        <div class="admin-container">
+            <h2>🛠️ Digital Stock & Inventory Register</h2>
+            <form id="inventoryForm">
+                <input type="hidden" name="formType" value="inventory">
+                
+                <div class="form-group">
+                    <label>Staff Name</label>
+                    <input type="text" name="staffName" required placeholder="Enter name">
+                </div>
 
-            <div class="form-group">
-                <label>Tool / Item Name</label>
-                <input type="text" name="itemName" required placeholder="E.g., Multimeter, Drilling Machine">
-            </div>
+                <div class="form-group">
+                    <label>Staff Type</label>
+                    <select name="staffType" required>
+                        <option value="">Select Type</option>
+                        <option value="Regular Faculty">Regular Faculty</option>
+                        <option value="Guest Faculty">Guest Faculty</option>
+                        <option value="Other Staff">Other Staff</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label>Quantity</label>
-                <input type="number" name="quantity" required placeholder="How many?">
-            </div>
+                <div class="form-group">
+                    <label>Tool / Item Name</label>
+                    <input type="text" name="itemName" required placeholder="E.g., Multimeter, Drilling Machine">
+                </div>
 
-            <div class="form-group">
-                <label>Action</label>
-                <select name="action" required>
-                    <option value="Issued">Issued (सामान लिया)</option>
-                    <option value="Returned">Returned (सामान वापस किया)</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" required placeholder="How many?">
+                </div>
 
-            <div class="form-group">
-                <label>Remarks</label>
-                <input type="text" name="remarks" placeholder="Any damage or note? (Optional)">
-            </div>
+                <div class="form-group">
+                    <label>Action</label>
+                    <select name="action" required>
+                        <option value="Issued">Issued (सामान लिया)</option>
+                        <option value="Returned">Returned (सामान वापस किया)</option>
+                    </select>
+                </div>
 
-            <button type="submit" class="submit-btn">Submit Record</button>
-        </form>
-        <p id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></p>
+                <div class="form-group">
+                    <label>Remarks</label>
+                    <input type="text" name="remarks" placeholder="Any damage or note? (Optional)">
+                </div>
+
+                <button type="submit" class="submit-btn">Submit Record</button>
+            </form>
+            <p id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></p>
+        </div>
     </div>
 
     <script>
-        // यहाँ अपना API URL डालें
+        // --- PIN CHECK LOGIC ---
+        // यहाँ आप अपना कोई भी 4 अंकों का गुप्त पासकोड सेट कर सकते हैं (अभी यह 2026 है)
+        const SECRET_PIN = "8877"; 
+
+        function checkPin() {
+            let enteredPin = document.getElementById("staffPin").value;
+            if(enteredPin === SECRET_PIN) {
+                // सही PIN होने पर लॉक स्क्रीन छुपाएं और फॉर्म दिखाएं
+                document.getElementById("pinScreen").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                // गलत PIN होने पर एरर दिखाएं
+                document.getElementById("pinError").style.display = "block";
+                document.getElementById("staffPin").value = ""; // बॉक्स खाली कर दें
+            }
+        }
+
+        // --- FORM SUBMIT LOGIC ---
         const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
         document.getElementById("inventoryForm").addEventListener("submit", function(e) {
