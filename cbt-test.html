@@ -71,17 +71,20 @@
     <footer></footer>
     <script src="components.js"></script>
 
-    <script>
+        <script>
+        // --- SECURE QUESTIONS DATABASE ---
+        // जवाबों को छिपाने के लिए Base64 का इस्तेमाल किया गया है।
+        // (0 = "MA==", 1 = "MQ==", 2 = "Mg==", 3 = "Mw==")
         const questionsDb = {
             "electrician": [
-                { q: "विद्युत धारा (Current) की इकाई क्या है?", options: ["Volt (वोल्ट)", "Ampere (एम्पीयर)", "Ohm (ओम)", "Watt (वाट)"], answer: 1 },
-                { q: "ट्रांसफार्मर (Transformer) किस सिद्धांत पर काम करता है?", options: ["स्व-प्रेरण (Self-induction)", "म्यूचुअल इंडक्शन (Mutual induction)", "फैराडे का नियम", "ओम का नियम"], answer: 1 },
-                { q: "MCB का पूरा नाम क्या है?", options: ["Miniature Circuit Breaker", "Main Circuit Breaker", "Motor Circuit Breaker", "Molded Circuit Breaker"], answer: 0 }
+                { q: "विद्युत धारा (Current) की इकाई क्या है?", options: ["Volt (वोल्ट)", "Ampere (एम्पीयर)", "Ohm (ओम)", "Watt (वाट)"], encodedAns: "MQ==" },
+                { q: "ट्रांसफार्मर (Transformer) किस सिद्धांत पर काम करता है?", options: ["स्व-प्रेरण (Self-induction)", "म्यूचुअल इंडक्शन (Mutual induction)", "फैराडे का नियम", "ओम का नियम"], encodedAns: "MQ==" },
+                { q: "MCB का पूरा नाम क्या है?", options: ["Miniature Circuit Breaker", "Main Circuit Breaker", "Motor Circuit Breaker", "Molded Circuit Breaker"], encodedAns: "MA==" }
             ],
             "fitter": [
-                { q: "माइक्रोमीटर (Micrometer) का अल्पतमांक (Least count) मीट्रिक में कितना होता है?", options: ["0.01 mm", "0.02 mm", "0.05 mm", "0.1 mm"], answer: 0 },
-                { q: "हेक्सा ब्लेड (Hacksaw blade) किस धातु की बनी होती है?", options: ["Mild Steel", "High Speed Steel", "Cast Iron", "Aluminium"], answer: 1 },
-                { q: "V-Block का उपयोग किसलिए किया जाता है?", options: ["फ्लैट जॉब को पकड़ने के लिए", "गोल जॉब को पकड़ने और मार्क करने के लिए", "थ्रेडिंग के लिए", "वेल्डिंग के लिए"], answer: 1 }
+                { q: "माइक्रोमीटर (Micrometer) का अल्पतमांक (Least count) मीट्रिक में कितना होता है?", options: ["0.01 mm", "0.02 mm", "0.05 mm", "0.1 mm"], encodedAns: "MA==" },
+                { q: "हेक्सा ब्लेड (Hacksaw blade) किस धातु की बनी होती है?", options: ["Mild Steel", "High Speed Steel", "Cast Iron", "Aluminium"], encodedAns: "MQ==" },
+                { q: "V-Block का उपयोग किसलिए किया जाता है?", options: ["फ्लैट जॉब को पकड़ने के लिए", "गोल जॉब को पकड़ने और मार्क करने के लिए", "थ्रेडिंग के लिए", "वेल्डिंग के लिए"], encodedAns: "MQ==" }
             ]
         };
 
@@ -117,10 +120,16 @@
             }
         }
 
+        // --- SECURE ANSWER CHECKING LOGIC ---
         function nextQuestion() {
             let selected = document.querySelector('input[name="answer"]:checked');
             if(!selected) { alert("कृपया आगे बढ़ने से पहले एक विकल्प चुनें!"); return; }
-            if(parseInt(selected.value) === currentQuestions[currentQIndex].answer) score++;
+            
+            // यूजर के चुने हुए विकल्प को Base64 में बदलकर डेटाबेस से मैच करना
+            if(btoa(selected.value) === currentQuestions[currentQIndex].encodedAns) {
+                score++;
+            }
+            
             currentQIndex++;
             if(currentQIndex < currentQuestions.length) loadQuestion(); else showResult();
         }
@@ -141,7 +150,8 @@
             let msg = percentage >= 80 ? "🌟 Excellent! You are ready for CBT." : (percentage >= 50 ? "👍 Good, but keep practicing." : "⚠️ You need more practice.");
             document.getElementById("resultMessage").innerText = msg;
         }
-    </script>
+        </script>
+    
 </body>
 </html>
 
