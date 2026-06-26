@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staff Auto-Draft Generator</title>
+    <style>
+        body { font-family: 'Georgia', serif; background-color: #f8fafc; padding: 20px; color: #1e293b; }
+        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        h2 { color: #1e3a8a; text-align: center; }
+        .form-section { margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        label { font-weight: bold; }
+        input, select { padding: 10px; width: 100%; border: 1px solid #cbd5e1; border-radius: 5px; }
+        .btn { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        #draftBox { margin-top: 30px; padding: 30px; border: 1px solid #e2e8f0; background: #fff; line-height: 1.6; }
+        .print-btn { margin-top: 20px; background: #10b981; padding: 10px 20px; color: white; border: none; cursor: pointer; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>✍️ Auto-Draft Generator</h2>
+    <div class="form-section">
+        <div>
+            <label>Employee Name</label>
+            <input type="text" id="empName" placeholder="Enter Name">
+        </div>
+        <div>
+            <label>Select Template</label>
+            <select id="templateType">
+                <option value="probation">Probation Completion (Pay Fixation)</option>
+                <option value="cl">Casual Leave Application</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn" onclick="generateDraft()">Generate Official Letter</button>
+
+    <div id="draftBox" style="display:none;">
+        <div id="letterContent"></div>
+        <button class="print-btn" onclick="window.print()">🖨️ Print Document</button>
+    </div>
+</div>
+
+<script>
+function generateDraft() {
+    let name = document.getElementById("empName").value || "________________";
+    let type = document.getElementById("templateType").value;
+    let content = "";
+    let date = new Date().toLocaleDateString();
+
+    if(type === "probation") {
+        content = `
+            <strong>सेवा में,</strong><br>
+            श्रीमान प्रधानाचार्य महोदय,<br>
+            Govt. ITI, Churu<br><br>
+            <strong>विषय: प्रोबेशन अवधि संतोषजनक पूर्ण करने एवं नियमित पे-स्केल निर्धारण बाबत।</strong><br><br>
+            महोदय,<br>
+            उपरोक्त विषयान्तर्गत निवेदन है कि मैं, <strong>${name}</strong>, इस संस्थान में पदस्थापित हूँ। मेरी दो वर्षीय प्रोबेशन अवधि दिनांक ${date} को सफलतापूर्वक एवं संतोषजनक रूप से पूर्ण हो गई है।<br><br>
+            अतः आपसे विनम्र निवेदन है कि मेरी सेवाएँ नियमित (Regular) करते हुए नियमानुसार पे-फिक्सेशन (Pay Fixation) करने की कृपा करें।<br><br>
+            संलग्न: प्रोबेशन पूर्णता प्रमाण पत्र।<br><br>
+            <strong>भवदीय,</strong><br>
+            ${name}<br>
+            पद: ____________
+        `;
+    } else {
+        content = `
+            <strong>सेवा में,</strong><br>
+            श्रीमान प्रधानाचार्य महोदय,<br>
+            Govt. ITI, Churu<br><br>
+            <strong>विषय: आकस्मिक अवकाश (Casual Leave) हेतु प्रार्थना पत्र।</strong><br><br>
+            महोदय,<br>
+            सविनय निवेदन है कि मुझे व्यक्तिगत कारणों से दिनांक ${date} को एक दिन का आकस्मिक अवकाश (CL) चाहिए।<br><br>
+            अतः आपसे प्रार्थना है कि मेरा अवकाश स्वीकृत करने की कृपा करें।<br><br>
+            <strong>धन्यवाद।</strong><br><br>
+            <strong>भवदीय,</strong><br>
+            ${name}
+        `;
+    }
+
+    document.getElementById("letterContent").innerHTML = content;
+    document.getElementById("draftBox").style.display = "block";
+}
+</script>
+
+</body>
+</html>
+
