@@ -156,3 +156,33 @@ footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px;
         margin: 5px 0;
     }
 }
+/* Contact Form Styling */
+#contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* फील्ड्स के बीच की जगह */
+    margin-top: 20px;
+}
+
+#contactForm label {
+    font-weight: 600;
+    font-size: 0.9em;
+    color: #1e3a8a;
+}
+
+#contactForm input, #contactForm textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 16px; /* मोबाइल पर टाइपिंग में आसानी के लिए */
+}
+
+#contactForm input[type="submit"] {
+    background: #1e3a8a;
+    color: white;
+    cursor: pointer;
+    font-weight: bold;
+    border: none;
+    padding: 14px;
+}
