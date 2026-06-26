@@ -9,6 +9,7 @@ const headerHTML = `
 
 // 2. Global Navigation Menu HTML Content
 // components.js में navHTML को अपडेट करें
+// components.js में navHTML को इस तरह अपडेट करें:
 const navHTML = `
     <div class="hamburger" onclick="toggleMenu()">☰</div>
     <div id="navLinks" style="display: flex; gap: 15px; align-items: center;">
@@ -21,6 +22,30 @@ const navHTML = `
         <button id="darkModeToggle" class="dark-btn">🌙</button>
     </div>
 `;
+
+// setupGlobalDarkMode फंक्शन को यह रूप दें:
+function setupGlobalDarkMode() {
+    const toggleBtn = document.getElementById("darkModeToggle");
+    if (!toggleBtn) return; 
+
+    // शुरुआत में थीम सेट करें
+    if (localStorage.getItem("theme") === "dark") {
+        document.body.classList.add("dark-mode");
+        toggleBtn.innerHTML = "☀️";
+    }
+
+    toggleBtn.onclick = function() {
+        document.body.classList.toggle("dark-mode");
+        if (document.body.classList.contains("dark-mode")) {
+            localStorage.setItem("theme", "dark");
+            toggleBtn.innerHTML = "☀️";
+        } else {
+            localStorage.setItem("theme", "light");
+            toggleBtn.innerHTML = "🌙";
+        }
+    };
+}
+
 
 // नीचे यह नया फंक्शन जोड़ें
 function toggleMenu() {
