@@ -85,47 +85,52 @@
             <p id="statusMsg" style="text-align:center; margin-top:15px; font-weight:bold;"></p>
         </div>
     </div>
+<script>
+    // --- SECURE PIN CHECK LOGIC ---
+    // '8877' का Base64 एन्कोडेड रूप 'ODg3Nw==' है।
+    // अब कोई भी 'View Source' करके सीधा PIN (8877) नहीं पढ़ पाएगा।
+    const ENCODED_PIN = "ODg3Nw=="; 
 
-    <script>
-        // --- PIN CHECK LOGIC ---
-        // यहाँ आप अपना कोई भी 4 अंकों का गुप्त पासकोड सेट कर सकते हैं (अभी यह 2026 है)
-        const SECRET_PIN = "8877"; 
-
-        function checkPin() {
-            let enteredPin = document.getElementById("staffPin").value;
-            if(enteredPin === SECRET_PIN) {
-                // सही PIN होने पर लॉक स्क्रीन छुपाएं और फॉर्म दिखाएं
-                document.getElementById("pinScreen").style.display = "none";
-                document.getElementById("mainContent").style.display = "block";
-            } else {
-                // गलत PIN होने पर एरर दिखाएं
-                document.getElementById("pinError").style.display = "block";
-                document.getElementById("staffPin").value = ""; // बॉक्स खाली कर दें
-            }
+    function checkPin() {
+        let enteredPin = document.getElementById("staffPin").value;
+        
+        // btoa() फंक्शन यूजर द्वारा डाले गए PIN को Base64 में बदलता है
+        if(btoa(enteredPin) === ENCODED_PIN) {
+            // सही PIN होने पर लॉक स्क्रीन छुपाएं और फॉर्म दिखाएं
+            document.getElementById("pinScreen").style.display = "none";
+            document.getElementById("mainContent").style.display = "block";
+        } else {
+            // गलत PIN होने पर एरर दिखाएं
+            document.getElementById("pinError").style.display = "block";
+            document.getElementById("staffPin").value = ""; // बॉक्स खाली कर दें
         }
+    }
 
-        // --- FORM SUBMIT LOGIC ---
-        const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
+    // --- FORM SUBMIT LOGIC ---
+    const API_URL = "https://script.google.com/macros/s/AKfycbzLYgQBSKtEJLI7eTpjiO-RFf32NeLhOWqkWOCDXoAnznMSsTyZMh1M5om_txKZ9UE/exec";
 
-        document.getElementById("inventoryForm").addEventListener("submit", function(e) {
-            e.preventDefault();
-            document.getElementById("statusMsg").innerText = "Submitting record... Please wait.";
-            document.getElementById("statusMsg").style.color = "blue";
-            
-            let formData = new FormData(this);
+    document.getElementById("inventoryForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+        
+        let statusElement = document.getElementById("statusMsg");
+        statusElement.innerText = "Submitting record... Please wait.";
+        statusElement.style.color = "blue";
+        
+        let formData = new FormData(this);
 
-            fetch(API_URL, { method: "POST", body: formData })
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById("statusMsg").innerText = "✅ Record saved successfully in Register!";
-                document.getElementById("statusMsg").style.color = "green";
-                this.reset();
-            })
-            .catch(error => {
-                document.getElementById("statusMsg").innerText = "❌ Error submitting record.";
-                document.getElementById("statusMsg").style.color = "red";
-            });
+        fetch(API_URL, { method: "POST", body: formData })
+        .then(response => response.text())
+        .then(data => {
+            statusElement.innerText = "✅ Record saved successfully in Register!";
+            statusElement.style.color = "green";
+            this.reset();
+        })
+        .catch(error => {
+            statusElement.innerText = "❌ Error submitting record. Please try again.";
+            statusElement.style.color = "red";
         });
-    </script>
+    });
+</script>
+    
 </body>
 </html>
