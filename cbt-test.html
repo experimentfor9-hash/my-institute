@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NCVT Online CBT Mock Test</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f1f5f9; margin: 0; padding: 20px; color: #1e293b; }
+        
+        .cbt-container { max-width: 800px; margin: 30px auto; background: #fff; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); overflow: hidden; border-top: 6px solid #1e3a8a; }
+        
+        /* Header & Timer */
+        .cbt-header { background: #1e3a8a; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .cbt-header h2 { margin: 0; font-size: 1.5em; }
+        .timer { font-size: 1.2em; font-weight: bold; background: #ef4444; padding: 5px 15px; border-radius: 20px; }
+
+        /* Screens */
+        .screen { padding: 30px; }
+        #quizScreen, #resultScreen { display: none; }
+
+        /* Form & Inputs */
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; font-weight: bold; margin-bottom: 8px; color: #334155; }
+        .form-group select { width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 16px; }
+
+        /* Buttons */
+        .btn { padding: 12px 25px; background: #2563eb; color: white; border: none; border-radius: 6px; font-size: 16px; cursor: pointer; font-weight: bold; transition: 0.3s; width: 100%; }
+        .btn:hover { background: #1d4ed8; }
+        .btn-success { background: #10b981; }
+        .btn-success:hover { background: #059669; }
+
+        /* Quiz Layout */
+        .question-text { font-size: 1.3em; margin-bottom: 20px; color: #0f172a; font-weight: bold; }
+        .options-list { list-style: none; padding: 0; }
+        .options-list li { margin-bottom: 12px; }
+        .option-label { display: block; padding: 15px; background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; cursor: pointer; transition: 0.2s; font-size: 1.1em; }
+        .option-label:hover { background: #e2e8f0; }
+        input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+
+        /* Result Layout */
+        .result-box { text-align: center; }
+        .score-circle { width: 150px; height: 150px; border-radius: 50%; background: #10b981; color: white; display: flex; align-items: center; justify-content: center; font-size: 3em; font-weight: bold; margin: 0 auto 20px; box-shadow: 0 5px 15px rgba(16,185,129,0.4); }
+        .result-msg { font-size: 1.5em; color: #1e3a8a; font-weight: bold; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="cbt-container">
+        <!-- ⏱️ Header & Timer -->
+        <div class="cbt-header">
+            <h2>💻 NCVT Mock Test</h2>
+            <div class="timer" id="timeDisplay">10:00</div>
+        </div>
+
+        <!-- 1. 🏠 Setup Screen -->
+        <div id="setupScreen" class="screen">
+            <h3 style="color: #1e3a8a; text-align: center;">Welcome to Online CBT Exam Portal</h3>
+            <p style="text-align: center; color: #64748b; margin-bottom: 30px;">Select your trade to start the realistic mock test.</p>
+            
+            <div class="form-group">
+                <label>Select Trade (अपनी ट्रेड चुनें)</label>
+                <select id="tradeSelect">
+                    <option value="electrician">⚡ Electrician (इलेक्ट्रीशियन)</option>
+                    <option value="fitter">🔧 Fitter (फिटर)</option>
+                </select>
+            </div>
+            <button class="btn" onclick="startTest()">Start CBT Test</button>
+        </div>
+
+        <!-- 2. 📝 Quiz Screen -->
+        <div id="quizScreen" class="screen">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 15px; color: #64748b; font-weight: bold;">
+                <span id="questionCounter">Question 1 of 5</span>
+                <span id="currentTradeLabel">Trade: Electrician</span>
+            </div>
+            
+            <div class="question-text" id="qText">प्रश्न यहाँ आएगा...</div>
+            
+            <ul class="options-list" id="optionsContainer">
+                <!-- ऑप्शंस जावास्क्रिप्ट से यहाँ आएंगे -->
+            </ul>
+
+            <button class="btn" id="nextBtn" onclick="nextQuestion()">Next Question ➡️</button>
+        </div>
+
+        <!-- 3. 🏆 Result Screen -->
+        <div id="resultScreen" class="screen result-box">
+            <h2 style="color: #0f172a;">Exam Completed!</h2>
+            <div class="score-circle" id="scoreDisplay">0/0</div>
+            <div class="result-msg" id="resultMessage">Good Job!</div>
+            <button class="btn btn-success" onclick="location.reload()">🔄 Restart Test</button>
+        </div>
+    </div>
+
+    <!-- ⚙️ JavaScript System -->
+    <script>
+        // 📚 NIMI पैटर्न के डमी प्रश्न (आप इन्हें बदल सकते हैं)
+        const questionsDb = {
+            "electrician": [
+                { q: "विद्युत धारा (Current) की इकाई क्या है?", options: ["Volt (वोल्ट)", "Ampere (एम्पीयर)", "Ohm (ओम)", "Watt (वाट)"], answer: 1 },
+                { q: "ट्रांसफार्मर (Transformer) किस सिद्धांत पर काम करता है?", options: ["स्व-प्रेरण (Self-induction)", "म्यूचुअल इंडक्शन (Mutual induction)", "फैराडे का नियम", "ओम का नियम"], answer: 1 },
+                { q: "MCB का पूरा नाम क्या है?", options: ["Miniature Circuit Breaker", "Main Circuit Breaker", "Motor Circuit Breaker", "Molded Circuit Breaker"], answer: 0 }
+            ],
+            "fitter": [
+                { q: "माइक्रोमीटर (Micrometer) का अल्पतमांक (Least count) मीट्रिक में कितना होता है?", options: ["0.01 mm", "0.02 mm", "0.05 mm", "0.1 mm"], answer: 0 },
+                { q: "हेक्सा ब्लेड (Hacksaw blade) किस धातु की बनी होती है?", options: ["Mild Steel", "High Speed Steel", "Cast Iron", "Aluminium"], answer: 1 },
+                { q: "V-Block का उपयोग किसलिए किया जाता है?", options: ["फ्लैट जॉब को पकड़ने के लिए", "गोल जॉब को पकड़ने और मार्क करने के लिए", "थ्रेडिंग के लिए", "वेल्डिंग के लिए"], answer: 1 }
+            ]
+        };
+
+        let currentTrade = "";
+        let currentQuestions = [];
+        let currentQIndex = 0;
+        let score = 0;
+        let timeLeft = 600; // 10 मिनट (600 सेकंड)
+        let timerInterval;
+
+        function startTest() {
+            currentTrade = document.getElementById("tradeSelect").value;
+            currentQuestions = questionsDb[currentTrade];
+            
+            // स्क्रीन बदलें
+            document.getElementById("setupScreen").style.display = "none";
+            document.getElementById("quizScreen").style.display = "block";
+            
+            let tradeName = currentTrade === "electrician" ? "Electrician" : "Fitter";
+            document.getElementById("currentTradeLabel").innerText = `Trade: ${tradeName}`;
+            
+            // टाइमर चालू करें
+            timerInterval = setInterval(updateTimer, 1000);
+            
+            loadQuestion();
+        }
+
+        function loadQuestion() {
+            // ऑप्शंस साफ़ करें
+            const optionsContainer = document.getElementById("optionsContainer");
+            optionsContainer.innerHTML = "";
+            
+            // प्रश्न लोड करें
+            let qData = currentQuestions[currentQIndex];
+            document.getElementById("qText").innerText = `Q${currentQIndex + 1}. ${qData.q}`;
+            document.getElementById("questionCounter").innerText = `Question ${currentQIndex + 1} of ${currentQuestions.length}`;
+
+            // ऑप्शंस लूप
+            qData.options.forEach((opt, index) => {
+                let li = document.createElement("li");
+                li.innerHTML = `
+                    <label class="option-label">
+                        <input type="radio" name="answer" value="${index}">
+                        ${opt}
+                    </label>
+                `;
+                optionsContainer.appendChild(li);
+            });
+
+            // बटन टेक्स्ट बदलें (आखिरी प्रश्न पर Submit दिखाएं)
+            let btn = document.getElementById("nextBtn");
+            if(currentQIndex === currentQuestions.length - 1) {
+                btn.innerText = "Submit Final Test ✅";
+                btn.classList.add("btn-success");
+            }
+        }
+
+        function nextQuestion() {
+            // चेक करें कि उत्तर चुना है या नहीं
+            let selected = document.querySelector('input[name="answer"]:checked');
+            if(!selected) {
+                alert("कृपया आगे बढ़ने से पहले एक विकल्प चुनें! (Please select an option)");
+                return;
+            }
+
+            // स्कोर चेक करें
+            if(parseInt(selected.value) === currentQuestions[currentQIndex].answer) {
+                score++;
+            }
+
+            currentQIndex++;
+
+            if(currentQIndex < currentQuestions.length) {
+                loadQuestion();
+            } else {
+                showResult();
+            }
+        }
+
+        function updateTimer() {
+            if(timeLeft <= 0) {
+                clearInterval(timerInterval);
+                alert("⏰ Time is Up! Auto-submitting the test.");
+                showResult();
+                return;
+            }
+            timeLeft--;
+            let m = Math.floor(timeLeft / 60);
+            let s = timeLeft % 60;
+            document.getElementById("timeDisplay").innerText = `${m}:${s < 10 ? '0' : ''}${s}`;
+        }
+
+        function showResult() {
+            clearInterval(timerInterval);
+            document.getElementById("quizScreen").style.display = "none";
+            document.getElementById("resultScreen").style.display = "block";
+            
+            document.getElementById("scoreDisplay").innerText = `${score}/${currentQuestions.length}`;
+            
+            let percentage = (score / currentQuestions.length) * 100;
+            let msg = "";
+            if(percentage >= 80) msg = "🌟 Excellent! You are ready for CBT.";
+            else if(percentage >= 50) msg = "👍 Good, but keep practicing.";
+            else msg = "⚠️ You need more practice in Trade Theory.";
+            
+            document.getElementById("resultMessage").innerText = msg;
+        }
+    </script>
+
+</body>
+</html>
+
