@@ -4,21 +4,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Staff Auto-Draft Generator</title>
+    <link rel="stylesheet" href="style.css">
     <style>
         body { font-family: 'Georgia', serif; background-color: #f8fafc; padding: 20px; color: #1e293b; }
-        .container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .draft-container { max-width: 800px; margin: 30px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         h2 { color: #1e3a8a; text-align: center; }
         .form-section { margin-bottom: 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        label { font-weight: bold; }
-        input, select { padding: 10px; width: 100%; border: 1px solid #cbd5e1; border-radius: 5px; }
-        .btn { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        label { font-weight: bold; display: block; margin-bottom: 5px; }
+        input, select { padding: 10px; width: 100%; border: 1px solid #cbd5e1; border-radius: 5px; box-sizing: border-box; }
+        .btn-gen { width: 100%; padding: 12px; background: #2563eb; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
         #draftBox { margin-top: 30px; padding: 30px; border: 1px solid #e2e8f0; background: #fff; line-height: 1.6; }
-        .print-btn { margin-top: 20px; background: #10b981; padding: 10px 20px; color: white; border: none; cursor: pointer; }
+        .print-btn { margin-top: 20px; background: #10b981; padding: 10px 20px; color: white; border: none; cursor: pointer; border-radius: 5px;}
     </style>
 </head>
 <body>
 
-<div class="container">
+    <header></header>
+    <nav></nav>
+
+<div class="draft-container">
     <h2>✍️ Auto-Draft Generator</h2>
     <div class="form-section">
         <div>
@@ -33,13 +37,16 @@
             </select>
         </div>
     </div>
-    <button class="btn" onclick="generateDraft()">Generate Official Letter</button>
+    <button class="btn-gen" onclick="generateDraft()">Generate Official Letter</button>
 
     <div id="draftBox" style="display:none;">
         <div id="letterContent"></div>
         <button class="print-btn" onclick="window.print()">🖨️ Print Document</button>
     </div>
 </div>
+
+<footer></footer>
+<script src="components.js"></script>
 
 <script>
 function generateDraft() {
@@ -84,4 +91,3 @@ function generateDraft() {
 
 </body>
 </html>
-
