@@ -1,188 +1,66 @@
-/* --- Indian Classes Sikar - Optimized Professional Stylesheet --- */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Montserrat:wght@600;700;800&display=swap');
+/* --- GLOBAL STYLES --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+body { background-color: #f8fafc; color: #334155; }
+a { text-decoration: none; }
+.container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+.section-padding { padding: 80px 0; }
+.text-center { text-align: center; }
+
+/* --- COLORS --- */
 :root {
-    --primary: #1e3a8a;
-    --secondary: #ec4899;
-    --accent: #8b5cf6;
-    --bg: #f8fafc;
-    --text: #334155;
-    --white: #ffffff;
+    --primary-blue: #0f172a;
+    --secondary-blue: #1e3a8a;
+    --accent-yellow: #facc15;
+    --text-light: #f8fafc;
+    --gray-light: #e2e8f0;
 }
 
-body { font-family: 'Inter', sans-serif; margin: 0; background: var(--bg); color: var(--text); overflow-x: hidden; }
+/* --- HEADER & NAVBAR (Global for all pages) --- */
+.top-nav-wrapper { background: linear-gradient(135deg, #0b1120 0%, #1e3a8a 100%); padding-bottom: 15px; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; margin-bottom: 40px; }
+.new-main-nav { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-bottom: 1px solid rgba(255,255,255,0.1); }
+.logo-area { display: flex; align-items: center; gap: 10px; color: white; }
+.logo-area img { width: 50px; height: 50px; border-radius: 50%; }
+.logo-area h2 { font-size: 20px; margin: 0; line-height: 1.2; }
+.logo-area p { font-size: 12px; color: #cbd5e1; }
+.nav-links { display: flex; gap: 25px; align-items: center; }
+.nav-links a { color: white; font-size: 15px; font-weight: 400; transition: 0.3s; }
+.nav-links a:hover { color: var(--accent-yellow); }
+.btn-enquiry { background: #2563eb; color: white; padding: 10px 25px; border-radius: 25px; font-weight: 500; transition: 0.3s; }
+.btn-enquiry:hover { background: var(--accent-yellow); color: #000; }
 
-/* हेडर - फिक्स: फोटो को ओवरफ्लो होने से रोकने के लिए */
-header {
-    background: linear-gradient(135deg, #1e3a8a 0%, #312e81 100%);
-    color: white;
-    padding: 60px 20px 100px;
-    text-align: center;
-    position: relative;
-}
+/* --- FLOATING SIDE BUTTONS --- */
+.floating-social { position: fixed; right: 0; top: 40%; transform: translateY(-50%); display: flex; flex-direction: column; z-index: 1000; }
+.float-btn { width: 60px; height: 60px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: white; font-size: 12px; font-weight: bold; cursor: pointer; transition: 0.3s; border-radius: 10px 0 0 10px; margin-bottom: 5px; text-decoration: none;}
+.float-btn i { font-size: 20px; margin-bottom: 5px; }
+.btn-wa { background: #25D366; }
+.btn-call { background: #2563eb; }
+.btn-apply { background: #ef4444; }
+.float-btn:hover { width: 70px; }
 
-header h1 { font-family: 'Montserrat', sans-serif; font-size: 2.5em; margin: 10px 0; }
+/* --- FOOTER --- */
+footer { background: #081021; color: #94a3b8; padding-top: 60px; margin-top: 50px; }
+.footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1.5fr; gap: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 40px; margin-bottom: 20px; }
+.footer-logo img { width: 50px; height: 50px; border-radius: 50%; margin-bottom: 15px; }
+.footer-logo h2 { color: white; font-size: 20px; margin-bottom: 5px; }
+.footer-logo p { font-size: 13px; margin-bottom: 20px; line-height: 1.6; }
+.social-icons { display: flex; gap: 15px; }
+.social-icons a { width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; background: #1e293b; transition: 0.3s; }
+.social-icons a:hover { transform: translateY(-3px); }
+.footer-col h4 { color: white; font-size: 18px; margin-bottom: 20px; font-weight: 600; }
+.footer-col ul { list-style: none; padding: 0; }
+.footer-col ul li { margin-bottom: 12px; }
+.footer-col ul li a { color: #94a3b8; font-size: 14px; transition: 0.3s; text-decoration: none; }
+.footer-col ul li a:hover { color: white; padding-left: 5px; }
+.contact-info { list-style: none; padding: 0; }
+.contact-info li { display: flex; gap: 15px; margin-bottom: 15px; font-size: 14px; }
+.contact-info i { color: #60a5fa; margin-top: 3px; }
+.footer-bottom { display: flex; justify-content: space-between; padding-bottom: 20px; font-size: 13px; }
 
-/* नेविगेशन - फिक्स: मार्जिन को संतुलित किया ताकि यह सही जगह दिखे */
-nav {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
-    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 10px;
-    max-width: 900px;
-    margin: -40px auto 30px auto; /* यहाँ से नेविगेशन की पोजीशन सेट होती है */
-    border-radius: 50px;
-    position: relative;
-    z-index: 1000;
-}
-
-nav a { text-decoration: none; color: var(--text); font-weight: 700; font-size: 0.8em; text-transform: uppercase; padding: 8px 15px; border-radius: 20px; transition: 0.3s; }
-nav a:hover { background: #f1f5f9; color: var(--primary); }
-
-/* मुख्य लेआउट */
-.container { max-width: 1100px; margin: 20px auto; padding: 20px; background: var(--white); border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-
-/* कार्ड्स का डिज़ाइन */
-.card { background: white; border-radius: 16px; padding: 20px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); }
-
-/* स्टेट्स रो (Stats Row) - फिक्स: मोबाइल और डेस्कटॉप दोनों के लिए */
-.stats-row {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    max-width: 1000px;
-    margin: 20px auto;
-    background: white;
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-}
-
-.stat-box { display: flex; align-items: center; gap: 10px; }
-.stat-icon { font-size: 1.5em; color: #2563eb; }
-
-/* नोटिस बोर्ड */
-.notice-board { background: #0f172a; color: white; padding: 10px; text-align: center; font-size: 0.9em; }
-
-/* मोबाइल के लिए फिक्स */
-@media (max-width: 768px) {
-    header { padding: 40px 10px 60px; }
-    header h1 { font-size: 1.8em; }
-    nav { margin: -20px 10px 20px 10px; gap: 5px; }
-    .stats-row { grid-template-columns: 1fr 1fr; margin: 10px; }
-}
-
-/* बाकी सभी ज़रूरी क्लासेज जो आपके स्ट्रक्चर के लिए थीं */
-.btn { background: var(--primary); color: white; padding: 10px 20px; border-radius: 30px; text-decoration: none; font-weight: 700; display: inline-block; }
-.page-image { width: 100%; height: auto; border-radius: 16px; }
-footer { background: #0f172a; color: #94a3b8; text-align: center; padding: 30px; margin-top: 40px; }
-.whatsapp-float { position: fixed; bottom: 20px; right: 20px; z-index: 9999; }
-.whatsapp-float img { width: 50px; }
-/* हेडर फोटो और लेआउट फिक्स */
-.page-image {
-    width: 100%;
-    max-height: 400px;
-    object-fit: cover;
-    border-radius: 16px;
-}
-
-/* नेविगेशन बटन को सही लुक देने के लिए */
-.enquiry-btn {
-    background: #ec4899 !important;
-    color: white !important;
-    padding: 10px 20px !important;
-    border-radius: 20px;
-    font-weight: bold !important;
-}
-
-/* अगर फोटो बहुत बड़ी दिख रही है, तो उसे यहाँ कंट्रोल करें */
-.image-side img {
-    width: 100% !important;
-    height: auto !important;
-    max-height: 500px;
-}
-
-/* हेडर लोगो फिक्स */
-.header-logo {
-    width: 80px; /* छोटा साइज */
-    height: 80px;
-    border-radius: 50%;
-    margin-bottom: 10px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Enquiry बटन स्टाइल */
-.enquiry-btn {
-    background: #ec4899 !important;
-    color: white !important;
-    padding: 8px 18px !important;
-    border-radius: 20px !important;
-    font-weight: bold !important;
-}
-/* मोबाइल के लिए Hamburger Menu का स्टाइल */
-.hamburger {
-    display: none; /* डेस्कटॉप पर छुपा हुआ */
-    font-size: 24px;
-    cursor: pointer;
-    padding: 10px;
-}
-
-@media (max-width: 768px) {
-    .hamburger { display: block; } /* मोबाइल पर दिखेगा */
-    
-    nav {
-        flex-direction: column;
-        align-items: center;
-        border-radius: 20px;
-        margin: -40px 10px 20px 10px;
-    }
-
-    nav.menu-open {
-        height: auto;
-    }
-
-    nav a, .dark-btn {
-        display: none; /* मोबाइल पर लिंक छुपा दिए */
-    }
-
-    nav.menu-open a, nav.menu-open .dark-btn {
-        display: block; /* मेनू खुलने पर दिखेंगे */
-        margin: 5px 0;
-    }
-}
-/* Contact Form Styling */
-#contactForm {
-    display: flex;
-    flex-direction: column;
-    gap: 15px; /* फील्ड्स के बीच की जगह */
-    margin-top: 20px;
-}
-
-#contactForm label {
-    font-weight: 600;
-    font-size: 0.9em;
-    color: #1e3a8a;
-}
-
-#contactForm input, #contactForm textarea {
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #cbd5e1;
-    border-radius: 8px;
-    font-size: 16px; /* मोबाइल पर टाइपिंग में आसानी के लिए */
-}
-
-#contactForm input[type="submit"] {
-    background: #1e3a8a;
-    color: white;
-    cursor: pointer;
-    font-weight: bold;
-    border: none;
-    padding: 14px;
+/* Responsive adjustments */
+@media (max-width: 992px) {
+    .new-main-nav { flex-direction: column; gap: 15px; }
+    .nav-links { flex-wrap: wrap; justify-content: center; }
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
 }
