@@ -24,7 +24,7 @@
             width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;
         }
         .form-group input[type="file"] { background: white; cursor: pointer; }
-        .form-group input:focus { border-color: #1e3a8a; outline: none; }
+        .form-group input:focus { border-color: #358ced; outline: none; }
 
         /* --- ID CARD PREVIEW AREA --- */
         .id-preview-area {
@@ -34,7 +34,7 @@
 
         .id-card-exact {
             width: 320px;
-            height: 650px; /* ऊँचाई थोड़ी और बढ़ाई ताकि एड्रेस स्पष्ट रहे */
+            height: 580px; 
             background: #ffffff;
             border-radius: 8px;
             border: 2px solid #000000;
@@ -45,20 +45,19 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
-        /* --- TIRANGA HEADER BAR --- */
+        /* --- IFMS 3.0 THEME HEADER BAR --- */
         .id-header-bar {
-            /* भारतीय ध्वज का ग्रेडिएंट */
-            background: linear-gradient(135deg, #FF9933 0%, #FFFFFF 50%, #138808 100%);
+            /* 1000727790.jpg के IFMS 3.0 टॉप बार से लिया गया ग्रेडिएंट */
+            background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: #ffffff; 
             text-align: center;
             padding: 12px 5px; 
             border-bottom: 2px solid #000000;
-            /* सफेद रंग पर सफेद टेक्स्ट को उभारने के लिए शैडो */
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.9), 0px 0px 6px rgba(0,0,0,0.7);
         }
         .id-header-bar h4 { 
             margin: 0 0 5px 0; font-size: 16px; font-weight: 900; 
             letter-spacing: 0.5px; text-transform: uppercase; 
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
         .id-header-bar p { 
             margin: 2px 0 0 0; font-size: 10px; font-weight: 600; 
@@ -83,7 +82,7 @@
         .data-colon { text-align: center; font-weight: bold; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
-        /* Footer & Signatures Block - FIXED POSITIONING */
+        /* Footer & Signatures Block */
         .id-footer-exact {
             position: absolute;
             bottom: 15px;
@@ -109,11 +108,13 @@
         .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; }
         .sig-title { font-size: 10px; font-weight: 800; color: #1f2937; line-height: 1.2; }
 
+        /* IFMS 3.0 Theme Button */
         .btn-download-exact {
-            background: #1e3a8a; color: white; padding: 15px 25px; border: none; border-radius: 8px;
+            background: #11329c; /* IFMS Deep Blue */
+            color: white; padding: 15px 25px; border: none; border-radius: 8px;
             font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; width: 100%; transition: 0.3s;
         }
-        .btn-download-exact:hover { background: #111827; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
+        .btn-download-exact:hover { background: #0a1f66; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
 
         @media (max-width: 992px) {
             .id-generator-container { grid-template-columns: 1fr; padding: 15px; }
@@ -127,9 +128,9 @@
 
     <div class="container section-padding">
         <div class="sec-title">
-            <span class="sec-badge">TIRANGA FORMAT</span>
-            <h2>Patriotic <span>Digital ID Card</span></h2>
-            <p>तिरंगा बैकग्राउंड और 1000727787.png के अपडेटेड टेक्स्ट के साथ पहचान पत्र बनाएं।</p>
+            <span class="sec-badge">IFMS 3.0 FORMAT</span>
+            <h2>Official <span>Digital ID Card</span></h2>
+            <p>1000727790.jpg के IFMS कलर स्ट्रक्चर के साथ आधिकारिक सरकारी पहचान पत्र बनाएं।</p>
         </div>
 
         <div class="id-generator-container">
@@ -144,11 +145,11 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Name (नाम)</label>
-                        <input type="text" id="inpName" placeholder="" oninput="updateField('inpName', 'outName')">
+                        <input type="text" id="inpName" placeholder="MUKESH KUMAR" oninput="updateField('inpName', 'outName')">
                     </div>
                     <div class="form-group">
                         <label>Father's Name (पिता का नाम)</label>
-                        <input type="text" id="inpFather" placeholder="" oninput="updateField('inpFather', 'outFather')">
+                        <input type="text" id="inpFather" placeholder="SHEONATH" oninput="updateField('inpFather', 'outFather')">
                     </div>
                 </div>
 
@@ -166,43 +167,43 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Employee ID (कर्मचारी कोड)</label>
-                        <input type="text" id="inpEmpId" placeholder="" oninput="updateField('inpEmpId', 'outEmpId')">
+                        <input type="text" id="inpEmpId" placeholder="RJCR202612003377" oninput="updateField('inpEmpId', 'outEmpId')">
                     </div>
                     <div class="form-group">
                         <label>Mobile No (मोबाइल नंबर)</label>
-                        <input type="text" id="inpMobile" placeholder="" oninput="updateField('inpMobile', 'outMobile')">
+                        <input type="text" id="inpMobile" placeholder="9660608859" oninput="updateField('inpMobile', 'outMobile')">
                     </div>
                 </div>
 
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Blood Group (रक्त समूह)</label>
-                        <input type="text" id="inpBlood" placeholder="" oninput="updateField('inpBlood', 'outBlood')">
+                        <input type="text" id="inpBlood" placeholder="O+" oninput="updateField('inpBlood', 'outBlood')">
                     </div>
                     <div class="form-group">
                         <label>U.I.D. No (आधार संख्या)</label>
-                        <input type="text" id="inpUid" placeholder="" oninput="updateField('inpUid', 'outUid')">
+                        <input type="text" id="inpUid" placeholder="776005622091" oninput="updateField('inpUid', 'outUid')">
                     </div>
                 </div>
 
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>PAN No (पैन संख्या)</label>
-                        <input type="text" id="inpPan" placeholder="" oninput="updateField('inpPan', 'outPan')">
+                        <input type="text" id="inpPan" placeholder="BYZPB1353D" oninput="updateField('inpPan', 'outPan')">
                     </div>
                     <div class="form-group">
                         <label>Address / City (पता)</label>
-                        <input type="text" id="inpAddress" placeholder="" oninput="updateField('inpAddress', 'outAddress')">
+                        <input type="text" id="inpAddress" placeholder="WARD NO.02, CHURU" oninput="updateField('inpAddress', 'outAddress')">
                     </div>
                 </div>
                 
                 <div class="form-grid-2" style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 15px;">
                     <div class="form-group">
-                        <label style="color: #138808;">Sign. Of Employee</label>
+                        <label style="color: #358ced;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
                         <input type="file" id="inpEmpSign" accept="image/*">
                     </div>
                     <div class="form-group">
-                        <label style="color: #138808;">Deputy director Sign</label>
+                        <label style="color: #358ced;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
                         <input type="file" id="inpPrinSign" accept="image/*">
                     </div>
                 </div>
@@ -213,7 +214,7 @@
                 
                 <div class="id-card-exact" id="idCardExactCapture">
                     
-                    <!-- TIRANGA HEADER -->
+                    <!-- IFMS 3.0 HEADER -->
                     <div class="id-header-bar">
                         <h4>Government OF RAJASTHAN</h4>
                         <p>Department of Skill Employment And entrepreneurship</p>
@@ -225,16 +226,16 @@
                     </div>
                     
                     <div class="id-data-block">
-                        <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName"></span></div>
-                        <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather"></span></div>
-                        <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/</span></div>
+                        <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span></div>
+                        <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span></div>
+                        <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span></div>
                         <div class="data-row"><span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span></div>
-                        <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId"></span></div>
-                        <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile"></span></div>
-                        <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood"></span></div>
-                        <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid"></span></div>
-                        <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan"></span></div>
-                        <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress"></span></div>
+                        <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span></div>
+                        <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span></div>
+                        <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span></div>
+                        <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span></div>
+                        <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span></div>
+                        <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span></div>
                     </div>
 
                     <!-- Signatures Base -->
@@ -252,7 +253,7 @@
                                 <img id="outPrinSign" src="" alt="Principal Signature">
                             </div>
                             <div class="sig-line"></div>
-                            <div class="sig-title">Deputy Director<br>Govt. ITI<br>Churu</div>
+                            <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute,<br>Churu</div>
                         </div>
                     </div>
                 </div>
@@ -270,15 +271,15 @@
         function updateField(inputId, outputId) {
             let value = document.getElementById(inputId).value;
             if(value === "") {
-                if(inputId === 'inpName') value = "";
-                if(inputId === 'inpFather') value = "";
+                if(inputId === 'inpName') value = "MUKESH KUMAR";
+                if(inputId === 'inpFather') value = "SHEONATH";
                 if(inputId === 'inpDesig') value = "JUNIOR INSTRUCTOR";
-                if(inputId === 'inpEmpId') value = "";
-                if(inputId === 'inpMobile') value = "";
-                if(inputId === 'inpBlood') value = "";
-                if(inputId === 'inpUid') value = "";
-                if(inputId === 'inpPan') value = "";
-                if(inputId === 'inpAddress') value = "";
+                if(inputId === 'inpEmpId') value = "RJCR202612003377";
+                if(inputId === 'inpMobile') value = "9660608859";
+                if(inputId === 'inpBlood') value = "O+";
+                if(inputId === 'inpUid') value = "776005622091";
+                if(inputId === 'inpPan') value = "BYZPB1353D";
+                if(inputId === 'inpAddress') value = "WARD NO.02, CHURU";
             }
             document.getElementById(outputId).innerText = value;
         }
