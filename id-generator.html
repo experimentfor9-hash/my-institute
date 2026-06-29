@@ -49,12 +49,16 @@
             border-radius: 6px;
             font-size: 14px;
         }
+        .form-group input[type="file"] {
+            background: white;
+            cursor: pointer;
+        }
         .form-group input:focus, .form-group select:focus {
             border-color: #1e3a8a;
             outline: none;
         }
 
-        /* --- PRECISE REPLICA OF THE ID CARD (From 1000727774.jpg) --- */
+        /* --- PRECISE REPLICA OF THE ID CARD --- */
         .id-preview-area {
             display: flex;
             flex-direction: column;
@@ -65,10 +69,9 @@
             border: 1px solid #cbd5e1;
         }
 
-        /* Card Frame Specifications matching the blue border holder look */
         .id-holder-frame {
             padding: 8px;
-            background: #00a8e8; /* Matches the cyan/blue plastic holder in image */
+            background: #00a8e8;
             border-radius: 12px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.15);
         }
@@ -84,9 +87,8 @@
             color: #000000;
         }
 
-        /* Header Bar: Matching the red/coral top bar from photo */
         .id-header-bar {
-            background: #b91c1c; /* Official Dark Red / Maroon shade */
+            background: #b91c1c; 
             color: #ffffff;
             text-align: center;
             padding: 8px 5px;
@@ -105,7 +107,6 @@
             opacity: 0.9;
         }
 
-        /* Photo block centered */
         .id-photo-block {
             width: 90px;
             height: 105px;
@@ -119,14 +120,12 @@
             object-fit: cover;
         }
 
-        /* Content Data Block matching alignment of 1000727774.jpg */
         .id-data-block {
             padding: 0 15px;
             font-size: 10.5px;
             line-height: 1.45;
         }
         
-        /* Exact layout typography */
         .data-row {
             display: grid;
             grid-template-columns: 80px 1fr;
@@ -142,7 +141,7 @@
             text-transform: uppercase;
         }
 
-        /* Footer Elements with Signatures */
+        /* Footer & Signatures Block */
         .id-footer-exact {
             position: absolute;
             bottom: 12px;
@@ -155,6 +154,19 @@
         .sig-box {
             text-align: center;
             width: 45%;
+        }
+        .sig-img-container {
+            height: 25px; /* Fixed height so layout doesn't jump */
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            margin-bottom: 2px;
+        }
+        .sig-img-container img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+            display: none; /* Hidden until uploaded */
         }
         .sig-line {
             border-top: 1px dotted #475569;
@@ -181,18 +193,29 @@
             transition: 0.3s;
         }
         .btn-download-exact:hover { background: #111827; }
+
+        /* --- MOBILE RESPONSIVENESS FIX --- */
+        @media (max-width: 992px) {
+            .id-generator-container {
+                grid-template-columns: 1fr; /* Stacks form and preview on mobile */
+                padding: 15px;
+            }
+            .form-grid-2 {
+                grid-template-columns: 1fr; /* Stacks form inputs */
+            }
+        }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Menu Injection via components.js -->
+    <!-- Dynamic Menu Injection -->
     <nav></nav>
 
     <div class="container section-padding">
         <div class="sec-title">
             <span class="sec-badge">OFFICIAL FORMAT</span>
             <h2>Exact <span>Govt ID Card Replica</span></h2>
-            <p>1000727774.jpg के प्रारूप के अनुसार हूबहू सरकारी पहचान पत्र जनरेटर टूल।</p>
+            <p>कर्मचारी और संस्था प्रधान के डिजिटल हस्ताक्षर के साथ पहचान पत्र बनाएं।</p>
         </div>
 
         <div class="id-generator-container">
@@ -207,11 +230,11 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Name (नाम)</label>
-                        <input type="text" id="inpName" placeholder="name of employee" oninput="updateField('inpName', 'outName')">
+                        <input type="text" id="inpName" placeholder="SHYORAPAL BHATI" oninput="updateField('inpName', 'outName')">
                     </div>
                     <div class="form-group">
                         <label>Father's Name (पिता का नाम)</label>
-                        <input type="text" id="inpFather" placeholder="employee father name" oninput="updateField('inpFather', 'outFather')">
+                        <input type="text" id="inpFather" placeholder="SH. MURARI LAL BHATI" oninput="updateField('inpFather', 'outFather')">
                     </div>
                 </div>
 
@@ -222,18 +245,18 @@
                     </div>
                     <div class="form-group">
                         <label>Designation (पद)</label>
-                        <input type="text" id="inpDesig" placeholder="post" oninput="updateField('inpDesig', 'outDesig')">
+                        <input type="text" id="inpDesig" placeholder="Senior Assistant" oninput="updateField('inpDesig', 'outDesig')">
                     </div>
                 </div>
 
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Employee ID (कर्मचारी कोड)</label>
-                        <input type="text" id="inpEmpId" placeholder="employee id" oninput="updateField('inpEmpId', 'outEmpId')">
+                        <input type="text" id="inpEmpId" placeholder="RJCR202012020244" oninput="updateField('inpEmpId', 'outEmpId')">
                     </div>
                     <div class="form-group">
                         <label>Mobile No (मोबाइल नंबर)</label>
-                        <input type="text" id="inpMobile" placeholder="mobile number" oninput="updateField('inpMobile', 'outMobile')">
+                        <input type="text" id="inpMobile" placeholder="8819790261" oninput="updateField('inpMobile', 'outMobile')">
                     </div>
                 </div>
 
@@ -251,11 +274,23 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>PAN No (पैन संख्या)</label>
-                        <input type="text" id="inpPan" placeholder="pen number" oninput="updateField('inpPan', 'outPan')">
+                        <input type="text" id="inpPan" placeholder="BYZPB1353D" oninput="updateField('inpPan', 'outPan')">
                     </div>
                     <div class="form-group">
                         <label>Address / City (पता)</label>
-                        <input type="text" id="inpAddress" placeholder="address" oninput="updateField('inpAddress', 'outAddress')">
+                        <input type="text" id="inpAddress" placeholder="WARD NO.02, CHURU" oninput="updateField('inpAddress', 'outAddress')">
+                    </div>
+                </div>
+                
+                <!-- NEW SIGNATURE UPLOAD FIELDS -->
+                <div class="form-grid-2" style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 15px;">
+                    <div class="form-group">
+                        <label style="color: #b91c1c;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
+                        <input type="file" id="inpEmpSign" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label style="color: #b91c1c;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
+                        <input type="file" id="inpPrinSign" accept="image/*">
                     </div>
                 </div>
             </div>
@@ -292,11 +327,20 @@
 
                         <!-- Signatures Base -->
                         <div class="id-footer-exact">
+                            <!-- Employee Signature Box -->
                             <div class="sig-box">
+                                <div class="sig-img-container">
+                                    <img id="outEmpSign" src="" alt="Employee Signature">
+                                </div>
                                 <div class="sig-line"></div>
                                 <div class="sig-title">Sign. Of Employee</div>
                             </div>
+                            
+                            <!-- Principal Signature Box -->
                             <div class="sig-box">
+                                <div class="sig-img-container">
+                                    <img id="outPrinSign" src="" alt="Principal Signature">
+                                </div>
                                 <div class="sig-line"></div>
                                 <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute, Churu</div>
                             </div>
@@ -352,6 +396,34 @@
                 const r = new FileReader();
                 r.onload = function(event) {
                     document.getElementById('outPhoto').src = event.target.result;
+                }
+                r.readAsDataURL(f);
+            }
+        });
+
+        // Employee Signature Upload Handling
+        document.getElementById('inpEmpSign').addEventListener('change', function(e) {
+            const f = e.target.files[0];
+            if(f) {
+                const r = new FileReader();
+                r.onload = function(event) {
+                    const img = document.getElementById('outEmpSign');
+                    img.src = event.target.result;
+                    img.style.display = 'block'; // Make it visible once loaded
+                }
+                r.readAsDataURL(f);
+            }
+        });
+
+        // Principal Signature Upload Handling
+        document.getElementById('inpPrinSign').addEventListener('change', function(e) {
+            const f = e.target.files[0];
+            if(f) {
+                const r = new FileReader();
+                r.onload = function(event) {
+                    const img = document.getElementById('outPrinSign');
+                    img.src = event.target.result;
+                    img.style.display = 'block'; // Make it visible once loaded
                 }
                 r.readAsDataURL(f);
             }
