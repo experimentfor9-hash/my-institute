@@ -23,199 +23,136 @@
             margin-bottom: 40px;
         }
 
+        /* --- FORM STYLING --- */
         .id-form {
             background: #f8fafc;
             padding: 25px;
             border-radius: 15px;
             border: 1px solid #e2e8f0;
         }
-        .form-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
+        .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .form-group { margin-bottom: 15px; }
         .form-group label {
-            display: block;
-            font-weight: 600;
-            color: #334155;
-            margin-bottom: 5px;
-            font-size: 13px;
+            display: block; font-weight: 600; color: #334155; margin-bottom: 5px; font-size: 13px;
         }
         .form-group input, .form-group select {
-            width: 100%;
-            padding: 10px;
-            border: 1px solid #cbd5e1;
-            border-radius: 6px;
-            font-size: 14px;
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; transition: 0.3s;
         }
-        .form-group input[type="file"] {
-            background: white;
-            cursor: pointer;
-        }
-        .form-group input:focus, .form-group select:focus {
-            border-color: #1e3a8a;
-            outline: none;
-        }
+        .form-group input[type="file"] { background: white; cursor: pointer; }
+        .form-group input:focus, .form-group select:focus { border-color: #1e3a8a; outline: none; }
 
-        /* --- PRECISE REPLICA OF THE ID CARD --- */
+        /* --- HIGHLY ATTRACTIVE EXACT ID CARD REPLICA --- */
         .id-preview-area {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            background: #f1f5f9;
-            padding: 30px;
-            border-radius: 15px;
-            border: 1px solid #cbd5e1;
-        }
-
-        .id-holder-frame {
-            padding: 8px;
-            background: #00a8e8;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+            display: flex; flex-direction: column; align-items: center;
+            background: #f1f5f9; padding: 30px; border-radius: 15px; border: 1px solid #cbd5e1;
         }
 
         .id-card-exact {
-            width: 290px;
-            height: 460px;
+            width: 320px;
+            height: 520px;
             background: #ffffff;
-            border-radius: 6px;
+            border-radius: 8px; /* Slight curve as seen in image */
+            border: 2px solid #000000; /* Crisp black border */
             overflow: hidden;
             position: relative;
             font-family: 'Arial', sans-serif;
             color: #000000;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
+        /* Header Bar: Crisp Red */
         .id-header-bar {
-            background: #b91c1c; 
+            background: #c11d23; /* Matching the exact red */
             color: #ffffff;
             text-align: center;
-            padding: 8px 5px;
+            padding: 12px 5px;
             border-bottom: 2px solid #000000;
         }
         .id-header-bar h4 {
-            margin: 0;
-            font-size: 13px;
-            font-weight: bold;
-            letter-spacing: 0.5px;
+            margin: 0 0 4px 0; font-size: 16px; font-weight: 900; letter-spacing: 0.5px;
         }
         .id-header-bar p {
-            margin: 1px 0 0 0;
-            font-size: 9px;
-            font-weight: normal;
-            opacity: 0.9;
+            margin: 0; font-size: 11px; font-weight: normal; letter-spacing: 0.2px;
         }
 
+        /* Photo Block */
         .id-photo-block {
-            width: 90px;
-            height: 105px;
-            margin: 12px auto 8px;
-            border: 1px solid #94a3b8;
+            width: 110px;
+            height: 135px;
+            margin: 18px auto 15px;
+            border: 1px solid #777; /* Subtle grey border */
             background: #f8fafc;
         }
-        .id-photo-block img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* Data Grid: Perfectly Aligned */
         .id-data-block {
-            padding: 0 15px;
-            font-size: 10.5px;
-            line-height: 1.45;
+            padding: 0 20px;
+            font-size: 13px; /* Slightly larger, crisp text */
+            line-height: 1.6;
         }
         
         .data-row {
             display: grid;
-            grid-template-columns: 80px 1fr;
-            margin-bottom: 2px;
+            grid-template-columns: 105px 10px 1fr; /* Exact spacing for Labels, Colon, and Values */
+            margin-bottom: 4px;
         }
-        .data-label {
-            font-weight: normal;
-            color: #000000;
-        }
-        .data-value {
-            font-weight: bold;
-            color: #000000;
-            text-transform: uppercase;
-        }
+        .data-label { color: #1a1a1a; font-weight: normal; }
+        .data-colon { text-align: center; font-weight: bold; }
+        .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
         /* Footer & Signatures Block */
         .id-footer-exact {
             position: absolute;
-            bottom: 12px;
+            bottom: 15px;
             width: 100%;
-            padding: 0 15px;
+            padding: 0 20px;
             display: flex;
             justify-content: space-between;
             align-items: flex-end;
         }
-        .sig-box {
-            text-align: center;
-            width: 45%;
-        }
+        .sig-box { text-align: center; width: 45%; }
+        
         .sig-img-container {
-            height: 25px; /* Fixed height so layout doesn't jump */
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            margin-bottom: 2px;
+            height: 35px;
+            display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;
         }
         .sig-img-container img {
-            max-height: 100%;
-            max-width: 100%;
-            object-fit: contain;
-            display: none; /* Hidden until uploaded */
+            max-height: 100%; max-width: 100%; object-fit: contain; display: none;
         }
+        
         .sig-line {
-            border-top: 1px dotted #475569;
-            margin-bottom: 3px;
+            border-top: 1px dashed #000000; /* Dashed line exactly like image */
+            margin-bottom: 4px;
         }
         .sig-title {
-            font-size: 8px;
-            font-weight: bold;
-            color: #334155;
-            line-height: 1.1;
+            font-size: 10px;
+            font-weight: 800; /* Bold titles */
+            color: #1f2937;
+            line-height: 1.2;
         }
 
         .btn-download-exact {
-            background: #1e3a8a;
-            color: white;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 600;
-            margin-top: 20px;
-            cursor: pointer;
-            width: 100%;
-            transition: 0.3s;
+            background: #1e3a8a; color: white; padding: 15px 25px; border: none; border-radius: 8px;
+            font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; width: 100%; transition: 0.3s;
         }
-        .btn-download-exact:hover { background: #111827; }
+        .btn-download-exact:hover { background: #111827; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
 
-        /* --- MOBILE RESPONSIVENESS FIX --- */
         @media (max-width: 992px) {
-            .id-generator-container {
-                grid-template-columns: 1fr; /* Stacks form and preview on mobile */
-                padding: 15px;
-            }
-            .form-grid-2 {
-                grid-template-columns: 1fr; /* Stacks form inputs */
-            }
+            .id-generator-container { grid-template-columns: 1fr; padding: 15px; }
+            .form-grid-2 { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Dynamic Menu Injection -->
     <nav></nav>
 
     <div class="container section-padding">
         <div class="sec-title">
-            <span class="sec-badge">OFFICIAL FORMAT</span>
-            <h2>Exact <span>Govt ID Card Replica</span></h2>
-            <p>कर्मचारी और संस्था प्रधान के डिजिटल हस्ताक्षर के साथ पहचान पत्र बनाएं।</p>
+            <span class="sec-badge">PREMIUM FORMAT</span>
+            <h2>Attractive <span>Digital ID Card</span></h2>
+            <p>1000727778.png के शानदार लेआउट के अनुसार हाई-रेजोल्यूशन पहचान पत्र बनाएं।</p>
         </div>
 
         <div class="id-generator-container">
@@ -230,11 +167,11 @@
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Name (नाम)</label>
-                        <input type="text" id="inpName" placeholder="SHYORAPAL BHATI" oninput="updateField('inpName', 'outName')">
+                        <input type="text" id="inpName" placeholder="MUKESH KUMAR" oninput="updateField('inpName', 'outName')">
                     </div>
                     <div class="form-group">
                         <label>Father's Name (पिता का नाम)</label>
-                        <input type="text" id="inpFather" placeholder="SH. MURARI LAL BHATI" oninput="updateField('inpFather', 'outFather')">
+                        <input type="text" id="inpFather" placeholder="SHEONATH" oninput="updateField('inpFather', 'outFather')">
                     </div>
                 </div>
 
@@ -245,29 +182,29 @@
                     </div>
                     <div class="form-group">
                         <label>Designation (पद)</label>
-                        <input type="text" id="inpDesig" placeholder="Senior Assistant" oninput="updateField('inpDesig', 'outDesig')">
+                        <input type="text" id="inpDesig" placeholder="JUNIOR INSTRUCTOR" oninput="updateField('inpDesig', 'outDesig')">
                     </div>
                 </div>
 
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Employee ID (कर्मचारी कोड)</label>
-                        <input type="text" id="inpEmpId" placeholder="RJCR202012020244" oninput="updateField('inpEmpId', 'outEmpId')">
+                        <input type="text" id="inpEmpId" placeholder="RJCR202612003377" oninput="updateField('inpEmpId', 'outEmpId')">
                     </div>
                     <div class="form-group">
                         <label>Mobile No (मोबाइल नंबर)</label>
-                        <input type="text" id="inpMobile" placeholder="8819790261" oninput="updateField('inpMobile', 'outMobile')">
+                        <input type="text" id="inpMobile" placeholder="9660608859" oninput="updateField('inpMobile', 'outMobile')">
                     </div>
                 </div>
 
                 <div class="form-grid-2">
                     <div class="form-group">
                         <label>Blood Group (रक्त समूह)</label>
-                        <input type="text" id="inpBlood" placeholder="B+" oninput="updateField('inpBlood', 'outBlood')">
+                        <input type="text" id="inpBlood" placeholder="O+" oninput="updateField('inpBlood', 'outBlood')">
                     </div>
                     <div class="form-group">
                         <label>U.I.D. No (आधार संख्या)</label>
-                        <input type="text" id="inpUid" placeholder="601978750081" oninput="updateField('inpUid', 'outUid')">
+                        <input type="text" id="inpUid" placeholder="776005622091" oninput="updateField('inpUid', 'outUid')">
                     </div>
                 </div>
 
@@ -282,14 +219,13 @@
                     </div>
                 </div>
                 
-                <!-- NEW SIGNATURE UPLOAD FIELDS -->
                 <div class="form-grid-2" style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 15px;">
                     <div class="form-group">
-                        <label style="color: #b91c1c;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
+                        <label style="color: #c11d23;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
                         <input type="file" id="inpEmpSign" accept="image/*">
                     </div>
                     <div class="form-group">
-                        <label style="color: #b91c1c;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
+                        <label style="color: #c11d23;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
                         <input type="file" id="inpPrinSign" accept="image/*">
                     </div>
                 </div>
@@ -297,145 +233,150 @@
 
             <!-- LIVE EXACT PREVIEW -->
             <div class="id-preview-area">
-                <div class="id-holder-frame">
-                    <div class="id-card-exact" id="idCardExactCapture">
-                        
-                        <!-- Top Header Bar -->
-                        <div class="id-header-bar">
-                            <h4>GOVT. OF RAJASTHAN</h4>
-                            <p>Govt. Industrial Training Institute, Churu</p>
+                
+                <div class="id-card-exact" id="idCardExactCapture">
+                    <!-- Top Header Bar -->
+                    <div class="id-header-bar">
+                        <h4>GOVT. OF RAJASTHAN</h4>
+                        <p>Govt. Industrial Training Institute, Churu</p>
+                    </div>
+                    
+                    <!-- Image Block -->
+                    <div class="id-photo-block">
+                        <img id="outPhoto" src="https://via.placeholder.com/110x135/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
+                    </div>
+                    
+                    <!-- Perfectly Aligned Data Grid -->
+                    <div class="id-data-block">
+                        <div class="data-row">
+                            <span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span>
                         </div>
-                        
-                        <!-- Image Block -->
-                        <div class="id-photo-block">
-                            <img id="outPhoto" src="https://via.placeholder.com/90x105/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
+                        <div class="data-row">
+                            <span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span>
                         </div>
-                        
-                        <!-- Main Meta Fields -->
-                        <div class="id-data-block">
-                            <div class="data-row"><span class="data-label">Name</span><span>: <span class="data-value" id="outName">SHYORAPAL BHATI</span></span></div>
-                            <div class="data-row"><span class="data-label">Father's Name</span><span>: <span class="data-value" id="outFather">SH. MURARI LAL BHATI</span></span></div>
-                            <div class="data-row"><span class="data-label">D.O.B.</span><span>: <span class="data-value" id="outDob">06/02/1991</span></span></div>
-                            <div class="data-row"><span class="data-label">Designation</span><span>: <span class="data-value" id="outDesig">Senior Assistant</span></span></div>
-                            <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span>: <span class="data-value" id="outEmpId">RJCR202012020244</span></span></div>
-                            <div class="data-row"><span class="data-label">Mobile No</span><span>: <span class="data-value" id="outMobile">8819790261</span></span></div>
-                            <div class="data-row"><span class="data-label">Blood Group</span><span>: <span class="data-value" id="outBlood">B+</span></span></div>
-                            <div class="data-row"><span class="data-label">U.I.D. No</span><span>: <span class="data-value" id="outUid">601978750081</span></span></div>
-                            <div class="data-row"><span class="data-label">PAN No</span><span>: <span class="data-value" id="outPan">BYZPB1353D</span></span></div>
-                            <div class="data-row"><span class="data-label">Address</span><span>: <span class="data-value" id="outAddress">WARD NO.02, CHURU</span></span></div>
+                        <div class="data-row">
+                            <span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span>
                         </div>
+                        <div class="data-row">
+                            <span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span>
+                        </div>
+                        <div class="data-row">
+                            <span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span>
+                        </div>
+                    </div>
 
-                        <!-- Signatures Base -->
-                        <div class="id-footer-exact">
-                            <!-- Employee Signature Box -->
-                            <div class="sig-box">
-                                <div class="sig-img-container">
-                                    <img id="outEmpSign" src="" alt="Employee Signature">
-                                </div>
-                                <div class="sig-line"></div>
-                                <div class="sig-title">Sign. Of Employee</div>
+                    <!-- Signatures Base -->
+                    <div class="id-footer-exact">
+                        <div class="sig-box">
+                            <div class="sig-img-container">
+                                <img id="outEmpSign" src="" alt="Employee Signature">
                             </div>
-                            
-                            <!-- Principal Signature Box -->
-                            <div class="sig-box">
-                                <div class="sig-img-container">
-                                    <img id="outPrinSign" src="" alt="Principal Signature">
-                                </div>
-                                <div class="sig-line"></div>
-                                <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute, Churu</div>
-                            </div>
+                            <div class="sig-line"></div>
+                            <div class="sig-title">Sign. Of Employee</div>
                         </div>
-
+                        
+                        <div class="sig-box">
+                            <div class="sig-img-container">
+                                <img id="outPrinSign" src="" alt="Principal Signature">
+                            </div>
+                            <div class="sig-line"></div>
+                            <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute,<br>Churu</div>
+                        </div>
                     </div>
                 </div>
 
-                <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-arrow-down"></i> Download Print-Ready ID Card</button>
+                <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-image"></i> Download ID Card HD</button>
             </div>
 
         </div>
     </div>
 
-    <!-- Global Footer Script Injected Here -->
     <footer></footer>
 
     <script src="components.js"></script>
 
     <script>
-        // Update values seamlessly
+        // Update values with new Defaults
         function updateField(inputId, outputId) {
             let value = document.getElementById(inputId).value;
             if(value === "") {
-                if(inputId === 'inpName') value = "SHYORAPAL BHATI";
-                if(inputId === 'inpFather') value = "SH. MURARI LAL BHATI";
-                if(inputId === 'inpDesig') value = "Senior Assistant";
-                if(inputId === 'inpEmpId') value = "RJCR202012020244";
-                if(inputId === 'inpMobile') value = "8819790261";
-                if(inputId === 'inpBlood') value = "B+";
-                if(inputId === 'inpUid') value = "601978750081";
+                if(inputId === 'inpName') value = "MUKESH KUMAR";
+                if(inputId === 'inpFather') value = "SHEONATH";
+                if(inputId === 'inpDesig') value = "JUNIOR INSTRUCTOR";
+                if(inputId === 'inpEmpId') value = "RJCR202612003377";
+                if(inputId === 'inpMobile') value = "9660608859";
+                if(inputId === 'inpBlood') value = "O+";
+                if(inputId === 'inpUid') value = "776005622091";
                 if(inputId === 'inpPan') value = "BYZPB1353D";
                 if(inputId === 'inpAddress') value = "WARD NO.02, CHURU";
             }
             document.getElementById(outputId).innerText = value;
         }
 
-        // Date Format to DD/MM/YYYY
         function updateDate(inputId, outputId) {
             let dVal = document.getElementById(inputId).value;
             if(dVal) {
                 let p = dVal.split('-');
                 document.getElementById(outputId).innerText = `${p[2]}/${p[1]}/${p[0]}`;
             } else {
-                document.getElementById(outputId).innerText = "06/02/1991";
+                document.getElementById(outputId).innerText = "23/06/1995";
             }
         }
 
-        // Photo Upload Handling
         document.getElementById('inpPhoto').addEventListener('change', function(e) {
             const f = e.target.files[0];
             if(f) {
                 const r = new FileReader();
-                r.onload = function(event) {
-                    document.getElementById('outPhoto').src = event.target.result;
-                }
+                r.onload = function(event) { document.getElementById('outPhoto').src = event.target.result; }
                 r.readAsDataURL(f);
             }
         });
 
-        // Employee Signature Upload Handling
         document.getElementById('inpEmpSign').addEventListener('change', function(e) {
             const f = e.target.files[0];
             if(f) {
                 const r = new FileReader();
                 r.onload = function(event) {
                     const img = document.getElementById('outEmpSign');
-                    img.src = event.target.result;
-                    img.style.display = 'block'; // Make it visible once loaded
+                    img.src = event.target.result; img.style.display = 'block';
                 }
                 r.readAsDataURL(f);
             }
         });
 
-        // Principal Signature Upload Handling
         document.getElementById('inpPrinSign').addEventListener('change', function(e) {
             const f = e.target.files[0];
             if(f) {
                 const r = new FileReader();
                 r.onload = function(event) {
                     const img = document.getElementById('outPrinSign');
-                    img.src = event.target.result;
-                    img.style.display = 'block'; // Make it visible once loaded
+                    img.src = event.target.result; img.style.display = 'block';
                 }
                 r.readAsDataURL(f);
             }
         });
 
-        // Exact Image Capture Engine
         function downloadExactID() {
             const element = document.getElementById('idCardExactCapture');
-            html2canvas(element, { scale: 4, useCORS: true, backgroundColor: null }).then(canvas => {
-                let name = document.getElementById('inpName').value || "Govt_Staff";
+            html2canvas(element, { scale: 5, useCORS: true, backgroundColor: null }).then(canvas => {
+                let name = document.getElementById('inpName').value || "Mukesh_Kumar";
                 const triggerLink = document.createElement('a');
-                triggerLink.download = `Official_ID_${name.replace(/ /g, "_")}.png`;
+                triggerLink.download = `ID_Card_${name.replace(/ /g, "_")}.png`;
                 triggerLink.href = canvas.toDataURL('image/png');
                 triggerLink.click();
             });
