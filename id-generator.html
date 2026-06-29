@@ -9,13 +9,39 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
+        /* --- SECURITY LOCK SCREEN STYLING --- */
+        #pinScreen {
+            max-width: 400px; margin: 100px auto;
+            background: white; padding: 40px 30px;
+            border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            text-align: center; border-top: 5px solid #358ced;
+        }
+        #pinScreen h2 { color: #11329c; margin-bottom: 10px; font-weight: 700; }
+        #pinScreen p { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+        #pinScreen input {
+            width: 70%; padding: 12px; margin-bottom: 20px;
+            border: 2px solid #cbd5e1; border-radius: 8px;
+            text-align: center; font-size: 24px; letter-spacing: 15px;
+            color: #0f172a; font-weight: bold;
+        }
+        #pinScreen input:focus { border-color: #358ced; outline: none; box-shadow: 0 0 0 3px rgba(53,140,237,0.1); }
+        .btn-unlock {
+            background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
+            color: white; padding: 12px 30px; border: none; border-radius: 8px;
+            font-size: 16px; font-weight: 600; cursor: pointer; width: 70%; transition: 0.3s;
+        }
+        .btn-unlock:hover { box-shadow: 0 5px 15px rgba(102,72,213,0.3); transform: translateY(-2px); }
+
+        /* Main Content Hidden by Default */
+        #mainContent { display: none; }
+
+        /* --- GENERATOR STYLING --- */
         .id-generator-container {
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;
             background: white; padding: 35px; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
         }
 
-        /* --- FORM STYLING --- */
         .id-form { background: #f8fafc; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; }
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .form-group { margin-bottom: 15px; }
@@ -33,26 +59,18 @@
         }
 
         .id-card-exact {
-            width: 320px;
-            height: 580px; 
-            background: #ffffff;
-            border-radius: 8px;
-            border: 2px solid #000000;
-            overflow: hidden;
-            position: relative;
-            font-family: 'Arial', sans-serif;
-            color: #000000;
+            width: 320px; height: 580px; 
+            background: #ffffff; border-radius: 8px; border: 2px solid #000000;
+            overflow: hidden; position: relative;
+            font-family: 'Arial', sans-serif; color: #000000;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
         /* --- IFMS 3.0 THEME HEADER BAR --- */
         .id-header-bar {
-            /* 1000727790.jpg के IFMS 3.0 टॉप बार से लिया गया ग्रेडिएंट */
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
-            color: #ffffff; 
-            text-align: center;
-            padding: 12px 5px; 
-            border-bottom: 2px solid #000000;
+            color: #ffffff; text-align: center;
+            padding: 12px 5px; border-bottom: 2px solid #000000;
         }
         .id-header-bar h4 { 
             margin: 0 0 5px 0; font-size: 16px; font-weight: 900; 
@@ -64,54 +82,39 @@
             letter-spacing: 0.2px; line-height: 1.3; 
         }
 
-        /* Photo Block */
         .id-photo-block {
             width: 110px; height: 135px; margin: 15px auto 15px;
             border: 1px solid #777; background: #f8fafc;
         }
         .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Data Grid */
-        .id-data-block {
-            padding: 0 20px; font-size: 13px; line-height: 1.6;
-        }
-        .data-row {
-            display: grid; grid-template-columns: 105px 10px 1fr; margin-bottom: 6px;
-        }
+        .id-data-block { padding: 0 20px; font-size: 13px; line-height: 1.6; }
+        .data-row { display: grid; grid-template-columns: 105px 10px 1fr; margin-bottom: 6px; }
         .data-label { color: #1a1a1a; font-weight: normal; }
         .data-colon { text-align: center; font-weight: bold; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
-        /* Footer & Signatures Block */
         .id-footer-exact {
-            position: absolute;
-            bottom: 15px;
-            left: 0; right: 0; 
-            padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: flex-end;
+            position: absolute; bottom: 15px; left: 0; right: 0; 
+            padding: 0 20px; display: flex; justify-content: space-between; align-items: flex-end;
         }
         .sig-box { text-align: center; width: 45%; }
         
         .sig-img-container {
-            height: 40px; 
-            width: 100%;
+            height: 40px; width: 100%;
             display: flex; align-items: center; justify-content: center; 
-            margin-bottom: 2px;
-            overflow: hidden;
+            margin-bottom: 2px; overflow: hidden;
         }
         .sig-img-container img {
             max-height: 100%; max-width: 100%; object-fit: contain; 
-            mix-blend-mode: multiply; /* Paper background remover */
-            display: none;
+            mix-blend-mode: multiply; display: none;
         }
         
         .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; }
         .sig-title { font-size: 10px; font-weight: 800; color: #1f2937; line-height: 1.2; }
 
-        /* IFMS 3.0 Theme Button */
         .btn-download-exact {
-            background: #11329c; /* IFMS Deep Blue */
-            color: white; padding: 15px 25px; border: none; border-radius: 8px;
+            background: #11329c; color: white; padding: 15px 25px; border: none; border-radius: 8px;
             font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; width: 100%; transition: 0.3s;
         }
         .btn-download-exact:hover { background: #0a1f66; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
@@ -126,141 +129,151 @@
 
     <nav></nav>
 
-    <div class="container section-padding">
-        <div class="sec-title">
-            <span class="sec-badge">IFMS 3.0 FORMAT</span>
-            <h2>Official <span>Digital ID Card</span></h2>
-            <p>1000727790.jpg के IFMS कलर स्ट्रक्चर के साथ आधिकारिक सरकारी पहचान पत्र बनाएं।</p>
-        </div>
+    <!-- 1. SECURITY LOCK SCREEN -->
+    <div id="pinScreen">
+        <h2>🔒 Admin Access</h2>
+        <p>Enter master passcode to access the Generator</p>
+        <input type="password" id="adminPin" placeholder="****" maxlength="4">
+        <br>
+        <button onclick="checkPin()" class="btn-unlock"><i class="fa-solid fa-key"></i> Unlock Tool</button>
+        <p id="pinError" style="color:#ef4444; display:none; margin-top:15px; font-weight:bold; font-size: 14px;">❌ Incorrect Passcode!</p>
+    </div>
 
-        <div class="id-generator-container">
-            
-            <!-- FORM INPUTS -->
-            <div class="id-form">
-                <div class="form-group">
-                    <label>कर्मचारी की फ़ोटो (Upload Passport Size Photo)</label>
-                    <input type="file" id="inpPhoto" accept="image/*">
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Name (नाम)</label>
-                        <input type="text" id="inpName" placeholder="MUKESH KUMAR" oninput="updateField('inpName', 'outName')">
-                    </div>
-                    <div class="form-group">
-                        <label>Father's Name (पिता का नाम)</label>
-                        <input type="text" id="inpFather" placeholder="SHEONATH" oninput="updateField('inpFather', 'outFather')">
-                    </div>
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Date of Birth (जन्म तिथि)</label>
-                        <input type="date" id="inpDob" onchange="updateDate('inpDob', 'outDob')">
-                    </div>
-                    <div class="form-group">
-                        <label>Designation (पद)</label>
-                        <input type="text" id="inpDesig" placeholder="JUNIOR INSTRUCTOR" oninput="updateField('inpDesig', 'outDesig')">
-                    </div>
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Employee ID (कर्मचारी कोड)</label>
-                        <input type="text" id="inpEmpId" placeholder="RJCR202612003377" oninput="updateField('inpEmpId', 'outEmpId')">
-                    </div>
-                    <div class="form-group">
-                        <label>Mobile No (मोबाइल नंबर)</label>
-                        <input type="text" id="inpMobile" placeholder="9660608859" oninput="updateField('inpMobile', 'outMobile')">
-                    </div>
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>Blood Group (रक्त समूह)</label>
-                        <input type="text" id="inpBlood" placeholder="O+" oninput="updateField('inpBlood', 'outBlood')">
-                    </div>
-                    <div class="form-group">
-                        <label>U.I.D. No (आधार संख्या)</label>
-                        <input type="text" id="inpUid" placeholder="776005622091" oninput="updateField('inpUid', 'outUid')">
-                    </div>
-                </div>
-
-                <div class="form-grid-2">
-                    <div class="form-group">
-                        <label>PAN No (पैन संख्या)</label>
-                        <input type="text" id="inpPan" placeholder="BYZPB1353D" oninput="updateField('inpPan', 'outPan')">
-                    </div>
-                    <div class="form-group">
-                        <label>Address / City (पता)</label>
-                        <input type="text" id="inpAddress" placeholder="WARD NO.02, CHURU" oninput="updateField('inpAddress', 'outAddress')">
-                    </div>
-                </div>
-                
-                <div class="form-grid-2" style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 15px;">
-                    <div class="form-group">
-                        <label style="color: #358ced;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
-                        <input type="file" id="inpEmpSign" accept="image/*">
-                    </div>
-                    <div class="form-group">
-                        <label style="color: #358ced;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
-                        <input type="file" id="inpPrinSign" accept="image/*">
-                    </div>
-                </div>
+    <!-- 2. MAIN GENERATOR CONTENT (Hidden until unlocked) -->
+    <div id="mainContent">
+        <div class="container section-padding" style="padding-top: 20px;">
+            <div class="sec-title">
+                <span class="sec-badge">IFMS 3.0 FORMAT</span>
+                <h2>Official <span>Digital ID Card</span></h2>
+                <p>IFMS कलर स्ट्रक्चर के साथ आधिकारिक सरकारी पहचान पत्र बनाएं।</p>
             </div>
 
-            <!-- LIVE EXACT PREVIEW -->
-            <div class="id-preview-area">
-                
-                <div class="id-card-exact" id="idCardExactCapture">
-                    
-                    <!-- IFMS 3.0 HEADER -->
-                    <div class="id-header-bar">
-                        <h4>Government OF RAJASTHAN</h4>
-                        <p>Department of Skill Employment And entrepreneurship</p>
-                        <p>Government Industrial Training Institute, Churu</p>
-                    </div>
-                    
-                    <div class="id-photo-block">
-                        <img id="outPhoto" src="https://via.placeholder.com/110x135/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
-                    </div>
-                    
-                    <div class="id-data-block">
-                        <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span></div>
-                        <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span></div>
-                        <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span></div>
-                        <div class="data-row"><span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span></div>
-                        <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span></div>
-                        <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span></div>
-                        <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span></div>
-                        <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span></div>
-                        <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span></div>
-                        <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span></div>
+            <div class="id-generator-container">
+                <!-- FORM INPUTS -->
+                <div class="id-form">
+                    <div class="form-group">
+                        <label>कर्मचारी की फ़ोटो (Upload Passport Size Photo)</label>
+                        <input type="file" id="inpPhoto" accept="image/*">
                     </div>
 
-                    <!-- Signatures Base -->
-                    <div class="id-footer-exact">
-                        <div class="sig-box">
-                            <div class="sig-img-container">
-                                <img id="outEmpSign" src="" alt="Employee Signature">
-                            </div>
-                            <div class="sig-line"></div>
-                            <div class="sig-title">Sign. Of Employee</div>
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Name (नाम)</label>
+                            <input type="text" id="inpName" placeholder="MUKESH KUMAR" oninput="updateField('inpName', 'outName')">
+                        </div>
+                        <div class="form-group">
+                            <label>Father's Name (पिता का नाम)</label>
+                            <input type="text" id="inpFather" placeholder="SHEONATH" oninput="updateField('inpFather', 'outFather')">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Date of Birth (जन्म तिथि)</label>
+                            <input type="date" id="inpDob" onchange="updateDate('inpDob', 'outDob')">
+                        </div>
+                        <div class="form-group">
+                            <label>Designation (पद)</label>
+                            <input type="text" id="inpDesig" placeholder="JUNIOR INSTRUCTOR" oninput="updateField('inpDesig', 'outDesig')">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Employee ID (कर्मचारी कोड)</label>
+                            <input type="text" id="inpEmpId" placeholder="RJCR202612003377" oninput="updateField('inpEmpId', 'outEmpId')">
+                        </div>
+                        <div class="form-group">
+                            <label>Mobile No (मोबाइल नंबर)</label>
+                            <input type="text" id="inpMobile" placeholder="9660608859" oninput="updateField('inpMobile', 'outMobile')">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>Blood Group (रक्त समूह)</label>
+                            <input type="text" id="inpBlood" placeholder="O+" oninput="updateField('inpBlood', 'outBlood')">
+                        </div>
+                        <div class="form-group">
+                            <label>U.I.D. No (आधार संख्या)</label>
+                            <input type="text" id="inpUid" placeholder="776005622091" oninput="updateField('inpUid', 'outUid')">
+                        </div>
+                    </div>
+
+                    <div class="form-grid-2">
+                        <div class="form-group">
+                            <label>PAN No (पैन संख्या)</label>
+                            <input type="text" id="inpPan" placeholder="BYZPB1353D" oninput="updateField('inpPan', 'outPan')">
+                        </div>
+                        <div class="form-group">
+                            <label>Address / City (पता)</label>
+                            <input type="text" id="inpAddress" placeholder="WARD NO.02, CHURU" oninput="updateField('inpAddress', 'outAddress')">
+                        </div>
+                    </div>
+                    
+                    <div class="form-grid-2" style="margin-top: 15px; border-top: 1px solid #cbd5e1; padding-top: 15px;">
+                        <div class="form-group">
+                            <label style="color: #358ced;">Sign. Of Employee (कर्मचारी हस्ताक्षर)</label>
+                            <input type="file" id="inpEmpSign" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label style="color: #358ced;">Principal Sign (प्रधानाचार्य हस्ताक्षर)</label>
+                            <input type="file" id="inpPrinSign" accept="image/*">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LIVE EXACT PREVIEW -->
+                <div class="id-preview-area">
+                    
+                    <div class="id-card-exact" id="idCardExactCapture">
+                        <div class="id-header-bar">
+                            <h4>Government OF RAJASTHAN</h4>
+                            <p>Department of Skill Employment And entrepreneurship</p>
+                            <p>Government Industrial Training Institute, Churu</p>
                         </div>
                         
-                        <div class="sig-box">
-                            <div class="sig-img-container">
-                                <img id="outPrinSign" src="" alt="Principal Signature">
+                        <div class="id-photo-block">
+                            <img id="outPhoto" src="https://via.placeholder.com/110x135/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
+                        </div>
+                        
+                        <div class="id-data-block">
+                            <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span></div>
+                            <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span></div>
+                            <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span></div>
+                            <div class="data-row"><span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span></div>
+                            <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span></div>
+                            <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span></div>
+                            <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span></div>
+                            <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span></div>
+                            <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span></div>
+                            <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span></div>
+                        </div>
+
+                        <!-- Signatures Base -->
+                        <div class="id-footer-exact">
+                            <div class="sig-box">
+                                <div class="sig-img-container">
+                                    <img id="outEmpSign" src="" alt="Employee Signature">
+                                </div>
+                                <div class="sig-line"></div>
+                                <div class="sig-title">Sign. Of Employee</div>
                             </div>
-                            <div class="sig-line"></div>
-                            <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute,<br>Churu</div>
+                            
+                            <div class="sig-box">
+                                <div class="sig-img-container">
+                                    <img id="outPrinSign" src="" alt="Principal Signature">
+                                </div>
+                                <div class="sig-line"></div>
+                                <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute,<br>Churu</div>
+                            </div>
                         </div>
                     </div>
+
+                    <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-image"></i> Download ID Card HD</button>
                 </div>
 
-                <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-image"></i> Download ID Card HD</button>
             </div>
-
         </div>
     </div>
 
@@ -268,6 +281,33 @@
     <script src="components.js"></script>
 
     <script>
+        // --- SECURITY PIN LOGIC ---
+        // '8877' का Base64 एन्कोडेड रूप 'ODg3Nw==' है। (इसे कोई व्यू सोर्स से पढ़ नहीं पाएगा)
+        const ENCODED_PIN = "ODg3Nw=="; 
+
+        function checkPin() {
+            let enteredPin = document.getElementById("adminPin").value;
+            
+            if(btoa(enteredPin) === ENCODED_PIN) {
+                // सही PIN: लॉक स्क्रीन छुपाएं और टूल दिखाएं
+                document.getElementById("pinScreen").style.display = "none";
+                document.getElementById("mainContent").style.display = "block";
+            } else {
+                // गलत PIN: एरर दिखाएं
+                document.getElementById("pinError").style.display = "block";
+                document.getElementById("adminPin").value = ""; 
+            }
+        }
+        
+        // Enter कीबोर्ड बटन दबाने पर भी Unlock हो जाए
+        document.getElementById("adminPin").addEventListener("keypress", function(event) {
+            if (event.key === "Enter") {
+                event.preventDefault();
+                checkPin();
+            }
+        });
+
+        // --- ID GENERATOR LOGIC ---
         function updateField(inputId, outputId) {
             let value = document.getElementById(inputId).value;
             if(value === "") {
@@ -340,3 +380,4 @@
     </script>
 </body>
 </html>
+
