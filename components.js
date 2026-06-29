@@ -20,6 +20,8 @@ const navHTML = `
                     <a href="gallery.html">Gallery</a>
                     <a href="auto-draft.html">Auto Draft</a>
                     <a href="contact.html">Contact</a>
+                    <a href="id-generator.html">ID Generator</a>
+                    
                 </div>
                 <a href="contact.html" class="btn-enquiry">Enquiry Now</a>
             </nav>
