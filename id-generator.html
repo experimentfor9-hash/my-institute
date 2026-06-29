@@ -5,43 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Govt ID Card Generator - Indian Classes Sikar</title>
     
-    <!-- Global Stylesheet Reference -->
     <link rel="stylesheet" href="style.css">
-    
-    <!-- html2canvas for high quality PNG export -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
         .id-generator-container {
-            display: grid;
-            grid-template-columns: 1.2fr 0.8fr;
-            gap: 30px;
-            background: white;
-            padding: 35px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            margin-bottom: 40px;
+            display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;
+            background: white; padding: 35px; border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
         }
 
         /* --- FORM STYLING --- */
-        .id-form {
-            background: #f8fafc;
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid #e2e8f0;
-        }
+        .id-form { background: #f8fafc; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; }
         .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .form-group { margin-bottom: 15px; }
-        .form-group label {
-            display: block; font-weight: 600; color: #334155; margin-bottom: 5px; font-size: 13px;
-        }
+        .form-group label { display: block; font-weight: 600; color: #334155; margin-bottom: 5px; font-size: 13px; }
         .form-group input, .form-group select {
-            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; transition: 0.3s;
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;
         }
         .form-group input[type="file"] { background: white; cursor: pointer; }
-        .form-group input:focus, .form-group select:focus { border-color: #1e3a8a; outline: none; }
+        .form-group input:focus { border-color: #1e3a8a; outline: none; }
 
-        /* --- HIGHLY ATTRACTIVE EXACT ID CARD REPLICA --- */
+        /* --- ID CARD PREVIEW AREA --- */
         .id-preview-area {
             display: flex; flex-direction: column; align-items: center;
             background: #f1f5f9; padding: 30px; border-radius: 15px; border: 1px solid #cbd5e1;
@@ -49,10 +34,10 @@
 
         .id-card-exact {
             width: 320px;
-            height: 520px;
+            height: 570px; /* ऊँचाई बढ़ाई गई ताकि सिग्नेचर और टेक्स्ट न टकराएं */
             background: #ffffff;
-            border-radius: 8px; /* Slight curve as seen in image */
-            border: 2px solid #000000; /* Crisp black border */
+            border-radius: 8px;
+            border: 2px solid #000000;
             overflow: hidden;
             position: relative;
             font-family: 'Arial', sans-serif;
@@ -60,77 +45,57 @@
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
-        /* Header Bar: Crisp Red */
+        /* Header Bar */
         .id-header-bar {
-            background: #c11d23; /* Matching the exact red */
-            color: #ffffff;
-            text-align: center;
-            padding: 12px 5px;
-            border-bottom: 2px solid #000000;
+            background: #c11d23; color: #ffffff; text-align: center;
+            padding: 12px 5px; border-bottom: 2px solid #000000;
         }
-        .id-header-bar h4 {
-            margin: 0 0 4px 0; font-size: 16px; font-weight: 900; letter-spacing: 0.5px;
-        }
-        .id-header-bar p {
-            margin: 0; font-size: 11px; font-weight: normal; letter-spacing: 0.2px;
-        }
+        .id-header-bar h4 { margin: 0 0 4px 0; font-size: 16px; font-weight: 900; letter-spacing: 0.5px; }
+        .id-header-bar p { margin: 0; font-size: 11px; font-weight: normal; letter-spacing: 0.2px; }
 
         /* Photo Block */
         .id-photo-block {
-            width: 110px;
-            height: 135px;
-            margin: 18px auto 15px;
-            border: 1px solid #777; /* Subtle grey border */
-            background: #f8fafc;
+            width: 110px; height: 135px; margin: 18px auto 15px;
+            border: 1px solid #777; background: #f8fafc;
         }
         .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
-        /* Data Grid: Perfectly Aligned */
+        /* Data Grid */
         .id-data-block {
-            padding: 0 20px;
-            font-size: 13px; /* Slightly larger, crisp text */
-            line-height: 1.6;
+            padding: 0 20px; font-size: 13px; line-height: 1.6;
         }
-        
         .data-row {
-            display: grid;
-            grid-template-columns: 105px 10px 1fr; /* Exact spacing for Labels, Colon, and Values */
-            margin-bottom: 4px;
+            display: grid; grid-template-columns: 105px 10px 1fr; margin-bottom: 6px;
         }
         .data-label { color: #1a1a1a; font-weight: normal; }
         .data-colon { text-align: center; font-weight: bold; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
-        /* Footer & Signatures Block */
+        /* Footer & Signatures Block - FIXED POSITIONING */
         .id-footer-exact {
             position: absolute;
-            bottom: 15px;
-            width: 100%;
+            bottom: 15px; /* कार्ड के बिल्कुल नीचे फिक्स */
+            left: 0; right: 0; /* Box sizing issue fix */
             padding: 0 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
+            display: flex; justify-content: space-between; align-items: flex-end;
         }
         .sig-box { text-align: center; width: 45%; }
         
         .sig-img-container {
-            height: 35px;
-            display: flex; align-items: flex-end; justify-content: center; margin-bottom: 2px;
+            height: 40px; /* फिक्स ऊँचाई ताकि लाइन नीचे न खिसके */
+            width: 100%;
+            display: flex; align-items: center; justify-content: center; 
+            margin-bottom: 2px;
+            overflow: hidden;
         }
         .sig-img-container img {
-            max-height: 100%; max-width: 100%; object-fit: contain; display: none;
+            max-height: 100%; max-width: 100%; object-fit: contain; 
+            mix-blend-mode: multiply; /* MAGIC: यह पेपर के ग्रे/सफ़ेद बैकग्राउंड को हटा देगा */
+            display: none;
         }
         
-        .sig-line {
-            border-top: 1px dashed #000000; /* Dashed line exactly like image */
-            margin-bottom: 4px;
-        }
-        .sig-title {
-            font-size: 10px;
-            font-weight: 800; /* Bold titles */
-            color: #1f2937;
-            line-height: 1.2;
-        }
+        .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; }
+        .sig-title { font-size: 10px; font-weight: 800; color: #1f2937; line-height: 1.2; }
 
         .btn-download-exact {
             background: #1e3a8a; color: white; padding: 15px 25px; border: none; border-radius: 8px;
@@ -152,7 +117,7 @@
         <div class="sec-title">
             <span class="sec-badge">PREMIUM FORMAT</span>
             <h2>Attractive <span>Digital ID Card</span></h2>
-            <p>1000727778.png के शानदार लेआउट के अनुसार हाई-रेजोल्यूशन पहचान पत्र बनाएं।</p>
+            <p>सिग्नेचर फिक्स और स्मार्ट बैकग्राउंड रिमूवल के साथ एकदम परफेक्ट लेआउट।</p>
         </div>
 
         <div class="id-generator-container">
@@ -235,49 +200,26 @@
             <div class="id-preview-area">
                 
                 <div class="id-card-exact" id="idCardExactCapture">
-                    <!-- Top Header Bar -->
                     <div class="id-header-bar">
                         <h4>GOVT. OF RAJASTHAN</h4>
                         <p>Govt. Industrial Training Institute, Churu</p>
                     </div>
                     
-                    <!-- Image Block -->
                     <div class="id-photo-block">
                         <img id="outPhoto" src="https://via.placeholder.com/110x135/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
                     </div>
                     
-                    <!-- Perfectly Aligned Data Grid -->
                     <div class="id-data-block">
-                        <div class="data-row">
-                            <span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span>
-                        </div>
-                        <div class="data-row">
-                            <span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span>
-                        </div>
+                        <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span></div>
+                        <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span></div>
+                        <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span></div>
+                        <div class="data-row"><span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span></div>
+                        <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span></div>
+                        <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span></div>
+                        <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span></div>
+                        <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span></div>
+                        <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span></div>
+                        <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span></div>
                     </div>
 
                     <!-- Signatures Base -->
@@ -307,11 +249,9 @@
     </div>
 
     <footer></footer>
-
     <script src="components.js"></script>
 
     <script>
-        // Update values with new Defaults
         function updateField(inputId, outputId) {
             let value = document.getElementById(inputId).value;
             if(value === "") {
