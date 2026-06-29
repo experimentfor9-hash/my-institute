@@ -1,124 +1,135 @@
-// components.js
+// components.js - Updated for New Modern Design
 
-// 1. Global Header HTML Content
-const headerHTML = `
-    <img src="Mukesh.jpg" alt="Institute Logo" class="header-logo">
-    <h1>Indian Classes Sikar</h1>
-    <p>Technical Education</p>
-`;
-
-// 2. Global Navigation Menu HTML Content
-// components.js में navHTML को अपडेट करें
-// components.js में navHTML को इस तरह अपडेट करें:
+// 1. Global Navigation (Navbar with new styling)
 const navHTML = `
-    <div class="hamburger" onclick="toggleMenu()">☰</div>
-    <div id="navLinks" style="display: flex; gap: 15px; align-items: center;">
-        <a href="index.html">Home</a>
-        <a href="about.html">About</a>
-        <a href="courses.html">Courses</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="cbt-test.html">CBT Test</a>
-        <a href="contact.html" class="enquiry-btn">Enquiry</a>
-        <button id="darkModeToggle" class="dark-btn">🌙</button>
+    <div class="top-nav-wrapper">
+        <div class="container">
+            <nav class="new-main-nav">
+                <div class="logo-area">
+                    <img src="Logo.jpg" alt="Institute Logo">
+                    <div>
+                        <h2>Indian Classes Sikar</h2>
+                        <p>Technical Education</p>
+                    </div>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">Home</a>
+                    <a href="about.html">About Us</a>
+                    <a href="courses.html">Courses</a>
+                    <a href="cbt-test.html">CBT Test</a>
+                    <a href="gallery.html">Gallery</a>
+                    <a href="auto-draft.html">Auto Draft</a>
+                    <a href="contact.html">Contact</a>
+                </div>
+                <a href="contact.html" class="btn-enquiry">Enquiry Now</a>
+            </nav>
+        </div>
     </div>
 `;
 
-// setupGlobalDarkMode फंक्शन को यह रूप दें:
-function setupGlobalDarkMode() {
-    const toggleBtn = document.getElementById("darkModeToggle");
-    if (!toggleBtn) return; 
-
-    // शुरुआत में थीम सेट करें
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark-mode");
-        toggleBtn.innerHTML = "☀️";
-    }
-
-    toggleBtn.onclick = function() {
-        document.body.classList.toggle("dark-mode");
-        if (document.body.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            toggleBtn.innerHTML = "☀️";
-        } else {
-            localStorage.setItem("theme", "light");
-            toggleBtn.innerHTML = "🌙";
-        }
-    };
-}
-
-
-// नीचे यह नया फंक्शन जोड़ें
-function toggleMenu() {
-    const links = document.getElementById("navLinks");
-    const nav = document.querySelector("nav");
-    if (links.style.display === "flex") {
-        links.style.display = "none";
-        nav.classList.remove("menu-open");
-    } else {
-        links.style.display = "flex";
-        links.style.flexDirection = "column";
-        nav.classList.add("menu-open");
-    }
-}
-
-
-
-
-// 3. Global Footer HTML Content
+// 2. Global Footer (Detailed new footer design)
 const footerHTML = `
-    <p>&copy; 2026 Indian Classes Sikar. All Rights Reserved.</p>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Col 1 -->
+                <div class="footer-logo">
+                    <img src="Logo.jpg" alt="Logo">
+                    <h2>Indian Classes Sikar</h2>
+                    <p style="color: #64748b;">Technical Education</p>
+                    <p>Best ITI coaching Institute for Electrician, Fitter and all trades with NCVT CBT preparation and placement assistance.</p>
+                    <div class="social-icons">
+                        <a href="#" style="background:#3b5998;"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" style="background:#ff0000;"><i class="fa-brands fa-youtube"></i></a>
+                        <a href="#" style="background:#e1306c;"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://wa.me/919785842401" style="background:#25d366;"><i class="fa-brands fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Col 2 -->
+                <div class="footer-col">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="courses.html">Courses</a></li>
+                        <li><a href="cbt-test.html">CBT Test</a></li>
+                        <li><a href="gallery.html">Gallery</a></li>
+                        <li><a href="contact.html">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 3 -->
+                <div class="footer-col">
+                    <h4>Our Courses</h4>
+                    <ul>
+                        <li><a href="courses.html">Electrician</a></li>
+                        <li><a href="courses.html">Fitter</a></li>
+                        <li><a href="courses.html">COPA</a></li>
+                        <li><a href="courses.html">Welder</a></li>
+                        <li><a href="courses.html">Diesel Mechanic</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 4 -->
+                <div class="footer-col">
+                    <h4>Important Links</h4>
+                    <ul>
+                        <li><a href="#">Resume Builder</a></li>
+                        <li><a href="auto-draft.html">Auto Draft</a></li>
+                        <li><a href="courses.html">Fee Calculator</a></li>
+                        <li><a href="inventory.html">Stock Register</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <!-- Col 5 -->
+                <div class="footer-col">
+                    <h4>Contact Info</h4>
+                    <ul class="contact-info">
+                        <li><i class="fa-solid fa-location-dot"></i> <span>Indian Classes Sikar, Sikar, Rajasthan - 332001</span></li>
+                        <li><i class="fa-solid fa-phone"></i> <span>+91 97858 42401</span></li>
+                        <li><i class="fa-solid fa-envelope"></i> <span>indianclassessikar@gmail.com</span></li>
+                        <li><i class="fa-solid fa-clock"></i> <span>Mon - Sat: 9:00 AM - 6:00 PM</span></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Indian Classes Sikar. All Rights Reserved.</p>
+                <p>Designed with ❤️ for Students</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Floating Social Buttons globally injected -->
+    <div class="floating-social">
+        <a href="https://wa.me/919785842401" class="float-btn btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a href="tel:+919785842401" class="float-btn btn-call"><i class="fa-solid fa-phone"></i> Call Us</a>
+        <a href="contact.html" class="float-btn btn-apply"><i class="fa-solid fa-file-signature"></i> Apply Now</a>
+    </div>
 `;
 
 // Execute when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", function() {
     
-    // Inject Header
-    const headerElement = document.querySelector("header");
-    if (headerElement) {
-        headerElement.innerHTML = headerHTML;
-    }
-
-    // Inject Navigation
+    // Inject Navigation into the <nav> tag on all pages
     const navElement = document.querySelector("nav");
     if (navElement) {
-        navElement.innerHTML = navHTML;
+        navElement.outerHTML = navHTML; // Replaces old <nav> with the new structured HTML
     }
 
-    // Inject Footer
+    // Inject Footer into the <footer> tag on all pages
     const footerElement = document.querySelector("footer");
     if (footerElement) {
-        footerElement.innerHTML = footerHTML;
+        footerElement.outerHTML = footerHTML; // Replaces old <footer> with the new structured HTML
     }
-
-    // Initialize and Setup Dark Mode Toggle Logic
-    setupGlobalDarkMode();
+    
+    // Check if FontAwesome is loaded (needed for icons in nav/footer), if not, inject it
+    if (!document.querySelector('link[href*="font-awesome"]')) {
+        const faLink = document.createElement('link');
+        faLink.rel = 'stylesheet';
+        faLink.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css';
+        document.head.appendChild(faLink);
+    }
 });
-
-// Logic to handle Dark Mode state across all website pages
-function setupGlobalDarkMode() {
-    const toggleBtn = document.getElementById("darkModeToggle");
-    if (!toggleBtn) return; // Prevent errors if button is missing on any page
-
-    // Check localStorage for saved theme preference and apply it
-    if (localStorage.getItem("theme") === "dark") {
-        document.body.classList.add("dark-mode");
-        toggleBtn.innerHTML = "☀️ Light Mode";
-    } else {
-        document.body.classList.remove("dark-mode");
-        toggleBtn.innerHTML = "🌙 Dark Mode";
-    }
-
-    // Click event handler for the toggle button
-    toggleBtn.onclick = function() {
-        document.body.classList.toggle("dark-mode");
-        
-        // Save the updated preference to localStorage
-        if (document.body.classList.contains("dark-mode")) {
-            localStorage.setItem("theme", "dark");
-            toggleBtn.innerHTML = "☀️ Light Mode";
-        } else {
-            localStorage.setItem("theme", "light");
-            toggleBtn.innerHTML = "🌙 Dark Mode";
-        }
-    };
-}
