@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Govt ID Card Generator - Indian Classes Sikar</title>
+    
+    <!-- Global Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- html2canvas for capturing and downloading the ID Card as Image -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+    <style>
+        /* --- Page Specific Styles --- */
+        .id-generator-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            margin-bottom: 40px;
+        }
+
+        /* --- Form Styling --- */
+        .id-form {
+            background: #f8fafc;
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid #e2e8f0;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .form-group { margin-bottom: 20px; }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            color: #334155;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Poppins', sans-serif;
+            transition: 0.3s;
+        }
+        .form-group input:focus, .form-group select:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.1);
+        }
+        .form-group input[type="file"] {
+            background: white;
+            padding: 9px;
+            cursor: pointer;
+        }
+
+        /* --- ID Card Live Preview Styling --- */
+        .id-preview-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #e0f2fe;
+            padding: 40px;
+            border-radius: 15px;
+            border: 2px dashed #93c5fd;
+        }
+
+        /* Standard ID Card Size (CR80 ratio approximately) */
+        .id-card {
+            width: 320px;
+            height: 500px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid #cbd5e1;
+            font-family: 'Arial', sans-serif; /* Standard font for official IDs */
+        }
+
+        /* Card Header */
+        .id-card-header {
+            background: #1e3a8a; /* Govt Blue */
+            color: white;
+            text-align: center;
+            padding: 15px 10px;
+            border-bottom: 5px solid #facc15;
+        }
+        .govt-logo {
+            width: 30px;
+            height: auto;
+            margin-bottom: 5px;
+            filter: brightness(0) invert(1); /* Makes it white */
+        }
+        .id-card-header h4 { margin: 0; font-size: 14px; font-weight: bold; letter-spacing: 1px; }
+        .id-card-header h5 { margin: 2px 0 0 0; font-size: 11px; font-weight: normal; color: #cbd5e1; }
+
+        /* Card Photo */
+        .id-card-photo {
+            width: 110px;
+            height: 130px;
+            margin: 20px auto 10px;
+            border: 3px solid #1e3a8a;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #f1f5f9;
+        }
+        .id-card-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Card Details */
+        .id-card-body {
+            text-align: center;
+            padding: 0 20px;
+        }
+        .id-card-name {
+            font-size: 20px;
+            font-weight: bold;
+            color: #0f172a;
+            margin: 0 0 2px 0;
+            text-transform: uppercase;
+        }
+        .id-card-desig {
+            font-size: 14px;
+            font-weight: bold;
+            color: #dc2626;
+            margin: 0 0 15px 0;
+        }
+        
+        /* Information Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            text-align: left;
+            font-size: 12px;
+            line-height: 1.6;
+            color: #334155;
+            font-weight: bold;
+        }
+        .info-grid span.label { color: #64748b; font-weight: normal; }
+
+        /* Card Footer */
+        .id-card-footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: #f8fafc;
+            padding: 10px 20px 15px;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+        }
+        .signature-block {
+            text-align: center;
+        }
+        .signature-line {
+            width: 80px;
+            border-top: 1px solid #000;
+            margin: 20px auto 5px;
+        }
+        .signature-text { font-size: 10px; font-weight: bold; color: #0f172a; }
+
+        /* Buttons */
+        .btn-download {
+            background: #10b981;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 30px;
+            font-size: 16px;
+            font-weight: 600;
+            margin-top: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            justify-content: center;
+        }
+        .btn-download:hover { background: #059669; transform: translateY(-3px); box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .id-generator-container { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Global Navigation will be injected here -->
+    <nav></nav>
+
+    <div class="container section-padding">
+        <div class="sec-title">
+            <span class="sec-badge">ADMIN TOOL</span>
+            <h2>Digital <span>ID Card Generator</span></h2>
+            <p>Generate and download high-quality official Identity Cards for staff and instructors.</p>
+        </div>
+
+        <div class="id-generator-container">
+            
+            <!-- LEFT SIDE: Data Entry Form -->
+            <div class="id-form">
+                <h3 style="margin-bottom: 20px; color: #1e3a8a;"><i class="fa-solid fa-user-pen"></i> Enter Employee Details</h3>
+                
+                <div class="form-group">
+                    <label>Upload Profile Photo</label>
+                    <input type="file" id="inpPhoto" accept="image/*">
+                </div>
+
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="inpName" placeholder="E.g. Mukesh Kumar" oninput="updateCard('inpName', 'outName')">
+                </div>
+
+                <div class="form-group">
+                    <label>Designation</label>
+                    <select id="inpDesig" onchange="updateCard('inpDesig', 'outDesig')">
+                        <option value="TRAINING OFFICER">Training Officer (T.O.)</option>
+                        <option value="PRINCIPAL">Principal</option>
+                        <option value="GUEST FACULTY">Guest Faculty</option>
+                        <option value="JUNIOR ASSISTANT">Junior Assistant</option>
+                        <option value="SYSTEM ADMIN">System Admin</option>
+                    </select>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Employee / SSO ID</label>
+                        <input type="text" id="inpId" placeholder="RJCH2026XXXX" oninput="updateCard('inpId', 'outId')">
+                    </div>
+                    <div class="form-group">
+                        <label>Blood Group</label>
+                        <select id="inpBlood" onchange="updateCard('inpBlood', 'outBlood')">
+                            <option value="O+">O+</option>
+                            <option value="O-">O-</option>
+                            <option value="A+">A+</option>
+                            <option value="A-">A-</option>
+                            <option value="B+">B+</option>
+                            <option value="B-">B-</option>
+                            <option value="AB+">AB+</option>
+                            <option value="AB-">AB-</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Date of Birth</label>
+                        <input type="date" id="inpDob" onchange="updateCardDate('inpDob', 'outDob')">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" id="inpMobile" placeholder="9876543210" oninput="updateCard('inpMobile', 'outMobile')">
+                    </div>
+                </div>
+            </div>
+
+            <!-- RIGHT SIDE: Live Preview -->
+            <div class="id-preview-area">
+                
+                <!-- The ID Card Div to be Captured -->
+                <div class="id-card" id="printCardArea">
+                    <div class="id-card-header">
+                        <!-- Generic Indian Emblem Placeholder -->
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" alt="Govt Logo" class="govt-logo">
+                        <h4>GOVERNMENT OF RAJASTHAN</h4>
+                        <h5>Govt. Industrial Training Institute, Churu</h5>
+                    </div>
+                    
+                    <div class="id-card-photo">
+                        <img id="outPhoto" src="https://via.placeholder.com/150x180/e2e8f0/94a3b8?text=PHOTO" alt="Employee">
+                    </div>
+                    
+                    <div class="id-card-body">
+                        <h2 class="id-card-name" id="outName">EMPLOYEE NAME</h2>
+                        <h3 class="id-card-desig" id="outDesig">TRAINING OFFICER</h3>
+                        
+                        <div class="info-grid">
+                            <span class="label">Emp / SSO ID</span> <span>: <span id="outId">RJCH2026XXXX</span></span>
+                            <span class="label">D.O.B.</span> <span>: <span id="outDob">DD-MM-YYYY</span></span>
+                            <span class="label">Blood Group</span> <span>: <span id="outBlood" style="color: #dc2626;">O+</span></span>
+                            <span class="label">Mobile</span> <span>: <span id="outMobile">+91-XXXXXXXXXX</span></span>
+                        </div>
+                    </div>
+
+                    <div class="id-card-footer">
+                        <div class="signature-block">
+                            <div class="signature-line"></div>
+                            <div class="signature-text">Holder's Sign</div>
+                        </div>
+                        <div class="signature-block">
+                            <div class="signature-line"></div>
+                            <div class="signature-text">Issuing Authority</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End ID Card Div -->
+
+                <button class="btn-download" onclick="downloadIDCard()"><i class="fa-solid fa-download"></i> Download High-Res ID Card</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Global Footer will be injected here -->
+    <footer></footer>
+
+    <!-- Global Components Script -->
+    <script src="components.js"></script>
+
+    <!-- Custom ID Generator Logic -->
+    <script>
+        // Real-time Text Update
+        function updateCard(inputId, outputId) {
+            let val = document.getElementById(inputId).value;
+            if(val === "") {
+                // Restore defaults if empty
+                if(inputId === 'inpName') val = "EMPLOYEE NAME";
+                if(inputId === 'inpId') val = "RJCH2026XXXX";
+                if(inputId === 'inpMobile') val = "+91-XXXXXXXXXX";
+            }
+            document.getElementById(outputId).innerText = val;
+        }
+
+        // Format Date nicely for ID card (e.g., YYYY-MM-DD to DD-MM-YYYY)
+        function updateCardDate(inputId, outputId) {
+            let dateVal = document.getElementById(inputId).value;
+            if(dateVal) {
+                let parts = dateVal.split('-');
+                document.getElementById(outputId).innerText = `${parts[2]}-${parts[1]}-${parts[0]}`;
+            } else {
+                document.getElementById(outputId).innerText = "DD-MM-YYYY";
+            }
+        }
+
+        // Handle Image Upload and Live Preview
+        document.getElementById('inpPhoto').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('outPhoto').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
+
+        // Download HTML Div as High Quality Image using html2canvas
+        function downloadIDCard() {
+            const cardElement = document.getElementById('printCardArea');
+            
+            // scale: 3 ensures the downloaded image is High Resolution (Print Ready)
+            html2canvas(cardElement, { scale: 3, useCORS: true, backgroundColor: "#ffffff" }).then(canvas => {
+                let empName = document.getElementById('inpName').value || "Employee";
+                
+                // Create a temporary link to trigger download
+                const link = document.createElement('a');
+                link.download = `ID_Card_${empName.replace(/ /g, "_")}.png`;
+                link.href = canvas.toDataURL('image/png');
+                link.click();
+            });
+        }
+    </script>
+
+</body>
+</html>
