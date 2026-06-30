@@ -32,7 +32,6 @@
         }
         .btn-unlock:hover { box-shadow: 0 5px 15px rgba(102,72,213,0.3); transform: translateY(-2px); }
 
-        /* Main Content Hidden by Default */
         #mainContent { display: none; }
 
         /* --- GENERATOR STYLING --- */
@@ -59,21 +58,36 @@
         }
 
         .id-card-exact {
-            width: 320px; height: 650px; 
+            width: 320px;
+            height: 610px; /* ऊँचाई बढ़ाई ताकि लोगो पट्टी आसानी से सेट हो जाए */
             background: #ffffff; border-radius: 8px; border: 2px solid #000000;
             overflow: hidden; position: relative;
             font-family: 'Arial', sans-serif; color: #000000;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
+        /* --- NEW: WHITE LOGO BAR AT TOP --- */
+        .id-logo-bar {
+            background: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 12px;
+            border-bottom: 1px solid #cbd5e1;
+        }
+        .id-logo-bar img { object-fit: contain; }
+        .logo-ashoka { height: 38px; mix-blend-mode: multiply; }
+        .logo-iti { height: 26px; }
+        .logo-dgt { height: 38px; mix-blend-mode: multiply; }
+
         /* --- IFMS 3.0 THEME HEADER BAR --- */
         .id-header-bar {
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: #ffffff; text-align: center;
-            padding: 12px 5px; border-bottom: 2px solid #000000;
+            padding: 10px 5px; border-bottom: 2px solid #000000;
         }
         .id-header-bar h4 { 
-            margin: 0 0 5px 0; font-size: 16px; font-weight: 900; 
+            margin: 0 0 4px 0; font-size: 15px; font-weight: 900; 
             letter-spacing: 0.5px; text-transform: uppercase; 
             text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
         }
@@ -83,7 +97,7 @@
         }
 
         .id-photo-block {
-            width: 110px; height: 135px; margin: 15px auto 15px;
+            width: 105px; height: 130px; margin: 15px auto 15px;
             border: 1px solid #777; background: #f8fafc;
         }
         .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -139,13 +153,13 @@
         <p id="pinError" style="color:#ef4444; display:none; margin-top:15px; font-weight:bold; font-size: 14px;">❌ Incorrect Passcode!</p>
     </div>
 
-    <!-- 2. MAIN GENERATOR CONTENT (Hidden until unlocked) -->
+    <!-- 2. MAIN GENERATOR CONTENT -->
     <div id="mainContent">
         <div class="container section-padding" style="padding-top: 20px;">
             <div class="sec-title">
-                <span class="sec-badge">Ye sirf Training Purpus hai</span>
+                <span class="sec-badge">IFMS 3.0 & DGT FORMAT</span>
                 <h2>Official <span>Digital ID Card</span></h2>
-                <p>कलर स्ट्रक्चर के साथ आधिकारिक सरकारी पहचान पत्र बनाएं।</p>
+                <p>तीनों आधिकारिक लोगोज़ (Ashoka Pillar, ITI, DGT) के साथ गवर्नमेंट पहचान पत्र बनाएं।</p>
             </div>
 
             <div class="id-generator-container">
@@ -227,6 +241,15 @@
                 <div class="id-preview-area">
                     
                     <div class="id-card-exact" id="idCardExactCapture">
+                        
+                        <!-- NEW LOGO BAR WITH YOUR IMAGES -->
+                        <div class="id-logo-bar">
+                            <img src="1000727909.jpg" class="logo-ashoka" alt="Ashoka Pillar">
+                            <img src="1000727908.png" class="logo-iti" alt="ITI Logo">
+                            <img src="1000727907.jpg" class="logo-dgt" alt="DGT Logo">
+                        </div>
+
+                        <!-- IFMS 3.0 HEADER TEXT -->
                         <div class="id-header-bar">
                             <h4>Government OF RAJASTHAN</h4>
                             <p>Department of Skill Employment And entrepreneurship</p>
@@ -234,20 +257,20 @@
                         </div>
                         
                         <div class="id-photo-block">
-                            <img id="outPhoto" src="https://via.placeholder.com/110x135/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
+                            <img id="outPhoto" src="https://via.placeholder.com/105x130/e2e8f0/94a3b8?text=PHOTO" alt="Staff">
                         </div>
                         
                         <div class="id-data-block">
-                            <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName"></span></div>
-                            <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather"></span></div>
-                            <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob"></span></div>
+                            <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value" id="outName">MUKESH KUMAR</span></div>
+                            <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value" id="outFather">SHEONATH</span></div>
+                            <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value" id="outDob">23/06/1995</span></div>
                             <div class="data-row"><span class="data-label">Designation</span><span class="data-colon">:</span><span class="data-value" id="outDesig">JUNIOR INSTRUCTOR</span></div>
-                            <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId"></span></div>
-                            <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile"></span></div>
-                            <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood"></span></div>
-                            <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid"></span></div>
-                            <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan"></span></div>
-                            <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress"></span></div>
+                            <div class="data-row"><span class="data-label">EMPLOYEE ID</span><span class="data-colon">:</span><span class="data-value" id="outEmpId">RJCR202612003377</span></div>
+                            <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value" id="outMobile">9660608859</span></div>
+                            <div class="data-row"><span class="data-label">Blood Group</span><span class="data-colon">:</span><span class="data-value" id="outBlood">O+</span></div>
+                            <div class="data-row"><span class="data-label">U.I.D. No</span><span class="data-colon">:</span><span class="data-value" id="outUid">776005622091</span></div>
+                            <div class="data-row"><span class="data-label">PAN No</span><span class="data-colon">:</span><span class="data-value" id="outPan">BYZPB1353D</span></div>
+                            <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" id="outAddress">WARD NO.02, CHURU</span></div>
                         </div>
 
                         <!-- Signatures Base -->
@@ -265,7 +288,7 @@
                                     <img id="outPrinSign" src="" alt="Principal Signature">
                                 </div>
                                 <div class="sig-line"></div>
-                                <div class="sig-title">Deputy Director<br>Govt. Industrial Training Institute,<br>Churu</div>
+                                <div class="sig-title">Deputy Director / Principal<br>Govt. Training Institute,<br>Churu</div>
                             </div>
                         </div>
                     </div>
@@ -281,29 +304,22 @@
     <script src="components.js"></script>
 
     <script>
-        // --- SECURITY PIN LOGIC ---
-        // '8877' का Base64 एन्कोडेड रूप 'ODg3Nw==' है। (इसे कोई व्यू सोर्स से पढ़ नहीं पाएगा)
+        // --- SECURITY PIN LOGIC (PIN: 8877) ---
         const ENCODED_PIN = "ODg3Nw=="; 
 
         function checkPin() {
             let enteredPin = document.getElementById("adminPin").value;
-            
             if(btoa(enteredPin) === ENCODED_PIN) {
-                // सही PIN: लॉक स्क्रीन छुपाएं और टूल दिखाएं
                 document.getElementById("pinScreen").style.display = "none";
                 document.getElementById("mainContent").style.display = "block";
             } else {
-                // गलत PIN: एरर दिखाएं
                 document.getElementById("pinError").style.display = "block";
                 document.getElementById("adminPin").value = ""; 
             }
         }
-        
-        // Enter कीबोर्ड बटन दबाने पर भी Unlock हो जाए
         document.getElementById("adminPin").addEventListener("keypress", function(event) {
             if (event.key === "Enter") {
-                event.preventDefault();
-                checkPin();
+                event.preventDefault(); checkPin();
             }
         });
 
@@ -311,15 +327,15 @@
         function updateField(inputId, outputId) {
             let value = document.getElementById(inputId).value;
             if(value === "") {
-                if(inputId === 'inpName') value = "";
-                if(inputId === 'inpFather') value = "";
+                if(inputId === 'inpName') value = "MUKESH KUMAR";
+                if(inputId === 'inpFather') value = "SHEONATH";
                 if(inputId === 'inpDesig') value = "JUNIOR INSTRUCTOR";
-                if(inputId === 'inpEmpId') value = "";
-                if(inputId === 'inpMobile') value = "";
-                if(inputId === 'inpBlood') value = "";
-                if(inputId === 'inpUid') value = "";
-                if(inputId === 'inpPan') value = "";
-                if(inputId === 'inpAddress') value = "";
+                if(inputId === 'inpEmpId') value = "RJCR202612003377";
+                if(inputId === 'inpMobile') value = "9660608859";
+                if(inputId === 'inpBlood') value = "O+";
+                if(inputId === 'inpUid') value = "776005622091";
+                if(inputId === 'inpPan') value = "BYZPB1353D";
+                if(inputId === 'inpAddress') value = "WARD NO.02, CHURU";
             }
             document.getElementById(outputId).innerText = value;
         }
@@ -380,4 +396,3 @@
     </script>
 </body>
 </html>
-
