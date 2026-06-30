@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
     <style>
-        /* --- SECURITY LOCK SCREEN STYLING --- */
+        /* --- SECURITY LOCK SCREEN --- */
         #pinScreen {
             max-width: 400px; margin: 100px auto;
             background: white; padding: 40px 30px;
@@ -57,61 +57,60 @@
             background: #f1f5f9; padding: 30px; border-radius: 15px; border: 1px solid #cbd5e1;
         }
 
+        /* OVERLAP FIX: Added Flexbox and Min-Height */
         .id-card-exact {
             width: 320px;
-            height: 610px; /* ऊँचाई बढ़ाई ताकि लोगो पट्टी आसानी से सेट हो जाए */
+            min-height: 640px; /* ऊँचाई बढ़ा दी गई है */
+            display: flex; 
+            flex-direction: column; /* यह अंदर के कंटेंट को फ्लेक्सिबल बनाएगा */
             background: #ffffff; border-radius: 8px; border: 2px solid #000000;
             overflow: hidden; position: relative;
             font-family: 'Arial', sans-serif; color: #000000;
             box-shadow: 0 15px 35px rgba(0,0,0,0.15);
         }
 
-        /* --- NEW: WHITE LOGO BAR AT TOP --- */
+        /* --- LOGO BAR --- */
         .id-logo-bar {
             background: #ffffff;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 12px;
-            border-bottom: 1px solid #cbd5e1;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 8px 12px; border-bottom: 1px solid #cbd5e1;
+            min-height: 55px; /* इमेजेज न मिलने पर भी पट्टी की ऊँचाई बनी रहेगी */
         }
         .id-logo-bar img { object-fit: contain; }
         .logo-ashoka { height: 38px; mix-blend-mode: multiply; }
         .logo-iti { height: 26px; }
         .logo-dgt { height: 38px; mix-blend-mode: multiply; }
 
-        /* --- IFMS 3.0 THEME HEADER BAR --- */
+        /* --- HEADER BAR --- */
         .id-header-bar {
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: #ffffff; text-align: center;
             padding: 10px 5px; border-bottom: 2px solid #000000;
         }
-        .id-header-bar h4 { 
-            margin: 0 0 4px 0; font-size: 15px; font-weight: 900; 
-            letter-spacing: 0.5px; text-transform: uppercase; 
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
-        }
-        .id-header-bar p { 
-            margin: 2px 0 0 0; font-size: 10px; font-weight: 600; 
-            letter-spacing: 0.2px; line-height: 1.3; 
-        }
+        .id-header-bar h4 { margin: 0 0 4px 0; font-size: 15px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
+        .id-header-bar p { margin: 2px 0 0 0; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; line-height: 1.3; }
 
+        /* Photo Block */
         .id-photo-block {
-            width: 105px; height: 130px; margin: 15px auto 15px;
+            width: 105px; height: 130px; margin: 20px auto 15px;
             border: 1px solid #777; background: #f8fafc;
         }
         .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
 
+        /* Data Grid */
         .id-data-block { padding: 0 20px; font-size: 13px; line-height: 1.6; }
         .data-row { display: grid; grid-template-columns: 105px 10px 1fr; margin-bottom: 6px; }
         .data-label { color: #1a1a1a; font-weight: normal; }
         .data-colon { text-align: center; font-weight: bold; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
+        /* OVERLAP FIX: Margin-Top Auto pushes footer strictly to the bottom */
         .id-footer-exact {
-            position: absolute; bottom: 15px; left: 0; right: 0; 
-            padding: 0 20px; display: flex; justify-content: space-between; align-items: flex-end;
+            margin-top: auto; /* यह कमांड सिग्नेचर को हमेशा नीचे धकेल कर रखेगी */
+            padding: 15px 20px; 
+            display: flex; justify-content: space-between; align-items: flex-end;
         }
+        
         .sig-box { text-align: center; width: 45%; }
         
         .sig-img-container {
@@ -242,7 +241,7 @@
                     
                     <div class="id-card-exact" id="idCardExactCapture">
                         
-                        <!-- NEW LOGO BAR WITH YOUR IMAGES -->
+                        <!-- LOGO BAR WITH YOUR IMAGES -->
                         <div class="id-logo-bar">
                             <img src="1000727909.jpg" class="logo-ashoka" alt="Ashoka Pillar">
                             <img src="1000727908.png" class="logo-iti" alt="ITI Logo">
