@@ -53,7 +53,7 @@
 /* --- EXACT CR80 PVC CARD PRINT SIZE --- */
 .id-card-exact {
     width: 340px; 
-    height: 540px; 
+    height: 580px; 
     display: block; 
     background: #ffffff; 
     border-radius: 10px;
