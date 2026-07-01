@@ -170,3 +170,15 @@
     .id-generator-container { grid-template-columns: 1fr; padding: 20px; }
     .form-grid-2 { grid-template-columns: 1fr; }
 }
+/* Print Button Styles */
+.btn-print-exact {
+    background: #10b981; /* हरा रंग प्रिंट के लिए */
+    color: #ffffff; padding: 14px 20px; border: none; border-radius: 12px;
+    font-size: 14px; font-weight: 600; margin-top: 12px; cursor: pointer; width: 100%; transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+}
+.btn-print-exact:hover { 
+    background: #059669; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(16, 185, 129, 0.25);
+}
+
