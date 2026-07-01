@@ -165,7 +165,9 @@
                                     </div>
                                 </div>
                             </div>
+                            <!-- Front Card Buttons -->
                             <button class="btn-download-exact" onclick="downloadCard('idCardFront', 'Front', this)"><i class="fa-solid fa-download"></i> Download Front Side</button>
+                            <button class="btn-print-exact" onclick="printCard('idCardFront', this)"><i class="fa-solid fa-print"></i> Print Front Side (HD)</button>
                         </div>
 
                         <!-- 2. BACK CARD -->
@@ -187,7 +189,9 @@
                                     <p class="contact-text">📞 Contact: 01562-XXXXXX</p>
                                 </div>
                             </div>
+                            <!-- Back Card Buttons -->
                             <button class="btn-download-exact" onclick="downloadCard('idCardBack', 'Back', this)" style="background: #1e40af;"><i class="fa-solid fa-download"></i> Download Back Side</button>
+                            <button class="btn-print-exact" onclick="printCard('idCardBack', this)"><i class="fa-solid fa-print"></i> Print Back Side (HD)</button>
                         </div>
 
                     </div>
@@ -282,7 +286,7 @@
             }
         });
 
-                // --- FULL-PROOF DUAL DOWNLOAD ENGINE (UPDATED) ---
+        // --- FULL-PROOF DUAL DOWNLOAD ENGINE ---
         function downloadCard(elementId, side, btnElement) {
             const originalText = btnElement.innerHTML;
             const element = document.getElementById(elementId);
@@ -294,7 +298,6 @@
             html2canvas(element, { 
                 scale: 4, 
                 useCORS: true, 
-                // allowTaint हटा दिया गया है ताकि SecurityError ना आए
                 backgroundColor: "#ffffff",
                 logging: false
             }).then(canvas => {
@@ -314,7 +317,66 @@
                 btnElement.disabled = false;
             });
         }
-        
+
+        // --- PERFECT SIZE PRINT ENGINE (54mm x 86mm) ---
+        function printCard(elementId, btnElement) {
+            const originalText = btnElement.innerHTML;
+            const element = document.getElementById(elementId);
+            
+            btnElement.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Preparing Print...';
+            btnElement.style.opacity = '0.8';
+            btnElement.disabled = true;
+
+            html2canvas(element, { 
+                scale: 4, // 4x for Ultra HD Print
+                useCORS: true, 
+                backgroundColor: "#ffffff",
+                logging: false
+            }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                
+                const printWindow = window.open('', '_blank');
+                printWindow.document.write(`
+                    <!DOCTYPE html>
+                    <html>
+                    <head>
+                        <title>Print ID Card</title>
+                        <style>
+                            @page { 
+                                size: 54mm 86mm; /* Exact PVC Card Size */
+                                margin: 0; 
+                            }
+                            body { 
+                                margin: 0; display: flex; justify-content: center; align-items: center; 
+                                height: 100vh; background: #fff; 
+                            }
+                            img {
+                                width: 54mm; 
+                                height: 86mm; 
+                                object-fit: contain;
+                            }
+                            @media print {
+                                body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+                            }
+                        </style>
+                    </head>
+                    <body>
+                        <img src="${imgData}" onload="setTimeout(() => { window.print(); window.close(); }, 500);" />
+                    </body>
+                    </html>
+                `);
+                printWindow.document.close();
+                
+                btnElement.innerHTML = originalText;
+                btnElement.style.opacity = '1';
+                btnElement.disabled = false;
+            }).catch(error => {
+                alert("Print Failed! " + error.message);
+                btnElement.innerHTML = originalText;
+                btnElement.style.opacity = '1';
+                btnElement.disabled = false;
+            });
+        }
     </script>
 
 </body>
