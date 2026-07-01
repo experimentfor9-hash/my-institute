@@ -282,7 +282,7 @@
             }
         });
 
-        // --- FULL-PROOF DUAL DOWNLOAD ENGINE ---
+                // --- FULL-PROOF DUAL DOWNLOAD ENGINE (UPDATED) ---
         function downloadCard(elementId, side, btnElement) {
             const originalText = btnElement.innerHTML;
             const element = document.getElementById(elementId);
@@ -292,15 +292,14 @@
             btnElement.disabled = true;
 
             html2canvas(element, { 
-                scale: 4, // 4x for Ultra HD Print
+                scale: 4, 
                 useCORS: true, 
-                allowTaint: true, 
+                // allowTaint हटा दिया गया है ताकि SecurityError ना आए
                 backgroundColor: "#ffffff",
                 logging: false
             }).then(canvas => {
                 let name = document.getElementById('inpName').value || "Employee";
                 const triggerLink = document.createElement('a');
-                // File name save with Front or Back specification
                 triggerLink.download = `ID_Card_${name.replace(/ /g, "_")}_${side}.png`;
                 triggerLink.href = canvas.toDataURL('image/png');
                 triggerLink.click();
@@ -310,11 +309,12 @@
                 btnElement.disabled = false;
             }).catch(error => {
                 alert("Download Failed! " + error.message);
-                btnElement.innerHTML = '<i class="fa-solid fa-print"></i> Try Again';
+                btnElement.innerHTML = originalText;
                 btnElement.style.opacity = '1';
                 btnElement.disabled = false;
             });
         }
+        
     </script>
 
 </body>
