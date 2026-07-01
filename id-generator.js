@@ -1,112 +1,203 @@
-// --- SECURITY PIN LOGIC (PIN: 8877) ---
-const ENCODED_PIN = "ODg3Nw=="; 
+/* --- SECURITY LOCK SCREEN --- */
+#pinScreen {
+    max-width: 400px; margin: 100px auto;
+    background: #ffffff; padding: 40px 30px;
+    border-radius: 16px; box-shadow: 0 15px 35px rgba(37, 99, 235, 0.1);
+    text-align: center; border-top: 6px solid #2563eb; 
+}
+#pinScreen h2 { color: #1e40af; margin-bottom: 10px; font-weight: 800; font-family: 'Poppins', sans-serif; }
+#pinScreen p { color: #475569; font-size: 14px; margin-bottom: 24px; font-family: 'Poppins', sans-serif; }
+#pinScreen input {
+    width: 75%; padding: 14px; margin-bottom: 24px;
+    border: 2px solid #cbd5e1; border-radius: 10px;
+    text-align: center; font-size: 26px; letter-spacing: 12px;
+    color: #0f172a; font-weight: 800; background: #f8fafc;
+    transition: all 0.3s ease;
+}
+#pinScreen input:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.15); background: #ffffff; }
+.btn-unlock {
+    background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%); 
+    color: white; padding: 14px 30px; border: none; border-radius: 10px;
+    font-size: 16px; font-weight: 700; cursor: pointer; width: 75%; transition: 0.3s;
+    font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;
+}
+.btn-unlock:hover { box-shadow: 0 8px 20px rgba(124, 58, 237, 0.3); transform: translateY(-3px); }
 
-function checkPin() {
-    let enteredPin = document.getElementById("adminPin").value;
-    if(btoa(enteredPin) === ENCODED_PIN) {
-        document.getElementById("pinScreen").style.display = "none";
-        document.getElementById("mainContent").style.display = "block";
-    } else {
-        document.getElementById("pinError").style.display = "block";
-        document.getElementById("adminPin").value = ""; 
-    }
+#mainContent { display: none; }
+
+/* --- GENERATOR STYLING --- */
+.id-generator-container {
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 35px;
+    background: #ffffff; padding: 40px; border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.06); margin-bottom: 40px;
+    font-family: 'Poppins', sans-serif; border: 1px solid #f1f5f9;
 }
 
-document.getElementById("adminPin").addEventListener("keypress", function(event) {
-    if (event.key === "Enter") {
-        event.preventDefault(); checkPin();
-    }
-});
+.id-form { background: #f8fafc; padding: 30px; border-radius: 16px; border: 1px solid #e2e8f0; }
+.form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-group { margin-bottom: 18px; }
+.form-group label { display: block; font-weight: 600; color: #1e293b; margin-bottom: 6px; font-size: 13px; letter-spacing: 0.2px; }
+.form-group input, .form-group select {
+    width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; font-family: 'Poppins', sans-serif;
+    background: #ffffff; transition: 0.3s; color: #0f172a;
+}
+.form-group input[type="file"] { cursor: pointer; padding: 9px; }
+.form-group input:focus { border-color: #2563eb; outline: none; box-shadow: 0 0 0 3px rgba(37,99,235,0.1); }
 
-// --- ID GENERATOR LOGIC ---
-function updateField(inputId, outputId) {
-    let value = document.getElementById(inputId).value;
-    if(value === "") {
-        if(inputId === 'inpName') value = "MUKESH KUMAR";
-        if(inputId === 'inpFather') value = "SHEONATH";
-        if(inputId === 'inpDesig') value = "JUNIOR INSTRUCTOR";
-        if(inputId === 'inpEmpId') value = "RJCR202612003377";
-        if(inputId === 'inpMobile') value = "9660608859";
-        if(inputId === 'inpBlood') value = "O+";
-        if(inputId === 'inpUid') value = "776005622091";
-        if(inputId === 'inpPan') value = "BYZPB1353D";
-        if(inputId === 'inpAddress') value = "WARD NO.02, CHURU";
-    }
-    document.getElementById(outputId).innerText = value;
+/* --- ID CARD PREVIEW AREA --- */
+.id-preview-area {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #f1f5f9; padding: 40px; border-radius: 16px; border: 2px dashed #cbd5e1;
 }
 
-function updateDate(inputId, outputId) {
-    let dVal = document.getElementById(inputId).value;
-    if(dVal) {
-        let p = dVal.split('-');
-        document.getElementById(outputId).innerText = `${p[2]}/${p[1]}/${p[0]}`;
-    } else {
-        document.getElementById(outputId).innerText = "23/06/1995";
-    }
+/* --- EXACT CR80 PVC CARD PRINT SIZE --- */
+.id-card-exact {
+    width: 340px; 
+    height: 540px; 
+    display: block; 
+    background: #ffffff; 
+    border-radius: 10px;
+    border: 1px solid #cbd5e1; 
+    overflow: hidden; 
+    position: relative; 
+    font-family: 'Roboto', sans-serif; 
+    color: #0f172a;
+    box-shadow: 0 25px 50px rgba(0,0,0,0.15); 
+    z-index: 1;
 }
 
-document.getElementById('inpPhoto').addEventListener('change', function(e) {
-    const f = e.target.files[0];
-    if(f) {
-        const r = new FileReader();
-        r.onload = function(event) { document.getElementById('outPhoto').src = event.target.result; }
-        r.readAsDataURL(f);
-    }
-});
+/* --- SUBTLE WATERMARK --- */
+.id-card-exact::before {
+    content: '';
+    position: absolute;
+    top: 55%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 220px; height: 220px;
+    background-image: url('1000727906.jpg'); 
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.04; 
+    z-index: -1;
+    mix-blend-mode: multiply;
+}
 
-document.getElementById('inpEmpSign').addEventListener('change', function(e) {
-    const f = e.target.files[0];
-    if(f) {
-        const r = new FileReader();
-        r.onload = function(event) {
-            const img = document.getElementById('outEmpSign');
-            img.src = event.target.result; img.style.display = 'block';
-        }
-        r.readAsDataURL(f);
-    }
-});
+/* --- HEADER BAR WITH EMBEDDED LOGOS --- */
+.id-header-bar {
+    background: linear-gradient(135deg, #1e40af 0%, #7c3aed 100%); 
+    color: #ffffff; text-align: center;
+    padding: 12px 45px; 
+    border-bottom: 3px solid #facc15; 
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 80px;
+    box-sizing: border-box;
+}
 
-document.getElementById('inpPrinSign').addEventListener('change', function(e) {
-    const f = e.target.files[0];
-    if(f) {
-        const r = new FileReader();
-        r.onload = function(event) {
-            const img = document.getElementById('outPrinSign');
-            img.src = event.target.result; img.style.display = 'block';
-        }
-        r.readAsDataURL(f);
-    }
-});
+.header-logo-left, .header-logo-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: #ffffff;
+    border-radius: 50%;
+    padding: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    object-fit: contain;
+}
+.header-logo-left { left: 10px; } 
+.header-logo-right { right: 10px; } 
 
-// --- FULL-PROOF DOWNLOAD ENGINE ---
-function downloadExactID() {
-    const btn = document.getElementById('btnDownload');
-    const element = document.getElementById('idCardExactCapture');
-    
-    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
-    btn.style.opacity = '0.8';
-    btn.disabled = true;
+.id-header-bar h4 { 
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    margin: 0 0 4px 0; font-size: 14.5px; font-weight: 900; 
+    letter-spacing: 0.5px; text-transform: uppercase; 
+    text-shadow: 1px 1px 4px rgba(0,0,0,0.5); 
+    line-height: 1;
+    white-space: nowrap; 
+}
+.inline-ashoka {
+    height: 26px; width: 26px; background: #ffffff;
+    border-radius: 50%; padding: 2px; object-fit: contain;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.4); mix-blend-mode: normal; 
+}
 
-    html2canvas(element, { 
-        scale: 4, 
-        useCORS: true, 
-        allowTaint: true, 
-        backgroundColor: "#ffffff",
-        logging: false
-    }).then(canvas => {
-        let name = document.getElementById('inpName').value || "Mukesh_Kumar";
-        const triggerLink = document.createElement('a');
-        triggerLink.download = `Print_Ready_ID_${name.replace(/ /g, "_")}.png`;
-        triggerLink.href = canvas.toDataURL('image/png');
-        triggerLink.click();
-        
-        btn.innerHTML = '<i class="fa-solid fa-print"></i> Download Print Ready ID (HD)';
-        btn.style.opacity = '1';
-        btn.disabled = false;
-    }).catch(error => {
-        alert("Download Failed! " + error.message);
-        btn.innerHTML = '<i class="fa-solid fa-print"></i> Try Again';
-        btn.style.opacity = '1';
-        btn.disabled = false;
-    });
+.id-header-bar p { 
+    margin: 2px 0 0 0; font-size: 10.5px; font-weight: 500; 
+    letter-spacing: 0.2px; line-height: 1.2; opacity: 0.95;
+}
+
+/* --- PREMIUM PHOTO BLOCK --- */
+.id-photo-block {
+    width: 105px; height: 130px; margin: 20px auto 15px;
+    border: 2px solid #7c3aed; 
+    padding: 4px; 
+    border-radius: 8px;
+    background: #ffffff;
+    box-shadow: 0 8px 20px rgba(124, 58, 237, 0.15); 
+}
+.id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 4px; }
+
+/* Data Grid */
+.id-data-block { padding: 0 24px; font-size: 11px; line-height: 1.7; }
+.data-row { display: grid; grid-template-columns: 105px 12px 1fr; margin-bottom: 6px; }
+.data-label { color: #475569; font-weight: 600; }
+.data-colon { text-align: center; font-weight: 800; color: #94a3b8; }
+.data-value { font-weight: 900; color: #0f172a; text-transform: uppercase; letter-spacing: 0.2px; }
+
+/* Footer permanently locked to the bottom */
+.id-footer-exact {
+    position: absolute; 
+    bottom: 12px; /* थोड़ा और नीचे कर दिया गया है */
+    left: 0;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 24px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: flex-end;
+}
+
+.sig-box { text-align: center; width: 45%; }
+
+/* --- SIGNATURE AUTO HEIGHT FIX --- */
+.sig-img-container {
+    height: auto; 
+    min-height: 30px;
+    max-height: 48px; /* सिग्नेचर 48px से ज्यादा बड़ी नहीं होगी, ताकि टेक्स्ट से ना टकराए */
+    width: 100%;
+    display: flex; 
+    align-items: flex-end; /* सिग्नेचर हमेशा डॉटेड लाइन के बिल्कुल ऊपर टिकी रहेगी */
+    justify-content: center; 
+    margin-bottom: 4px; 
+}
+.sig-img-container img {
+    height: auto; /* Auto Height Adjust */
+    width: auto; 
+    max-height: 48px; 
+    max-width: 100%; 
+    object-fit: contain; 
+    mix-blend-mode: multiply; 
+    display: none;
+}
+
+.sig-line { border-top: 1px dashed #94a3b8; margin-bottom: 5px; width: 100%; }
+.sig-title { font-size: 10.5px; font-weight: 800; color: #1e293b; line-height: 1.3; }
+
+/* Download Button */
+.btn-download-exact {
+    background: #0f172a; 
+    color: #ffffff; padding: 16px 28px; border: none; border-radius: 12px;
+    font-size: 16px; font-weight: 600; margin-top: 30px; cursor: pointer; width: 100%; transition: all 0.3s ease;
+    font-family: 'Poppins', sans-serif; letter-spacing: 0.5px;
+    display: flex; justify-content: center; align-items: center; gap: 10px;
+}
+.btn-download-exact:hover { background: #1e293b; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(15, 23, 42, 0.25);}
+
+@media (max-width: 992px) {
+    .id-generator-container { grid-template-columns: 1fr; padding: 20px; }
+    .form-grid-2 { grid-template-columns: 1fr; }
 }
