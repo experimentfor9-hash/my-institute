@@ -7,6 +7,8 @@
     
     <link rel="stylesheet" href="style.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <!-- Premium Official Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap" rel="stylesheet">
 
     <style>
         /* --- SECURITY LOCK SCREEN --- */
@@ -16,8 +18,8 @@
             border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center; border-top: 5px solid #358ced;
         }
-        #pinScreen h2 { color: #11329c; margin-bottom: 10px; font-weight: 700; }
-        #pinScreen p { color: #64748b; font-size: 14px; margin-bottom: 20px; }
+        #pinScreen h2 { color: #11329c; margin-bottom: 10px; font-weight: 700; font-family: 'Poppins', sans-serif; }
+        #pinScreen p { color: #64748b; font-size: 14px; margin-bottom: 20px; font-family: 'Poppins', sans-serif; }
         #pinScreen input {
             width: 70%; padding: 12px; margin-bottom: 20px;
             border: 2px solid #cbd5e1; border-radius: 8px;
@@ -29,6 +31,7 @@
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: white; padding: 12px 30px; border: none; border-radius: 8px;
             font-size: 16px; font-weight: 600; cursor: pointer; width: 70%; transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
         .btn-unlock:hover { box-shadow: 0 5px 15px rgba(102,72,213,0.3); transform: translateY(-2px); }
 
@@ -39,6 +42,7 @@
             display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 30px;
             background: white; padding: 35px; border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); margin-bottom: 40px;
+            font-family: 'Poppins', sans-serif;
         }
 
         .id-form { background: #f8fafc; padding: 25px; border-radius: 15px; border: 1px solid #e2e8f0; }
@@ -46,7 +50,7 @@
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-weight: 600; color: #334155; margin-bottom: 5px; font-size: 13px; }
         .form-group input, .form-group select {
-            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box;
+            width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; box-sizing: border-box; font-family: 'Poppins', sans-serif;
         }
         .form-group input[type="file"] { background: white; cursor: pointer; }
         .form-group input:focus { border-color: #358ced; outline: none; }
@@ -57,57 +61,91 @@
             background: #f1f5f9; padding: 30px; border-radius: 15px; border: 1px solid #cbd5e1;
         }
 
-        /* OVERLAP FIX: Added Flexbox and Min-Height */
+        /* --- PREMIUM CARD FRAME --- */
         .id-card-exact {
             width: 320px;
-            min-height: 640px; /* ऊँचाई बढ़ा दी गई है */
+            min-height: 640px;
             display: flex; 
-            flex-direction: column; /* यह अंदर के कंटेंट को फ्लेक्सिबल बनाएगा */
-            background: #ffffff; border-radius: 8px; border: 2px solid #000000;
-            overflow: hidden; position: relative;
-            font-family: 'Arial', sans-serif; color: #000000;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+            flex-direction: column; 
+            background: #ffffff; 
+            border-radius: 10px; 
+            border: 2px solid #111;
+            overflow: hidden; 
+            position: relative;
+            font-family: 'Roboto', sans-serif; /* Official Font */
+            color: #000000;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            z-index: 1;
         }
 
-        /* --- LOGO BAR --- */
+        /* --- SUBTLE WATERMARK --- */
+        .id-card-exact::before {
+            content: '';
+            position: absolute;
+            top: 55%; left: 50%;
+            transform: translate(-50%, -50%);
+            width: 180px; height: 180px;
+            background-image: url('1000727909.jpg');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.05; /* Very light watermark */
+            z-index: -1;
+            mix-blend-mode: multiply;
+        }
+
+        /* --- LOGO BAR (Reordered as per 1000729280.png) --- */
         .id-logo-bar {
             background: #ffffff;
             display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 12px; border-bottom: 1px solid #cbd5e1;
-            min-height: 55px; /* इमेजेज न मिलने पर भी पट्टी की ऊँचाई बनी रहेगी */
+            padding: 8px 15px; 
+            min-height: 55px;
         }
-        .id-logo-bar img { object-fit: contain; }
-        .logo-ashoka { height: 38px; mix-blend-mode: multiply; }
-        .logo-iti { height: 26px; }
-        .logo-dgt { height: 38px; mix-blend-mode: multiply; }
+        .id-logo-bar img { object-fit: contain; mix-blend-mode: multiply; }
+        .logo-left { height: 35px; } /* DGT */
+        .logo-center { height: 42px; } /* Ashoka */
+        .logo-right { height: 26px; } /* ITI */
 
-        /* --- HEADER BAR --- */
+        /* --- IFMS HEADER BAR --- */
         .id-header-bar {
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: #ffffff; text-align: center;
-            padding: 10px 5px; border-bottom: 2px solid #000000;
+            padding: 10px 5px; 
+            border-top: 1px solid #cbd5e1;
+            border-bottom: 2px solid #000000;
         }
-        .id-header-bar h4 { margin: 0 0 4px 0; font-size: 15px; font-weight: 900; letter-spacing: 0.5px; text-transform: uppercase; text-shadow: 1px 1px 2px rgba(0,0,0,0.3); }
-        .id-header-bar p { margin: 2px 0 0 0; font-size: 10px; font-weight: 600; letter-spacing: 0.2px; line-height: 1.3; }
+        .id-header-bar h4 { 
+            margin: 0 0 5px 0; font-size: 16px; font-weight: 900; 
+            letter-spacing: 0.8px; text-transform: uppercase; 
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.4); 
+        }
+        .id-header-bar p { 
+            margin: 2px 0 0 0; font-size: 10.5px; font-weight: 500; 
+            letter-spacing: 0.2px; line-height: 1.3; 
+        }
 
-        /* Photo Block */
+        /* --- PREMIUM PHOTO BLOCK --- */
         .id-photo-block {
-            width: 105px; height: 130px; margin: 20px auto 15px;
-            border: 1px solid #777; background: #f8fafc;
+            width: 105px; height: 130px; margin: 25px auto 20px;
+            border: 2px solid #6648d5; /* Matching IFMS Purple Border */
+            padding: 3px; /* Space between image and border */
+            border-radius: 6px;
+            background: #ffffff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Soft shadow */
         }
-        .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 3px; }
 
         /* Data Grid */
-        .id-data-block { padding: 0 20px; font-size: 13px; line-height: 1.6; }
+        .id-data-block { padding: 0 22px; font-size: 13.5px; line-height: 1.7; }
         .data-row { display: grid; grid-template-columns: 105px 10px 1fr; margin-bottom: 6px; }
-        .data-label { color: #1a1a1a; font-weight: normal; }
-        .data-colon { text-align: center; font-weight: bold; }
+        .data-label { color: #374151; font-weight: 500; }
+        .data-colon { text-align: center; font-weight: 700; color: #111; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.3px; }
 
-        /* OVERLAP FIX: Margin-Top Auto pushes footer strictly to the bottom */
+        /* Footer & Signatures Block */
         .id-footer-exact {
-            margin-top: auto; /* यह कमांड सिग्नेचर को हमेशा नीचे धकेल कर रखेगी */
-            padding: 15px 20px; 
+            margin-top: auto; 
+            padding: 20px 20px 15px; 
             display: flex; justify-content: space-between; align-items: flex-end;
         }
         
@@ -116,19 +154,20 @@
         .sig-img-container {
             height: 40px; width: 100%;
             display: flex; align-items: center; justify-content: center; 
-            margin-bottom: 2px; overflow: hidden;
+            margin-bottom: 3px; overflow: hidden;
         }
         .sig-img-container img {
             max-height: 100%; max-width: 100%; object-fit: contain; 
             mix-blend-mode: multiply; display: none;
         }
         
-        .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; }
-        .sig-title { font-size: 10px; font-weight: 800; color: #1f2937; line-height: 1.2; }
+        .sig-line { border-top: 1px dashed #000000; margin-bottom: 5px; }
+        .sig-title { font-size: 10.5px; font-weight: 900; color: #111; line-height: 1.2; }
 
         .btn-download-exact {
             background: #11329c; color: white; padding: 15px 25px; border: none; border-radius: 8px;
             font-size: 16px; font-weight: 600; margin-top: 25px; cursor: pointer; width: 100%; transition: 0.3s;
+            font-family: 'Poppins', sans-serif;
         }
         .btn-download-exact:hover { background: #0a1f66; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(0,0,0,0.2);}
 
@@ -158,7 +197,7 @@
             <div class="sec-title">
                 <span class="sec-badge">IFMS 3.0 & DGT FORMAT</span>
                 <h2>Official <span>Digital ID Card</span></h2>
-                <p>तीनों आधिकारिक लोगोज़ (Ashoka Pillar, ITI, DGT) के साथ गवर्नमेंट पहचान पत्र बनाएं।</p>
+                <p>वाटरमार्क और प्रीमियम फॉन्ट के साथ सबसे आकर्षक गवर्नमेंट पहचान पत्र बनाएं।</p>
             </div>
 
             <div class="id-generator-container">
@@ -241,16 +280,16 @@
                     
                     <div class="id-card-exact" id="idCardExactCapture">
                         
-                        <!-- LOGO BAR WITH YOUR IMAGES -->
+                        <!-- NEW LOGO BAR (Left: DGT, Center: Ashoka, Right: ITI) -->
                         <div class="id-logo-bar">
-                            <img src="1000727909.jpg" class="logo-ashoka" alt="Ashoka Pillar">
-                            <img src="1000727908.png" class="logo-iti" alt="ITI Logo">
-                            <img src="1000727907.jpg" class="logo-dgt" alt="DGT Logo">
+                            <img src="1000727907.jpg" class="logo-left" alt="DGT Logo">
+                            <img src="1000727909.jpg" class="logo-center" alt="Ashoka Pillar">
+                            <img src="1000727908.png" class="logo-right" alt="ITI Logo">
                         </div>
 
                         <!-- IFMS 3.0 HEADER TEXT -->
                         <div class="id-header-bar">
-                            <h4>Government OF RAJASTHAN</h4>
+                            <h4>GOVERNMENT OF RAJASTHAN</h4>
                             <p>Department of Skill Employment And entrepreneurship</p>
                             <p>Government Industrial Training Institute, Churu</p>
                         </div>
@@ -292,7 +331,7 @@
                         </div>
                     </div>
 
-                    <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-image"></i> Download ID Card HD</button>
+                    <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-file-image"></i> Download Premium ID Card</button>
                 </div>
 
             </div>
