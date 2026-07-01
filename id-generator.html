@@ -59,17 +59,16 @@
             background: #f1f5f9; padding: 30px; border-radius: 15px; border: 1px solid #cbd5e1;
         }
 
-        /* --- EXACT CR80 PVC CARD PRINT SIZE --- */
+        /* --- FIX: Display set to block, position absolute added for footer --- */
         .id-card-exact {
             width: 340px; 
             height: 540px; 
-            display: flex; 
-            flex-direction: column; 
+            display: block; /* Flexbox removed to prevent html2canvas bugs */
             background: #ffffff; 
             border-radius: 8px;
             border: 2px solid #111;
             overflow: hidden; 
-            position: relative;
+            position: relative; /* This is crucial for locking the footer */
             font-family: 'Roboto', sans-serif; 
             color: #000000;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
@@ -103,9 +102,9 @@
             flex-direction: column;
             justify-content: center;
             height: 75px;
+            box-sizing: border-box;
         }
 
-        /* Side Logos */
         .header-logo-left, .header-logo-right {
             position: absolute;
             top: 50%;
@@ -121,7 +120,6 @@
         .header-logo-left { left: 8px; } 
         .header-logo-right { right: 8px; } 
 
-        /* Inline Ashoka Stambh Text */
         .id-header-bar h4 { 
             display: flex; align-items: center; justify-content: center; gap: 6px;
             margin: 0 0 3px 0; font-size: 14px; font-weight: 900; 
@@ -159,11 +157,17 @@
         .data-colon { text-align: center; font-weight: 700; color: #111; }
         .data-value { font-weight: 900; color: #000000; text-transform: uppercase; letter-spacing: 0.2px; }
 
-        /* Footer & Signatures Block */
+        /* FIX: Footer permanently locked to the bottom */
         .id-footer-exact {
-            margin-top: auto; 
-            padding: 10px 22px 15px; 
-            display: flex; justify-content: space-between; align-items: flex-end;
+            position: absolute; 
+            bottom: 15px; /* Locked 15px from the bottom edge */
+            left: 0;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 0 22px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: flex-end;
         }
         
         .sig-box { text-align: center; width: 45%; }
@@ -178,7 +182,7 @@
             mix-blend-mode: multiply; display: none;
         }
         
-        .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; }
+        .sig-line { border-top: 1px dashed #000000; margin-bottom: 4px; width: 100%; }
         .sig-title { font-size: 10.5px; font-weight: 900; color: #111; line-height: 1.2; }
 
         /* Download Button */
@@ -300,7 +304,6 @@
                         
                         <!-- IFMS HEADER TEXT WITH EMBEDDED LOGOS -->
                         <div class="id-header-bar">
-                            <!-- onerror जोड़ा गया है ताकि अगर मोबाइल में फोटो न मिले तो क्रैश न हो -->
                             <img src="1000727908_2.png" onerror="this.style.display='none'" class="header-logo-left" alt="ITI Logo">
                             <img src="1000727906.jpg" onerror="this.style.display='none'" class="header-logo-right" alt="DGT Logo">
                             
@@ -441,15 +444,14 @@
             const btn = document.getElementById('btnDownload');
             const element = document.getElementById('idCardExactCapture');
             
-            // Show loading state
             btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
             btn.style.opacity = '0.8';
             btn.disabled = true;
 
             html2canvas(element, { 
-                scale: 3, // Changed to 3 to prevent mobile memory crash
+                scale: 4, 
                 useCORS: true, 
-                allowTaint: true, // Allows rendering even if images are blocked
+                allowTaint: true, 
                 backgroundColor: "#ffffff",
                 logging: false
             }).then(canvas => {
@@ -459,12 +461,10 @@
                 triggerLink.href = canvas.toDataURL('image/png');
                 triggerLink.click();
                 
-                // Reset button
                 btn.innerHTML = '<i class="fa-solid fa-print"></i> Download Print Ready ID (HD)';
                 btn.style.opacity = '1';
                 btn.disabled = false;
             }).catch(error => {
-                // If it still crashes, alert the user
                 alert("Download Failed! " + error.message);
                 btn.innerHTML = '<i class="fa-solid fa-print"></i> Try Again';
                 btn.style.opacity = '1';
