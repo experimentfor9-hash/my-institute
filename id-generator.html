@@ -32,7 +32,6 @@
             font-size: 16px; font-weight: 600; cursor: pointer; width: 70%; transition: 0.3s;
             font-family: 'Poppins', sans-serif;
         }
-        .btn-unlock:hover { box-shadow: 0 5px 15px rgba(102,72,213,0.3); transform: translateY(-2px); }
 
         #mainContent { display: none; }
 
@@ -62,12 +61,12 @@
 
         /* --- EXACT CR80 PVC CARD PRINT SIZE --- */
         .id-card-exact {
-            width: 340px;       /* 54mm Aspect Ratio Base */
-            height: 540px;      /* 86mm Aspect Ratio Base (Fixed Height) */
+            width: 340px; 
+            height: 540px; 
             display: flex; 
             flex-direction: column; 
             background: #ffffff; 
-            border-radius: 8px; /* Standard PVC Corner Radius */
+            border-radius: 8px;
             border: 2px solid #111;
             overflow: hidden; 
             position: relative;
@@ -119,8 +118,8 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.4);
             object-fit: contain;
         }
-        .header-logo-left { left: 8px; } /* ITI Logo */
-        .header-logo-right { right: 8px; } /* DGT Logo */
+        .header-logo-left { left: 8px; } 
+        .header-logo-right { right: 8px; } 
 
         /* Inline Ashoka Stambh Text */
         .id-header-bar h4 { 
@@ -162,7 +161,7 @@
 
         /* Footer & Signatures Block */
         .id-footer-exact {
-            margin-top: auto; /* Automatically pushes to the bottom edge */
+            margin-top: auto; 
             padding: 10px 22px 15px; 
             display: flex; justify-content: space-between; align-items: flex-end;
         }
@@ -301,10 +300,11 @@
                         
                         <!-- IFMS HEADER TEXT WITH EMBEDDED LOGOS -->
                         <div class="id-header-bar">
-                            <img src="1000727908_2.png" class="header-logo-left" alt="ITI Logo">
-                            <img src="1000727906.jpg" class="header-logo-right" alt="DGT Logo">
+                            <!-- onerror जोड़ा गया है ताकि अगर मोबाइल में फोटो न मिले तो क्रैश न हो -->
+                            <img src="1000727908_2.png" onerror="this.style.display='none'" class="header-logo-left" alt="ITI Logo">
+                            <img src="1000727906.jpg" onerror="this.style.display='none'" class="header-logo-right" alt="DGT Logo">
                             
-                            <h4>GOVERNMENT OF <img src="1000727909_2.jpg" class="inline-ashoka" alt="Ashoka"> RAJASTHAN</h4>
+                            <h4>GOVERNMENT OF <img src="1000727909_2.jpg" onerror="this.style.display='none'" class="inline-ashoka" alt="Ashoka"> RAJASTHAN</h4>
                             <p>Department of Skill Employment And entrepreneurship</p>
                             <p>Government Industrial Training Institute, Churu</p>
                         </div>
@@ -346,7 +346,7 @@
                         </div>
                     </div>
 
-                    <button class="btn-download-exact" onclick="downloadExactID()"><i class="fa-solid fa-print"></i> Download Print Ready ID (HD)</button>
+                    <button class="btn-download-exact" onclick="downloadExactID()" id="btnDownload"><i class="fa-solid fa-print"></i> Download Print Ready ID (HD)</button>
                 </div>
 
             </div>
@@ -436,14 +436,20 @@
             }
         });
 
+        // --- FULL-PROOF DOWNLOAD ENGINE ---
         function downloadExactID() {
+            const btn = document.getElementById('btnDownload');
             const element = document.getElementById('idCardExactCapture');
             
-            // scale: 5 ensures high definition export (1700x2700 pixels)
-            // backgroundColor: "#ffffff" ensures pure white background
+            // Show loading state
+            btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Downloading...';
+            btn.style.opacity = '0.8';
+            btn.disabled = true;
+
             html2canvas(element, { 
-                scale: 5, 
+                scale: 3, // Changed to 3 to prevent mobile memory crash
                 useCORS: true, 
+                allowTaint: true, // Allows rendering even if images are blocked
                 backgroundColor: "#ffffff",
                 logging: false
             }).then(canvas => {
@@ -452,6 +458,17 @@
                 triggerLink.download = `Print_Ready_ID_${name.replace(/ /g, "_")}.png`;
                 triggerLink.href = canvas.toDataURL('image/png');
                 triggerLink.click();
+                
+                // Reset button
+                btn.innerHTML = '<i class="fa-solid fa-print"></i> Download Print Ready ID (HD)';
+                btn.style.opacity = '1';
+                btn.disabled = false;
+            }).catch(error => {
+                // If it still crashes, alert the user
+                alert("Download Failed! " + error.message);
+                btn.innerHTML = '<i class="fa-solid fa-print"></i> Try Again';
+                btn.style.opacity = '1';
+                btn.disabled = false;
             });
         }
     </script>
