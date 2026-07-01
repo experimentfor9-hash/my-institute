@@ -64,7 +64,7 @@
         /* --- PREMIUM CARD FRAME --- */
         .id-card-exact {
             width: 320px;
-            min-height: 640px;
+            min-height: 560px;
             display: flex; 
             flex-direction: column; 
             background: #ffffff; 
@@ -72,7 +72,7 @@
             border: 2px solid #111;
             overflow: hidden; 
             position: relative;
-            font-family: 'Roboto', sans-serif; /* Official Font */
+            font-family: 'Roboto', sans-serif; 
             color: #000000;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             z-index: 1;
@@ -89,49 +89,67 @@
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
-            opacity: 0.05; /* Very light watermark */
+            opacity: 0.05; 
             z-index: -1;
             mix-blend-mode: multiply;
         }
 
-        /* --- LOGO BAR (Reordered as per 1000729280.png) --- */
-        .id-logo-bar {
-            background: #ffffff;
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 8px 15px; 
-            min-height: 55px;
-        }
-        .id-logo-bar img { object-fit: contain; mix-blend-mode: multiply; }
-        .logo-left { height: 35px; } /* DGT */
-        .logo-center { height: 42px; } /* Ashoka */
-        .logo-right { height: 26px; } /* ITI */
-
-        /* --- IFMS HEADER BAR --- */
+        /* --- INTEGRATED IFMS HEADER BAR WITH LOGOS --- */
         .id-header-bar {
             background: linear-gradient(to right, #358ced 0%, #6648d5 100%);
             color: #ffffff; text-align: center;
-            padding: 10px 5px; 
-            border-top: 1px solid #cbd5e1;
+            padding: 12px 42px; /* Side padding to make room for side logos */
             border-bottom: 2px solid #000000;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 75px;
         }
+
+        /* Side Logos in White Circular Badges */
+        .header-logo-left, .header-logo-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 36px;
+            height: 36px;
+            background: #ffffff;
+            border-radius: 50%;
+            padding: 3px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            object-fit: contain;
+        }
+        .header-logo-left { left: 8px; } /* ITI Logo */
+        .header-logo-right { right: 8px; } /* DGT Logo */
+
+        /* Inline Ashoka Stambh Text */
         .id-header-bar h4 { 
-            margin: 0 0 5px 0; font-size: 16px; font-weight: 900; 
-            letter-spacing: 0.8px; text-transform: uppercase; 
+            display: flex; align-items: center; justify-content: center; gap: 5px;
+            margin: 0 0 5px 0; font-size: 13.5px; font-weight: 900; 
+            letter-spacing: 0.3px; text-transform: uppercase; 
             text-shadow: 1px 1px 3px rgba(0,0,0,0.4); 
+            line-height: 1;
         }
+        /* Make Ashoka Pure White to match the text perfectly */
+        .inline-ashoka {
+            height: 22px;
+            filter: brightness(0) invert(1);
+        }
+
         .id-header-bar p { 
-            margin: 2px 0 0 0; font-size: 10.5px; font-weight: 500; 
-            letter-spacing: 0.2px; line-height: 1.3; 
+            margin: 2px 0 0 0; font-size: 10px; font-weight: 500; 
+            letter-spacing: 0.1px; line-height: 1.3; 
         }
 
         /* --- PREMIUM PHOTO BLOCK --- */
         .id-photo-block {
-            width: 105px; height: 130px; margin: 25px auto 20px;
-            border: 2px solid #6648d5; /* Matching IFMS Purple Border */
-            padding: 3px; /* Space between image and border */
+            width: 105px; height: 130px; margin: 20px auto 15px;
+            border: 2px solid #6648d5; 
+            padding: 3px; 
             border-radius: 6px;
             background: #ffffff;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1); /* Soft shadow */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
         }
         .id-photo-block img { width: 100%; height: 100%; object-fit: cover; display: block; border-radius: 3px; }
 
@@ -195,9 +213,9 @@
     <div id="mainContent">
         <div class="container section-padding" style="padding-top: 20px;">
             <div class="sec-title">
-                <span class="sec-badge">IFMS 3.0 & DGT FORMAT</span>
+                <span class="sec-badge">SMART CARD FORMAT</span>
                 <h2>Official <span>Digital ID Card</span></h2>
-                <p>वाटरमार्क और प्रीमियम फॉन्ट के साथ सबसे आकर्षक गवर्नमेंट पहचान पत्र बनाएं।</p>
+                <p>IFMS हेडर के अंदर एम्बेडेड लोगोज़ और बेहतरीन डिज़ाइन के साथ कार्ड बनाएं।</p>
             </div>
 
             <div class="id-generator-container">
@@ -280,16 +298,15 @@
                     
                     <div class="id-card-exact" id="idCardExactCapture">
                         
-                        <!-- NEW LOGO BAR (Left: DGT, Center: Ashoka, Right: ITI) -->
-                        <div class="id-logo-bar">
-                            <img src="1000727907.jpg" class="logo-left" alt="DGT Logo">
-                            <img src="1000727909.jpg" class="logo-center" alt="Ashoka Pillar">
-                            <img src="1000727908.png" class="logo-right" alt="ITI Logo">
-                        </div>
-
-                        <!-- IFMS 3.0 HEADER TEXT -->
+                        <!-- IFMS 3.0 HEADER TEXT WITH EMBEDDED LOGOS -->
                         <div class="id-header-bar">
-                            <h4>GOVERNMENT OF RAJASTHAN</h4>
+                            <!-- Left ITI Logo -->
+                            <img src="1000727908.png" class="header-logo-left" alt="ITI Logo">
+                            <!-- Right DGT Logo -->
+                            <img src="1000727907.jpg" class="header-logo-right" alt="DGT Logo">
+                            
+                            <!-- Inline Ashoka Stambh -->
+                            <h4>GOVERNMENT OF <img src="1000727909.jpg" class="inline-ashoka" alt="Ashoka"> RAJASTHAN</h4>
                             <p>Department of Skill Employment And entrepreneurship</p>
                             <p>Government Industrial Training Institute, Churu</p>
                         </div>
