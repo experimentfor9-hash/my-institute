@@ -106,8 +106,8 @@ const footerHTML = `
 
     <!-- Floating Social Buttons globally injected -->
     <div class="floating-social">
-        <a href="https://wa.me/919785842401" class="float-btn btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-        <a href="tel:+919785842401" class="float-btn btn-call"><i class="fa-solid fa-phone"></i> Call Us</a>
+        <a href="https://wa.me/917877709258" class="float-btn btn-wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+        <a href="tel:+917877709258" class="float-btn btn-call"><i class="fa-solid fa-phone"></i> Call Us</a>
         <a href="contact.html" class="float-btn btn-apply"><i class="fa-solid fa-file-signature"></i> Apply Now</a>
     </div>
 `;
