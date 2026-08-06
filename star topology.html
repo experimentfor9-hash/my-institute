@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <title>Star Topology - Micro Teaching</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #09090e, #1a1a2e, #0f2027);
+            color: white;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        /* Glassmorphism Effect */
+        .slide-container {
+            width: 80%;
+            height: 70%;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            border-radius: 25px;
+            box-shadow: 0 0 40px rgba(0, 242, 254, 0.2);
+            padding: 50px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Slide Animations */
+        .slide {
+            display: none;
+            animation: slideIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        .slide.active {
+            display: block;
+        }
+        
+        @keyframes slideIn {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* Glowing Text */
+        h1, h2 {
+            color: #00f2fe;
+            text-shadow: 0 0 15px rgba(0, 242, 254, 0.6);
+            text-align: center;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        h2 { font-size: 2.5rem; text-align: left; border-bottom: 2px solid rgba(0, 242, 254, 0.3); padding-bottom: 10px; }
+        
+        ul { font-size: 1.8rem; line-height: 2.2; }
+        
+        li { margin-bottom: 15px; }
+        
+        li::marker {
+            color: #00f2fe;
+            content: '🚀  '; /* Rocket Icon instead of dots */
+        }
+        
+        .alert-text {
+            color: #ff0844;
+            text-shadow: 0 0 15px rgba(255, 8, 68, 0.8);
+            border-bottom-color: rgba(255, 8, 68, 0.3);
+        }
+
+        .alert-li::marker { content: '⚠️  '; }
+
+        /* Neon Navigation Buttons */
+        .nav-btn {
+            position: absolute;
+            bottom: -30px;
+            padding: 12px 30px;
+            background: rgba(0, 242, 254, 0.1);
+            border: 2px solid #00f2fe;
+            border-radius: 50px;
+            color: #00f2fe;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 0 10px rgba(0, 242, 254, 0.3) inset;
+        }
+        
+        .nav-btn:hover {
+            background: #00f2fe;
+            color: #000;
+            box-shadow: 0 0 20px #00f2fe;
+            transform: translateY(-5px);
+        }
+        
+        .prev { left: 40px; }
+        .next { right: 40px; }
+    </style>
+</head>
+<body>
+
+    <div class="slide-container">
+        
+        <!-- Slide 1: Intro -->
+        <div class="slide active">
+            <h1>🌟 स्टार टोपोलॉजी (Star Topology)</h1>
+            <p style="text-align:center; font-size: 1.8rem; margin-top:20px; color: #b3cdd1;">नेटवर्किंग का सबसे लोकप्रिय और भरोसेमंद डिज़ाइन</p>
+        </div>
+
+        <!-- Slide 2: Structure -->
+        <div class="slide">
+            <h2>🔗 संरचना (Structure)</h2>
+            <ul>
+                <li>इसमें सभी कंप्यूटर एक <b>केंद्रीय डिवाइस (Central Device)</b> से जुड़े होते हैं।</li>
+                <li>इस मुख्य डिवाइस को <b>Hub (हब)</b> या <b>Switch (स्विच)</b> कहा जाता है।</li>
+                <li>इसका आकार एक तारे (Star) जैसा दिखता है, इसलिए इसका यह नाम पड़ा।</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Working -->
+        <div class="slide">
+            <h2>⚙️ कार्यप्रणाली (How it Works)</h2>
+            <ul>
+                <li>कोई भी कंप्यूटर सीधे दूसरे कंप्यूटर को डेटा नहीं भेज सकता।</li>
+                <li>डेटा सबसे पहले बीच वाले <b>Hub/Switch</b> के पास जाता है।</li>
+                <li>फिर Hub उस डेटा को सही कंप्यूटर (Node) तक पहुँचाता है।</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Advantages -->
+        <div class="slide">
+            <h2>✅ इसके फायदे (Advantages)</h2>
+            <ul>
+                <li>नेटवर्क में नया कंप्यूटर जोड़ना या हटाना बहुत आसान है।</li>
+                <li>अगर एक केबल खराब हो जाए, तो <b>बाकी नेटवर्क चलता रहता है</b>।</li>
+                <li>नेटवर्क में कोई दिक्कत (Fault) खोजना बहुत सरल है।</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Disadvantages (Red Theme) -->
+        <div class="slide">
+            <h2 class="alert-text">⚠️ इसका सबसे बड़ा नुकसान (Disadvantage)</h2>
+            <ul>
+                <li class="alert-li">पूरा नेटवर्क सिर्फ एक डिवाइस (Hub) पर निर्भर है।</li>
+                <li class="alert-li">अगर बीच का <b>Hub खराब हो गया, तो पूरा नेटवर्क ठप हो जाएगा!</b></li>
+                <li class="alert-li">यह अन्य टोपोलॉजी के मुकाबले थोड़ा महँगा होता है (केबल ज्यादा लगती है)।</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Outro -->
+        <div class="slide">
+            <h1 style="font-size: 4rem;">धन्यवाद! 🙏</h1>
+            <p style="text-align:center; font-size: 1.8rem; margin-top:20px; color: #b3cdd1;">क्या किसी का कोई प्रश्न (Question) है?</p>
+        </div>
+
+        <!-- Navigation -->
+        <button class="nav-btn prev" onclick="changeSlide(-1)">◀ पिछला</button>
+        <button class="nav-btn next" onclick="changeSlide(1)">अगला ▶</button>
+    </div>
+
+    <!-- JavaScript for Animation & Controls -->
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + direction + slides.length) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }
+
+        // कीबोर्ड (Keyboard) से भी स्लाइड बदलने के लिए
+        document.addEventListener('keydown', function(event) {
+            if(event.key === 'ArrowRight' || event.key === ' ') changeSlide(1);
+            if(event.key === 'ArrowLeft') changeSlide(-1);
+        });
+    </script>
+</body>
+</html>
+
