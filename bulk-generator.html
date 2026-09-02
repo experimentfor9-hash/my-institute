@@ -1,1 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bulk ITI Trainee ID Card Generator</title>
+    <link rel="stylesheet" href="id-generator.css">
+    <style>
+        /* Bulk Print Control Styles */
+        body { background: #f1f5f9; font-family: 'Poppins', sans-serif; padding: 20px; }
+        .controls { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; text-align: center; }
+        .controls h2 { color: #1e40af; margin-top: 0; }
+        .btn { background: #2563eb; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin: 5px; }
+        .btn-print { background: #10b981; }
+        
+        /* A4 Page Grid for Print */
+        #bulkCardsContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+            gap: 20px;
+            justify-content: center;
+        }
+
+        /* --- PRINT SPECIFIC CSS --- */
+        @media print {
+            body { padding: 0; background: white; }
+            .controls { display: none; /* Hide buttons during print */ }
+            
+            #bulkCardsContainer {
+                display: grid;
+                grid-template-columns: 1fr 1fr; /* 2 Cards per row on A4 */
+                gap: 10px;
+                row-gap: 20px;
+            }
+            .id-card-exact {
+                page-break-inside: avoid; /* Prevent card splitting across pages */
+                border: 1px solid #ccc; /* Cut lines */
+                box-shadow: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="controls">
+        <h2>🛠️ Bulk Trainee ID Card Generator</h2>
+        <p>1. अपनी CSV फ़ाइल अपलोड करें | 2. कार्ड प्रीव्यू देखें | 3. प्रिंट करें</p>
+        <input type="file" id="csvFileInput" accept=".csv" class="btn" style="background: #e2e8f0; color: #0f172a;">
+        <button class="btn btn-print" onclick="window.print()">🖨️ Print All Cards (A4 Size)</button>
+    </div>
+
+    <div id="bulkCardsContainer"></div>
+
+    <script>
+        document.getElementById('csvFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                const csvData = event.target.result;
+                processData(csvData);
+            };
+            reader.readAsText(file);
+        });
+
+        function processData(csvData) {
+            const rows = csvData.split('\n');
+            const container = document.getElementById('bulkCardsContainer');
+            container.innerHTML = ''; // Clear previous
+
+            // Skip Header row (let i = 1)
+            for (let i = 1; i < rows.length; i++) {
+                if (rows[i].trim() === '') continue;
+                
+                // Assuming CSV format: AppNo, Name, Father, DOB, Mobile, Aadhar, Address
+                const cols = rows[i].split(',');
+
+                const appNo = cols[0] ? cols[0].trim() : '';
+                const name = cols[1] ? cols[1].trim() : '';
+                const father = cols[2] ? cols[2].trim() : '';
+                const dob = cols[3] ? cols[3].trim() : '';
+                const mobile = cols[4] ? cols[4].trim() : '';
+                const aadhar = cols[5] ? cols[5].trim() : '';
+                const address = cols[6] ? cols[6].trim() : '';
+                
+                // Photo Name matching Application Number (e.g., photos/25101449.jpg)
+                const photoSrc = `photos/${appNo}.jpg`; 
+
+                // Generate HTML for this single card
+                const cardHTML = `
+                    <div class="id-card-exact">
+                        <div class="id-header-bar">
+                            <img src="1.jpg" class="header-logo-left" alt="ITI Logo">
+                            <img src="2.jpg" class="header-logo-right" alt="DGT Logo">
+                            <h4>राजस्थान सरकार</h4>
+                            <p>कौशल नियोजन एवं उद्यमिता विभाग</p>
+                            <p>राजकीय औद्योगिक प्रशिक्षण संस्थान, सुजानगढ़ (चूरू)</p>
+                        </div>
+                        
+                        <div class="id-photo-block">
+                            <img src="${photoSrc}" onerror="this.src='https://via.placeholder.com/105x130/e2e8f0/94a3b8?text=PHOTO'">
+                        </div>
+                        
+                        <div class="id-data-block">
+                            <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value">${name}</span></div>
+                            <div class="data-row"><span class="data-label">Father's Name</span><span class="data-colon">:</span><span class="data-value">${father}</span></div>
+                            <div class="data-row"><span class="data-label">Trade</span><span class="data-colon">:</span><span class="data-value">R&ACT</span></div>
+                            <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value">${dob}</span></div>
+                            <div class="data-row"><span class="data-label">App. No.</span><span class="data-colon">:</span><span class="data-value">${appNo}</span></div>
+                            <div class="data-row"><span class="data-label">Mobile No</span><span class="data-colon">:</span><span class="data-value">${mobile}</span></div>
+                            <div class="data-row"><span class="data-label">Aadhar No</span><span class="data-colon">:</span><span class="data-value">${aadhar}</span></div>
+                        </div>
+
+                        <div class="id-footer-exact">
+                            <div class="sig-box">
+                                <div class="sig-line" style="margin-top:25px;"></div>
+                                <div class="sig-title">हस्ताक्षर ट्रेनी</div>
+                            </div>
+                            <div class="sig-box">
+                                <div class="sig-line" style="margin-top:25px;"></div>
+                                <div class="sig-title">प्रधानाचार्य / उपनिदेशक<br>रा. औ. प्र. संस्थान, सुजानगढ़</div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                container.innerHTML += cardHTML;
+            }
+        }
+    </script>
+</body>
+</html>
 
