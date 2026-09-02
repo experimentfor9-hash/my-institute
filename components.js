@@ -19,9 +19,8 @@ const navHTML = `
                     <a href="cbt-test.html">CBT Test</a>
                     <a href="gallery.html">Gallery</a>
                     <a href="auto-draft.html">Auto Draft</a>
-                    <a href="contact.html">Contact</a>
                     <a href="id-generator.html">ID Generator</a>
-                    
+                    <a href="bulk-generator.html" style="color: #2563eb; font-weight: bold;">Bulk ID</a> <a href="contact.html">Contact</a>
                 </div>
                 <a href="contact.html" class="btn-enquiry">Enquiry Now</a>
             </nav>
@@ -74,16 +73,16 @@ const footerHTML = `
                 </div>
 
                 <!-- Col 4 -->
-                <div class="footer-col">
+                                <div class="footer-col">
                     <h4>Important Links</h4>
                     <ul>
                         <li><a href="#">Resume Builder</a></li>
                         <li><a href="auto-draft.html">Auto Draft</a></li>
                         <li><a href="courses.html">Fee Calculator</a></li>
-                        <li><a href="inventory.html">Stock Register</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                    </ul>
+                        <li><a href="id-generator.html">Single ID Generator</a></li>
+                        <li><a href="bulk-generator.html">Bulk ID Generator</a></li> </ul>
                 </div>
+            
 
                 <!-- Col 5 -->
                 <div class="footer-col">
