@@ -3,364 +3,286 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bulk ITI Trainee ID Card Generator</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Google Sheets Bulk ID Card Generator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         /* General Page Styles */
-        body { background: #f1f5f9; font-family: 'Poppins', sans-serif; padding: 20px; margin: 0; }
-        .controls { background: #fff; padding: 20px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; text-align: center; }
-        .controls h2 { color: #1e40af; margin-top: 0; }
-        .btn { background: #2563eb; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 16px; margin: 5px; }
+        body { background: #e2e8f0; font-family: 'Roboto', sans-serif; padding: 20px; margin: 0; }
+        .controls { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); margin-bottom: 30px; text-align: center; max-width: 900px; margin-left: auto; margin-right: auto;}
+        .controls h2 { color: #0b3b84; margin-top: 0; }
+        .input-group { display: flex; flex-direction: column; gap: 15px; margin-bottom: 15px; align-items: center; }
+        
+        .sheet-input { width: 90%; padding: 12px; font-size: 14px; border: 2px solid #cbd5e1; border-radius: 8px; font-family: 'Roboto', sans-serif; }
+        .sheet-input:focus { border-color: #2563eb; outline: none; }
+
+        .btn-row { display: flex; justify-content: center; gap: 15px; flex-wrap: wrap; }
+        .btn { background: #2563eb; color: white; padding: 12px 24px; border: none; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 15px; transition: 0.3s; box-shadow: 0 4px 6px rgba(37,99,235,0.2);}
+        .btn:hover { background: #1d4ed8; transform: translateY(-2px);}
         .btn-print { background: #10b981; }
-        .instructions { font-size: 14px; color: #475569; margin-bottom: 15px; }
-
-        /* Screen Viewing */
-        #bulkCardsContainer {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-
-        .card-wrapper {
-            display: flex;
-            flex-direction: row; 
-            gap: 10px;
-            align-items: center;
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
-
-        /* --- ID CARD SPECIFIC STYLES (46mm x 73mm) --- */
-        .id-card {
-            width: 46mm;
-            height: 73mm;
-            background: #ffffff;
-            border: 1px solid #cbd5e1;
-            border-radius: 2.5mm;
-            box-sizing: border-box;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Front Card Header - Matched to PDF */
-        .id-header {
-            background: #ffffff;
-            color: #1e3a8a;
-            padding: 1.5mm 1mm;
-            text-align: center;
-            border-bottom: 1mm solid #fbbf24; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            position: relative;
-        }
+        .btn-print:hover { background: #059669; }
         
-        .header-logos {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            width: 100%;
-            padding: 0 1mm;
-            box-sizing: border-box;
-            margin-bottom: 0.5mm;
-        }
+        .instructions { font-size: 14px; color: #475569; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px; text-align: left; border: 1px solid #e2e8f0;}
 
-        .header-logos img {
-            height: 6mm;
-            width: 6mm;
-            object-fit: contain;
-            background: white;
-            border-radius: 50%;
-        }
+        #statusMessage { font-size: 15px; margin-top: 10px; font-weight: bold; }
 
-        /* Font size adjusted slightly to fit "GOVERNMENT" */
-        .id-header h3 { margin: 0; font-size: 5pt; font-weight: 700; line-height: 1.2; color: #dc2626; }
-        .id-header p { margin: 0.5mm 0 0 0; font-size: 3.5pt; font-weight: 600; line-height: 1.2; color: #000; }
-        
-        /* Application No Tag */
-        .app-no-tag {
-            background: #1e3a8a;
-            color: white;
-            font-size: 4.5pt;
-            font-weight: 700;
-            padding: 0.5mm 2mm;
-            border-radius: 1mm;
-            margin-top: 1.5mm;
-            display: inline-block;
-        }
+        /* Screen Viewing Grid */
+        #bulkCardsContainer { display: flex; flex-wrap: wrap; gap: 20px; justify-content: center; }
+        .card-wrapper { display: flex; flex-direction: row; gap: 15px; align-items: center; background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
 
-        /* Photo Section */
-        .id-photo-block {
-            text-align: center;
-            margin-top: 1.5mm;
-            margin-bottom: 1.5mm;
-        }
-        .id-photo-block img {
-            width: 13mm;
-            height: 17mm;
-            border: 1px solid #1e3a8a;
-            border-radius: 1mm;
-            object-fit: cover;
-        }
+        /* --- ID CARD SPECIFIC STYLES (85.6mm x 54mm Landscape) --- */
+        .id-card { width: 85.6mm; height: 54mm; background: #ffffff; border: 1px solid #cbd5e1; border-radius: 2mm; box-sizing: border-box; position: relative; overflow: hidden; }
 
-        /* Data Section */
-        .id-data-block {
-            padding: 0 2mm;
-            font-size: 4pt;
-            color: #000;
-            line-height: 1.35;
-        }
-        .data-row {
-            display: flex;
-            margin-bottom: 0.4mm;
-        }
-        .data-label {
-            width: 30%;
-            font-weight: 700;
-            color: #1e3a8a;
-        }
-        .data-colon {
-            width: 5%;
-            font-weight: 700;
-        }
-        .data-value {
-            width: 65%;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
+        .header-main { background: #0b3b84; color: white; display: flex; justify-content: space-between; align-items: center; padding: 1mm 2mm; height: 12mm; box-sizing: border-box; }
+        .side-logo { height: 8.5mm; width: 8.5mm; background: white; border-radius: 1mm; object-fit: contain; padding: 0.5mm; }
+        .header-center { display: flex; align-items: center; justify-content: center; flex-grow: 1; }
+        .header-text { text-align: center; line-height: 1.15; }
+        .header-text p { margin: 0 0 0.5mm 0; font-size: 4pt; font-weight: 500; } 
+        .header-text h1 { margin: 0; font-size: 5.8pt; font-weight: 700; letter-spacing: 0.1mm; } 
+        .header-text h2 { margin: 0.5mm 0 0 0; font-size: 5.5pt; font-weight: 700; color: #facc15; } 
+        .header-sub { background: #1d4ed8; color: white; text-align: center; font-size: 5.5pt; font-weight: 700; padding: 0.6mm 0; border-bottom: 0.5mm solid #fbbf24; }
 
-        /* Footer / Signatures */
-        .id-footer {
-            position: absolute;
-            bottom: 1.5mm;
-            width: 100%;
-            display: flex;
-            justify-content: space-between;
-            padding: 0 2mm;
-            box-sizing: border-box;
-        }
-        .sig-box {
-            text-align: center;
-            font-size: 3.5pt;
-            font-weight: 600;
-            color: #000;
-            width: 45%;
-        }
-        .sig-line {
-            border-top: 0.5px dashed #000;
-            margin-bottom: 1mm;
-            margin-top: 5mm; 
-        }
+        .card-body { display: flex; padding: 2mm; gap: 2.5mm; }
+        .photo-section { width: 18mm; display: flex; flex-direction: column; align-items: center; z-index: 2; }
+        .photo-section img { width: 15mm; height: 19mm; border: 1px solid #0b3b84; object-fit: cover; }
+        .app-no-box { margin-top: 1.5mm; width: 100%; text-align: center; font-size: 4.8pt; font-weight: 700; color: #0b3b84; line-height: 1.3; background-color: #f1f5f9; border: 0.5px solid #cbd5e1; border-radius: 1mm; padding: 0.5mm; box-sizing: border-box; }
 
-        /* --- BACK CARD STYLES --- */
-        .back-content {
-            padding: 3mm 2mm;
-            height: 100%;
-            box-sizing: border-box;
-            display: flex;
-            flex-direction: column;
-        }
-        .back-title {
-            text-align: center;
-            color: #1e3a8a;
-            font-size: 6.5pt;
-            font-weight: 700;
-            margin: 0 0 2mm 0;
-            padding-bottom: 1.5mm;
-            border-bottom: 0.5px solid #cbd5e1;
-        }
-        .instructions-list {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            font-size: 4pt;
-            color: #0f172a;
-        }
-        .instructions-list li {
-            margin-bottom: 1.5mm;
-            font-weight: 600;
-            line-height: 1.3;
-        }
-        .instructions-list li span {
-            display: block;
-            font-weight: 400;
-            color: #64748b;
-            font-size: 3.5pt;
-        }
-        .return-box {
-            margin-top: auto;
-            border: 0.5px dashed #94a3b8;
-            border-radius: 1.5mm;
-            padding: 1.5mm;
-            text-align: center;
-            background: #f8fafc;
-        }
+        .data-section { flex-grow: 1; font-size: 5.2pt; color: #000; line-height: 1.35; z-index: 2; }
+        .data-row { margin-bottom: 0.6mm; display: flex; }
+        .label { width: 44%; font-weight: 500; color: #1e293b; }
+        .value { width: 56%; font-weight: 700; text-transform: uppercase; }
 
-        /* --- PRINT SPECIFIC CSS (A4 Optimized) --- */
+        .principal-sig { position: absolute; bottom: 1.5mm; right: 1.5mm; text-align: center; width: 32mm; z-index: 1; }
+        .sig-img { height: 7mm; width: auto; mix-blend-mode: multiply; margin: 0 auto 0.2mm auto; display: block; }
+        .principal-name { font-size: 4pt; color: #0b3b84; font-weight: 700; margin-bottom: 0.5mm; line-height: 1.2; }
+        .principal-line { border-top: 0.5px solid #000; font-size: 4.2pt; font-weight: 700; padding-top: 0.5mm; }
+
+        /* BACK CARD STYLES */
+        .back-body { padding: 3mm 3mm 12mm 3mm; font-size: 4.5pt; line-height: 1.4; color: #000; }
+        .back-info strong { color: #0b3b84; }
+        .instructions-block { margin-top: 2mm; }
+        .instructions-block strong { color: #0b3b84; font-size: 5pt; display: block; margin-bottom: 1mm; border-bottom: 0.5px solid #cbd5e1; padding-bottom: 0.5mm; }
+        .instructions-list { margin: 0; padding-left: 3mm; list-style-type: decimal; font-size: 4pt; }
+        .instructions-list li { margin-bottom: 0.5mm; }
+        .back-footer { position: absolute; bottom: 0; left: 0; width: 100%; background: #0b3b84; color: white; text-align: center; padding: 1.5mm 2mm; font-size: 4.5pt; line-height: 1.3; box-sizing: border-box; }
+
+        /* --- PRINT SPECIFIC CSS --- */
         @media print {
-            @page {
-                size: A4 portrait;
-                margin: 10mm 5mm; /* Very small margins to fit maximum cards */
-            }
-            body { 
-                padding: 0; 
-                margin: 0; 
-                background: white; 
-                -webkit-print-color-adjust: exact; 
-                print-color-adjust: exact; 
-            }
+            @page { size: A4 portrait; margin: 10mm; }
+            body { padding: 0; margin: 0; background: white; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
             .controls { display: none !important; }
-            
-            #bulkCardsContainer {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr); /* 2 pairs (Front & Back) per row */
-                column-gap: 5mm; 
-                row-gap: 5mm; 
-                justify-items: center;
-                align-content: flex-start;
-            }
-            
-            .card-wrapper {
-                page-break-inside: avoid; /* Prevents card from cutting across pages */
-                break-inside: avoid;
-                gap: 0; /* Front and back cards touch each other for easy folding */
-                padding: 0;
-                box-shadow: none;
-                background: transparent;
-            }
-            
-            .id-card {
-                border: 0.5px dashed #94a3b8; /* Cut guides for printing */
-                border-radius: 0; /* Standard for cutting */
-            }
+            #bulkCardsContainer { display: grid; grid-template-columns: 1fr; row-gap: 5mm; justify-items: center; }
+            .card-wrapper { page-break-inside: avoid; gap: 0; padding: 0; box-shadow: none; }
+            .id-card { border: 0.5px dashed #94a3b8; border-radius: 0; }
         }
     </style>
 </head>
 <body>
 
     <div class="controls">
-        <h2>🛠️ Bulk Trainee ID Card Generator (A4 Print Layout)</h2>
-        <p class="instructions">
-            <strong>CSV Column Order:</strong><br>
-            AppNo, Name, FatherName, Trade, DOB, Mobile, Aadhar, Email, Address
-        </p>
-        <input type="file" id="csvFileInput" accept=".csv" class="btn" style="background: #e2e8f0; color: #0f172a;">
-        <button class="btn btn-print" onclick="window.print()">🖨️ Print All Cards (A4 Size)</button>
+        <h2>🚀 Direct Google Sheets ID Card Generator (Auto-Photo)</h2>
+        
+        <div class="instructions">
+            <strong>महत्वपूर्ण निर्देश:</strong><br>
+            1. आपकी Google Sheet की शेयरिंग सेटिंग <strong>"Anyone with the link can view"</strong> होनी चाहिए।<br>
+            2. Google Sheet में <strong>12वाँ कॉलम (Column L) "Photo Link"</strong> का होना चाहिए, जिसमें फोटो का Google Drive लिंक हो।<br>
+            3. नीचे अपनी Google Sheet का लिंक पेस्ट करें और <strong>"Generate All Cards"</strong> दबाएं।
+        </div>
+
+        <div class="input-group">
+            <input type="text" id="sheetUrlInput" class="sheet-input" placeholder="Paste Google Sheet Link here...">
+            
+            <div class="btn-row">
+                <button class="btn" onclick="fetchSheetData()">⚡ Generate All Cards</button>
+                <button class="btn btn-print" onclick="window.print()">🖨️ Print All Cards</button>
+            </div>
+        </div>
+        <div id="statusMessage"></div>
     </div>
 
     <div id="bulkCardsContainer"></div>
 
     <script>
-        document.getElementById('csvFileInput').addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (!file) return;
+        function updateStatus(msg, color) {
+            const statusEl = document.getElementById('statusMessage');
+            statusEl.innerText = msg;
+            statusEl.style.color = color;
+        }
 
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const csvData = event.target.result;
-                processData(csvData);
-            };
-            reader.readAsText(file);
-        });
+        // Convert normal Google Drive link to Direct Image Link
+        function getDirectImageUrl(url) {
+            if (!url) return 'https://via.placeholder.com/60x75/e2e8f0/94a3b8?text=PHOTO';
+            
+            const driveRegex = /\/d\/(.*?)\//;
+            const idRegex = /id=([^&]+)/;
+            let fileId = '';
+            
+            if (url.includes('drive.google.com')) {
+                if (url.match(driveRegex)) {
+                    fileId = url.match(driveRegex)[1];
+                } else if (url.match(idRegex)) {
+                    fileId = url.match(idRegex)[1];
+                }
+                if (fileId) {
+                    return `https://drive.google.com/uc?export=view&id=${fileId}`;
+                }
+            }
+            return url; // Return as-is if it's not a drive link (e.g., Imgur link)
+        }
+
+        // Fetch Data Directly from Google Sheet URL
+        function fetchSheetData() {
+            const urlInput = document.getElementById('sheetUrlInput').value.trim();
+            if(!urlInput) {
+                updateStatus("❌ Please paste a valid Google Sheet Link first.", 'red');
+                return;
+            }
+
+            updateStatus("⏳ Fetching data & photos from Google Sheet...", 'orange');
+
+            const idMatch = urlInput.match(/\/d\/([a-zA-Z0-9-_]+)/);
+            const gidMatch = urlInput.match(/gid=([0-9]+)/);
+
+            if (idMatch) {
+                const sheetId = idMatch[1];
+                let exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+                if (gidMatch) {
+                    exportUrl += `&gid=${gidMatch[1]}`;
+                }
+
+                fetch(exportUrl)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Network response was not ok");
+                        return response.text();
+                    })
+                    .then(csvText => {
+                        processData(csvText);
+                        updateStatus("✅ All Cards Generated Successfully!", 'green');
+                    })
+                    .catch(error => {
+                        console.error('Fetch error:', error);
+                        updateStatus("❌ Error fetching data! Make sure your Google Sheet sharing is set to 'Anyone with the link can view'.", 'red');
+                    });
+            } else {
+                updateStatus("❌ Invalid Google Sheet Link format.", 'red');
+            }
+        }
+
+        // CSV Parser
+        function CSVToArray(strData) {
+            const objPattern = new RegExp(("(\\,|\\r?\\n|\\r|^)(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|([^\"\\,\\r\\n]*))"), "gi");
+            let arrData = [[]];
+            let arrMatches = null;
+            while (arrMatches = objPattern.exec(strData)) {
+                let strMatchedDelimiter = arrMatches[1];
+                if (strMatchedDelimiter.length && strMatchedDelimiter !== ",") { arrData.push([]); }
+                let strMatchedValue;
+                if (arrMatches[2]) { strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\""); } 
+                else { strMatchedValue = arrMatches[3]; }
+                arrData[arrData.length - 1].push(strMatchedValue);
+            }
+            return arrData;
+        }
 
         function processData(csvData) {
-            const rows = csvData.split('\n');
+            const rows = CSVToArray(csvData);
+            if (rows.length < 2) return;
+
             const container = document.getElementById('bulkCardsContainer');
             container.innerHTML = ''; 
 
-            for (let i = 1; i < rows.length; i++) {
-                if (rows[i].trim() === '') continue;
-                
-                // Matches your PDF Trainee format
-                const cols = rows[i].split(',');
+            // Timestamp detection offset
+            let offset = 0;
+            if (rows[0][0] && rows[0][0].toLowerCase().includes("timestamp")) {
+                offset = 1;
+            }
 
-                const appNo = cols[0] ? cols[0].trim() : '';
-                const name = cols[1] ? cols[1].trim() : '';
-                const father = cols[2] ? cols[2].trim() : '';
-                const trade = cols[3] ? cols[3].trim() : '';
-                const dob = cols[4] ? cols[4].trim() : '';
-                const mobile = cols[5] ? cols[5].trim() : '';
-                const aadhar = cols[6] ? cols[6].trim() : '';
-                const email = cols[7] ? cols[7].trim() : '';
-                const address = cols[8] ? cols[8].trim() : '';
+            for (let i = 1; i < rows.length; i++) {
+                if (rows[i].length < 10 + offset) continue; 
                 
-                const photoSrc = `photos/${appNo}.jpg`; 
+                const cols = rows[i];
+
+                const appNo = cols[offset + 0] ? cols[offset + 0].trim() : '';
+                const name = cols[offset + 1] ? cols[offset + 1].trim() : '';
+                
+                if(appNo === '' && name === '') continue; 
+
+                const father = cols[offset + 2] ? cols[offset + 2].trim() : '';
+                const trade = cols[offset + 3] ? cols[offset + 3].trim() : '';
+                const shiftUnit = cols[offset + 4] ? cols[offset + 4].trim() : '';
+                const dob = cols[offset + 5] ? cols[offset + 5].trim() : '';
+                const bloodGroup = cols[offset + 6] ? cols[offset + 6].trim() : '';
+                const aadhar = cols[offset + 7] ? cols[offset + 7].trim() : '';
+                // Email skipped (offset + 8)
+                const mobile = cols[offset + 9] ? cols[offset + 9].trim() : '';
+                const address = cols[offset + 10] ? cols[offset + 10].trim() : '';
+                
+                // Fetch Photo URL from the 12th column (index 11)
+                const rawPhotoUrl = cols[offset + 11] ? cols[offset + 11].trim() : '';
+                const finalPhotoSrc = getDirectImageUrl(rawPhotoUrl);
 
                 const cardHTML = `
                     <div class="card-wrapper">
                         <!-- FRONT OF CARD -->
                         <div class="id-card">
-                            <div class="id-header">
-                                <div class="header-logos">
-                                    <img src="1.jpg" alt="ITI Logo">
-                                    <img src="RJ.jpg" alt="Govt Logo" style="height:7mm; width:7mm;">
-                                    <img src="2.jpg" alt="Skill Logo">
+                            <div class="header-main">
+                                <img src="2.jpg" alt="Skill Logo" class="side-logo">
+                                <div class="header-center">
+                                    <div class="header-text">
+                                        <p>(Directorate of Technical Education, Govt. of Rajasthan)</p>
+                                        <h1>GOVERNMENT INDUSTRIAL TRAINING INSTITUTE, CHURU</h1>
+                                        <h2>राजकीय औद्योगिक प्रशिक्षण संस्थान, चूरू</h2>
+                                    </div>
                                 </div>
-                                <h3>GOVERNMENT INDUSTRIAL<br>TRAINING INSTITUTE</h3>
-                                <p>Churu, Rajasthan-331001</p>
+                                <img src="1.jpg" alt="ITI Logo" class="side-logo">
+                            </div>
+                            <div class="header-sub">TRAINEE IDENTITY CARD / पहचान पत्र</div>
+                            
+                            <div class="card-body">
+                                <div class="photo-section">
+                                    <img src="${finalPhotoSrc}" onerror="this.src='https://via.placeholder.com/60x75/e2e8f0/94a3b8?text=PHOTO'">
+                                    <div class="app-no-box">App No:<br>${appNo}</div>
+                                </div>
+                                <div class="data-section">
+                                    <div class="data-row"><span class="label">Name / नाम:</span> <span class="value">${name}</span></div>
+                                    <div class="data-row"><span class="label">Father's Name / पिता का नाम:</span> <span class="value">${father}</span></div>
+                                    <div class="data-row"><span class="label">Trade / व्यवसाय:</span> <span class="value">${trade}</span></div>
+                                    <div class="data-row"><span class="label">Shift / Unit:</span> <span class="value">${shiftUnit}</span></div>
+                                    <div class="data-row"><span class="label">DOB / जन्म तिथि:</span> <span class="value">${dob}</span></div>
+                                    <div class="data-row"><span class="label">Blood Group:</span> <span class="value" style="color: #dc2626;">${bloodGroup}</span></div>
+                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">${aadhar}</span></div>
+                                </div>
                             </div>
                             
-                            <div style="text-align: center;">
-                                <div class="app-no-tag">Application: ${appNo}</div>
-                            </div>
-
-                            <div class="id-photo-block">
-                                <img src="${photoSrc}" onerror="this.src='https://via.placeholder.com/50x65/e2e8f0/94a3b8?text=PHOTO'">
-                            </div>
-                            
-                            <div class="id-data-block">
-                                <div class="data-row"><span class="data-label">Name</span><span class="data-colon">:</span><span class="data-value">${name}</span></div>
-                                <div class="data-row"><span class="data-label">Father</span><span class="data-colon">:</span><span class="data-value">${father}</span></div>
-                                <div class="data-row"><span class="data-label">Trade</span><span class="data-colon">:</span><span class="data-value">${trade}</span></div>
-                                <div class="data-row"><span class="data-label">D.O.B.</span><span class="data-colon">:</span><span class="data-value">${dob}</span></div>
-                                <div class="data-row"><span class="data-label">Mobile</span><span class="data-colon">:</span><span class="data-value">${mobile}</span></div>
-                                <div class="data-row"><span class="data-label">Aadhar</span><span class="data-colon">:</span><span class="data-value">${aadhar}</span></div>
-                                <div class="data-row"><span class="data-label">Email ID</span><span class="data-colon">:</span><span class="data-value" style="font-size:3.2pt; text-transform:none;">${email}</span></div>
-                                <div class="data-row"><span class="data-label">Address</span><span class="data-colon">:</span><span class="data-value" style="font-size:3.5pt; text-transform:none;">${address}</span></div>
-                            </div>
-
-                            <div class="id-footer">
-                                <div class="sig-box">
-                                    <div class="sig-line"></div>
-                                    Student Sign
-                                </div>
-                                <div class="sig-box">
-                                    <div class="sig-line"></div>
-                                    Principal/Dy. Director
-                                </div>
+                            <div class="principal-sig">
+                                <img src="WhatsApp Image 2026-09-02 at 11.59.43 PM.jpeg" class="sig-img" alt="Signature">
+                                <div class="principal-name">Deputy Director,<br>Govt. ITI, Churu</div>
+                                <div class="principal-line">Sign & Seal</div>
                             </div>
                         </div>
 
                         <!-- BACK OF CARD -->
                         <div class="id-card">
-                            <div class="back-content">
-                                <h4 class="back-title">Instructions / निर्देश</h4>
-                                <ul class="instructions-list">
-                                    <li>1. यह पहचान पत्र राजकीय ITI, चूरू की संपत्ति है।
-                                        <span>(This card is the property of Govt. ITI, Churu.)</span>
-                                    </li>
-                                    <li>2. ड्यूटी के दौरान इसे पहनना अनिवार्य है।
-                                        <span>(It is mandatory to wear this card during duty hours.)</span>
-                                    </li>
-                                    <li>3. यह कार्ड अहस्तांतरणीय है।
-                                        <span>(This card is non-transferable.)</span>
-                                    </li>
-                                </ul>
-                                
-                                <div class="return-box">
-                                    <div style="color: #ef4444; font-weight: 700; font-size: 4.5pt; margin-bottom: 1mm;">If found, please return to:</div>
-                                    <div style="font-size: 3.5pt; font-weight: 600; color: #1e293b; line-height: 1.4;">
-                                        OFFICE OF THE DEPUTY DIRECTOR<br>
-                                        Government Industrial Training Institute<br>
-                                        Churu, Rajasthan-331001
-                                    </div>
-                                    <div style="color: #1d4ed8; font-weight: 700; margin-top: 1.5mm; font-size: 4pt;">
-                                        📞 Contact: 01568-274299
-                                    </div>
+                            <div class="back-body">
+                                <div class="back-info">
+                                    <strong>Address / स्थायी पता:</strong><br>${address}<br><br>
+                                    <strong>Mobile No. / मोबाइल नं.:</strong> ${mobile}<br>
+                                    <strong>Emergency Contact / आपातकालीन संपर्क:</strong> ${father} - ${mobile}
                                 </div>
+                                <div class="instructions-block">
+                                    <strong>Instructions / आवश्यक निर्देश:</strong>
+                                    <ol class="instructions-list">
+                                        <li>This card is non-transferable. / यह कार्ड अहस्तांतरणीय है।</li>
+                                        <li>Must be worn during institute hours. / संस्थान परिसर में इसे पहनना अनिवार्य है।</li>
+                                        <li>Valid only for the regular session. / यह केवल नियमित प्रशिक्षण अवधि के लिए मान्य है।</li>
+                                        <li>If lost, inform the institute immediately. / खो जाने पर तुरंत संस्थान को सूचित करें।</li>
+                                        <li>Surrender this card upon completion of training. / प्रशिक्षण पूर्ण होने पर इसे जमा करवाएं।</li>
+                                    </ol>
+                                </div>
+                            </div>
+                            <div class="back-footer">
+                                If found, please return to: (यदि यह कार्ड मिले तो कृपया यहाँ लौटाएं:)<br>
+                                Deputy Director, Govt. ITI Churu, Rajasthan - 331001<br>
+                                Phone / फोन : 01562-250001
                             </div>
                         </div>
                     </div>
