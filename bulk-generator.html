@@ -94,8 +94,7 @@
         </div>
 
         <div class="input-group">
-            <!-- Google Sheet Link set as Default Value -->
-            <input type="text" id="sheetUrlInput" class="sheet-input" value="https://docs.google.com/spreadsheets/d/1VYjRN0V6qXv5-2sswoIJIi2Cs9BQii668p1C7O1Lw2Q/edit?resourcekey=&gid=1352763808#gid=1352763808" placeholder="Paste your Google Sheet Link here...">
+            <input type="text" id="sheetUrlInput" class="sheet-input" value="https://docs.google.com/spreadsheets/d/1VYjRN0V6qXv5-2sswoIJIi2Cs9BQii668p1C7O1Lw2Q/edit?usp=drivesdk" placeholder="Paste your Google Sheet Link here...">
             
             <div class="btn-row">
                 <button class="btn" onclick="fetchSheetData()">⚡ Generate All Cards</button>
@@ -167,7 +166,7 @@
                     })
                     .catch(error => {
                         console.error('Fetch error:', error);
-                        updateStatus("❌ Error! कृपया सुनिश्चित करें कि आपकी Google Sheet 'Anyone with the link can view' पर सेट है।", 'red');
+                        updateStatus("❌ Error! कृपया सुनिश्चित करें कि आपकी Google Sheet 'Anyone with the link can view' पर सेट है। (या File > Share > Publish to web करें)", 'red');
                     });
             } else {
                 updateStatus("❌ Invalid Google Sheet Link format.", 'red');
@@ -229,7 +228,6 @@
 
                 const cardHTML = `
                     <div class="card-wrapper">
-                        <!-- FRONT OF CARD -->
                         <div class="id-card">
                             <div class="header-main">
                                 <img src="2.jpg" alt="Skill Logo" class="side-logo">
@@ -256,7 +254,7 @@
                                     <div class="data-row"><span class="label">Shift / Unit:</span> <span class="value">${shiftUnit}</span></div>
                                     <div class="data-row"><span class="label">DOB / जन्म तिथि:</span> <span class="value">${dob}</span></div>
                                     <div class="data-row"><span class="label">Blood Group:</span> <span class="value" style="color: #dc2626;">${bloodGroup}</span></div>
-                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">[Aadhaar Redacted]</span></div>
+                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">${aadhar}</span></div>
                                 </div>
                             </div>
                             
@@ -267,7 +265,6 @@
                             </div>
                         </div>
 
-                        <!-- BACK OF CARD -->
                         <div class="id-card">
                             <div class="back-body">
                                 <div class="back-info">
@@ -300,4 +297,3 @@
     </script>
 </body>
 </html>
-
