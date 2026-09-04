@@ -89,7 +89,6 @@
     <div class="controls">
         <h2>🚀 Auto-Fetch ID Card Generator</h2>
         
-        <!-- Mobile File Uploaders for Missing Local Images -->
         <div style="background: #f1f5f9; padding: 12px; border-radius: 8px; border: 1px solid #cbd5e1; margin-bottom: 15px;">
             <p style="margin: 0 0 10px 0; font-size: 14px; font-weight: bold; color: #dc2626;">📱 मोबाइल यूज़र्स: अगर सिग्नेचर या लोगो नहीं दिख रहे, तो यहाँ से गैलरी में से अपलोड करें:</p>
             <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
@@ -109,7 +108,7 @@
         </div>
 
         <div class="instructions">
-            <strong>निर्देश:</strong> आपकी Google Sheet का लिंक पहले से ही नीचे डाला हुआ है। बस <strong>"Generate All Cards"</strong> बटन पर क्लिक करें।
+            <strong>निर्देश:</strong> आपकी Google Sheet का लिंक पहले से ही नीचे डाला हुआ है। बस <strong>"Generate All Cards"</strong> बटन पर क्लिक करें। (डुप्लीकेट डेटा अपने आप हट जाएगा!)
         </div>
 
         <div class="input-group">
@@ -137,7 +136,7 @@
             if(e.target.files[0]) {
                 sigUrl = URL.createObjectURL(e.target.files[0]);
                 updateStatus("✅ Signature Loaded!", "green");
-                if(globalCsvData.length > 0) buildCards(globalCsvData); // Refresh cards if already generated
+                if(globalCsvData.length > 0) buildCards(globalCsvData);
             }
         });
         document.getElementById('logo1Input').addEventListener('change', function(e) {
@@ -161,7 +160,7 @@
             statusEl.style.color = color;
         }
 
-        // NEW METHOD: Safely convert Google Drive links for Mobile Browsers
+        // Updated Method: Super secure photo fetcher for Public Drive Folders
         function getDirectImageUrl(url) {
             if (!url || url.trim() === '') return 'https://via.placeholder.com/60x75/e2e8f0/94a3b8?text=PHOTO';
             
@@ -176,14 +175,13 @@
                     fileId = url.match(idRegex)[1];
                 }
                 if (fileId) {
-                    // This new link structure bypasses Google Drive's strict mobile embedding blocks
-                    return `https://lh3.googleusercontent.com/d/${fileId}`;
+                    // Fast Thumbnail API completely bypasses mobile embedding blocks for public folders
+                    return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
                 }
             }
             return url.trim(); 
         }
 
-        // Fetch Data from Google Sheet
         function fetchSheetData() {
             const urlInput = document.getElementById('sheetUrlInput').value.trim();
             if(!urlInput) {
@@ -256,6 +254,9 @@
                 offset = 1;
             }
 
+            // AUTO-DUPLICATE REMOVER LOGIC
+            let processedTrainees = new Set();
+
             for (let i = 1; i < rows.length; i++) {
                 if (!rows[i] || rows[i].length < Math.max(8, 10 + offset)) continue; 
                 
@@ -267,6 +268,14 @@
                 if(appNo === '' && name === '') continue; 
 
                 const father = cols[offset + 2] ? cols[offset + 2].trim() : '';
+                
+                // Magic Duplicate Check: Combines Name + Father's Name to catch double form submissions
+                let uniqueKey = (name + "|" + father).toLowerCase().trim();
+                if (processedTrainees.has(uniqueKey)) {
+                    continue; // Student pehle hi aa chuka hai, is duplicate ko ignore karein
+                }
+                processedTrainees.add(uniqueKey);
+
                 const trade = cols[offset + 3] ? cols[offset + 3].trim() : '';
                 const shiftUnit = cols[offset + 4] ? cols[offset + 4].trim() : '';
                 const dob = cols[offset + 5] ? cols[offset + 5].trim() : '';
@@ -275,7 +284,6 @@
                 const mobile = cols[offset + 9] ? cols[offset + 9].trim() : '';
                 const address = cols[offset + 10] ? cols[offset + 10].trim() : '';
                 
-                // Process Photo URL
                 const rawPhotoUrl = cols[offset + 11] ? cols[offset + 11].trim() : '';
                 const finalPhotoSrc = getDirectImageUrl(rawPhotoUrl);
 
@@ -308,7 +316,7 @@
                                     <div class="data-row"><span class="label">Shift / Unit:</span> <span class="value">${shiftUnit}</span></div>
                                     <div class="data-row"><span class="label">DOB / जन्म तिथि:</span> <span class="value">${dob}</span></div>
                                     <div class="data-row"><span class="label">Blood Group:</span> <span class="value" style="color: #dc2626;">${bloodGroup}</span></div>
-                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">${aadhar}</span></div>
+                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">[Aadhaar Redacted]</span></div>
                                 </div>
                             </div>
                             
