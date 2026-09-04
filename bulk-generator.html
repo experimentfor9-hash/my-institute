@@ -135,7 +135,7 @@
             return url.trim(); 
         }
 
-        // Fetch Data Directly from Google Sheet URL
+        // Fetch Data Directly from Google Sheet URL using Visualization API to bypass CORS
         function fetchSheetData() {
             const urlInput = document.getElementById('sheetUrlInput').value.trim();
             if(!urlInput) {
@@ -150,7 +150,8 @@
 
             if (idMatch) {
                 const sheetId = idMatch[1];
-                let exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=csv`;
+                // Using gviz/tq endpoint which handles CORS correctly for public sheets
+                let exportUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
                 if (gidMatch) {
                     exportUrl += `&gid=${gidMatch[1]}`;
                 }
@@ -166,7 +167,7 @@
                     })
                     .catch(error => {
                         console.error('Fetch error:', error);
-                        updateStatus("❌ Error fetching data! Make sure your Google Sheet sharing is set to 'Anyone with the link can view'.", 'red');
+                        updateStatus("❌ Error! कृपया सुनिश्चित करें कि आपकी Google Sheet 'Anyone with the link can view' पर सेट है।", 'red');
                     });
             } else {
                 updateStatus("❌ Invalid Google Sheet Link format.", 'red');
@@ -255,7 +256,7 @@
                                     <div class="data-row"><span class="label">Shift / Unit:</span> <span class="value">${shiftUnit}</span></div>
                                     <div class="data-row"><span class="label">DOB / जन्म तिथि:</span> <span class="value">${dob}</span></div>
                                     <div class="data-row"><span class="label">Blood Group:</span> <span class="value" style="color: #dc2626;">${bloodGroup}</span></div>
-                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">${aadhar}</span></div>
+                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">[Aadhaar Redacted]</span></div>
                                 </div>
                             </div>
                             
@@ -299,3 +300,4 @@
     </script>
 </body>
 </html>
+
