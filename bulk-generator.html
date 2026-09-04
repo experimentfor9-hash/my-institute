@@ -125,13 +125,11 @@
     <div id="bulkCardsContainer"></div>
 
     <script>
-        // Variables to hold local image URLs
         let sigUrl = "WhatsApp Image 2026-09-02 at 11.59.43 PM.jpeg";
         let leftLogoUrl = "2.jpg";
         let rightLogoUrl = "1.jpg";
         let globalCsvData = [];
 
-        // Handle Mobile Image Uploads
         document.getElementById('sigInput').addEventListener('change', function(e) {
             if(e.target.files[0]) {
                 sigUrl = URL.createObjectURL(e.target.files[0]);
@@ -160,7 +158,6 @@
             statusEl.style.color = color;
         }
 
-        // Updated Method: Super secure photo fetcher for Public Drive Folders
         function getDirectImageUrl(url) {
             if (!url || url.trim() === '') return 'https://via.placeholder.com/60x75/e2e8f0/94a3b8?text=PHOTO';
             
@@ -175,7 +172,6 @@
                     fileId = url.match(idRegex)[1];
                 }
                 if (fileId) {
-                    // Fast Thumbnail API completely bypasses mobile embedding blocks for public folders
                     return `https://drive.google.com/thumbnail?id=${fileId}&sz=w400`;
                 }
             }
@@ -254,7 +250,6 @@
                 offset = 1;
             }
 
-            // AUTO-DUPLICATE REMOVER LOGIC
             let processedTrainees = new Set();
 
             for (let i = 1; i < rows.length; i++) {
@@ -269,10 +264,9 @@
 
                 const father = cols[offset + 2] ? cols[offset + 2].trim() : '';
                 
-                // Magic Duplicate Check: Combines Name + Father's Name to catch double form submissions
                 let uniqueKey = (name + "|" + father).toLowerCase().trim();
                 if (processedTrainees.has(uniqueKey)) {
-                    continue; // Student pehle hi aa chuka hai, is duplicate ko ignore karein
+                    continue; 
                 }
                 processedTrainees.add(uniqueKey);
 
@@ -316,7 +310,7 @@
                                     <div class="data-row"><span class="label">Shift / Unit:</span> <span class="value">${shiftUnit}</span></div>
                                     <div class="data-row"><span class="label">DOB / जन्म तिथि:</span> <span class="value">${dob}</span></div>
                                     <div class="data-row"><span class="label">Blood Group:</span> <span class="value" style="color: #dc2626;">${bloodGroup}</span></div>
-                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">[Aadhaar Redacted]</span></div>
+                                    <div class="data-row"><span class="label">Aadhar No. / आधार नं.:</span> <span class="value">${aadhar}</span></div>
                                 </div>
                             </div>
                             
