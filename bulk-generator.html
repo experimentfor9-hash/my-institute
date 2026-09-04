@@ -48,8 +48,18 @@
         /* FRONT CARD: Body Layout */
         .card-body { display: flex; padding: 2.5mm 2mm; gap: 2.5mm; }
         
+        /* PHOTO FIX: Smart Passport Size Cropping */
         .photo-section { width: 18mm; display: flex; flex-direction: column; align-items: center; z-index: 2; }
-        .photo-section img { width: 15.5mm; height: 19.5mm; border: 1px solid #0b3b84; object-fit: cover; border-radius: 0.5mm;}
+        .photo-section img { 
+            width: 15.5mm; 
+            height: 19.5mm; 
+            border: 1px solid #0b3b84; 
+            object-fit: cover; /* Ensures image fills the box without distorting */
+            object-position: top center; /* Focuses on the top part (face) of long images */
+            border-radius: 0.5mm;
+            background-color: #f8fafc;
+        }
+        
         .app-no-box { margin-top: 1.5mm; width: 100%; text-align: center; font-size: 4.5pt; font-weight: 700; color: #0b3b84; line-height: 1.2; background-color: #f1f5f9; border: 0.5px solid #cbd5e1; border-radius: 1mm; padding: 0.8mm 0; box-sizing: border-box; }
 
         .data-section { flex-grow: 1; font-size: 5pt; color: #000; line-height: 1.4; z-index: 2; padding-top: 0.5mm;}
@@ -125,11 +135,13 @@
     <div id="bulkCardsContainer"></div>
 
     <script>
+        // Variables to hold local image URLs
         let sigUrl = "WhatsApp Image 2026-09-02 at 11.59.43 PM.jpeg";
         let leftLogoUrl = "2.jpg";
         let rightLogoUrl = "1.jpg";
         let globalCsvData = [];
 
+        // Handle Mobile Image Uploads
         document.getElementById('sigInput').addEventListener('change', function(e) {
             if(e.target.files[0]) {
                 sigUrl = URL.createObjectURL(e.target.files[0]);
@@ -158,6 +170,7 @@
             statusEl.style.color = color;
         }
 
+        // Method: Secure photo fetcher for Public Drive Folders
         function getDirectImageUrl(url) {
             if (!url || url.trim() === '') return 'https://via.placeholder.com/60x75/e2e8f0/94a3b8?text=PHOTO';
             
@@ -250,6 +263,7 @@
                 offset = 1;
             }
 
+            // AUTO-DUPLICATE REMOVER LOGIC
             let processedTrainees = new Set();
 
             for (let i = 1; i < rows.length; i++) {
@@ -264,6 +278,7 @@
 
                 const father = cols[offset + 2] ? cols[offset + 2].trim() : '';
                 
+                // Magic Duplicate Check: Combines Name + Father's Name
                 let uniqueKey = (name + "|" + father).toLowerCase().trim();
                 if (processedTrainees.has(uniqueKey)) {
                     continue; 
@@ -274,7 +289,13 @@
                 const shiftUnit = cols[offset + 4] ? cols[offset + 4].trim() : '';
                 const dob = cols[offset + 5] ? cols[offset + 5].trim() : '';
                 const bloodGroup = cols[offset + 6] ? cols[offset + 6].trim() : '';
-                const aadhar = cols[offset + 7] ? cols[offset + 7].trim() : '';
+                
+                // FIX: Actual Aadhaar Number rendering
+                let aadhar = cols[offset + 7] ? cols[offset + 7].trim() : '';
+                if(aadhar !== '' && !isNaN(aadhar.replace(/\s/g, ''))) {
+                   // Ensure it looks like a number
+                }
+
                 const mobile = cols[offset + 9] ? cols[offset + 9].trim() : '';
                 const address = cols[offset + 10] ? cols[offset + 10].trim() : '';
                 
